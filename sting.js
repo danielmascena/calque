@@ -9,7 +9,7 @@ let lit = raw[i];
  subst = subst.join('');
  }
  if (typeof subst === "object" && lit.slice(-7)=== 'style="') {
- subst = Object.entries(subst).map((v,i)=> v.join(":")).join(";");
+ subst = JSON.stringify(subst).replace(/,/g,";");
 }
  if (lit.endsWith('!')) { 
  subst = htmlEscape(subst); 
