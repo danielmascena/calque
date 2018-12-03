@@ -1,8 +1,8 @@
-
-export default function html(templateObject, ...substs) { 
-let raw = templateObject.raw;
+export function spatha(){
+HTMLElement.prototype.html = function(templateObject, ...substs) { 
+const raw = templateObject.raw;
 let result = '';
-let list=[];
+let elemEvents=[], strMatch;
 substs.forEach((subst, i) => { 
 let lit = raw[i];
  if (Array.isArray(subst)) { 
@@ -11,10 +11,12 @@ let lit = raw[i];
  if (typeof subst === "object" && lit.slice(-7) === 'style="') {
  subst = JSON.stringify(subst).replace(/,/g,";");
 }
-if (typeof subst === "function" && lit.slice(-15).match(/[\w.]*\son.*=["']$/)) {
-let hash = lit.hashCode();
-list.push({id:hash, fn: subst});
-subst="' ghostID='"+hash;
+if (typeof subst === "function" && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
+  let eventType = strMatch[0].slice(3, -2);  
+  let _attrID = '_spt-fauxid-'+lit.hashCode();
+  let hashValue = _attrID.hashCode();
+elemEvents.push({_attrID, hashValue, fn: subst, eventType});
+subst=`' ${_attrID}='"${hashValue}`;
 }
  if (lit.endsWith('!')) { 
  subst = htmlEscape(subst); 
@@ -23,8 +25,15 @@ subst="' ghostID='"+hash;
  result += lit; result += subst; 
  });
  result += raw[raw.length-1];
- console.log(list);
-return [result, list];
+ console.log(elemEvents);
+  this.innerHTML = result;
+  for ( evt of elemEvents) {
+    let elem = this.querySelector(`[${evt._attrID}]`);
+    elem.addEventListener(elem.eventType, elem.fn);
+  }
+}
 }
 function htmlEscape(str) { return str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/`/g, '&#96;'); }
 String.prototype.hashCode = function () { var text = ""; var possible = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; for (var i = 0; i < 15; i++) text += possible.charAt(Math.floor(Math.random() * possible.length)); return text; } 
+
+
