@@ -1,4 +1,5 @@
-export function spatha(){
+export function spatha() {
+	window["🗡"] || (window["🗡"] = !function(){
 HTMLElement.prototype.html = function(templateObject, ...substs) { 
 const raw = templateObject.raw;
 let result = '';
@@ -32,7 +33,9 @@ subst=`' ${_attrID}='"${hashValue}`;
     elem.addEventListener(elem.eventType, elem.fn);
   }
 }
+}());
 }
+
 function htmlEscape(str) { return str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/`/g, '&#96;'); }
 String.prototype.hashCode = function () { var text = ""; var possible = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; for (var i = 0; i < 15; i++) text += possible.charAt(Math.floor(Math.random() * possible.length)); return text; } 
 
