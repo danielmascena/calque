@@ -1,0 +1,27 @@
+<DOCTYPE html>
+<script type="text/javascript">
+
+class MyComponent extends HTMLElement {
+  static get observedAttributes() { return ['name']; }
+  constructor(...args) {
+    super(...args);
+  }
+  attributeChangedCallback() { this.render(); }
+  connectedCallback() { this.render(); }
+  render() {
+    this._innerHTML = html`
+    <p id onblur='${(e)=> console.log(e.target.textContent)}' class='par' contenteditable>hai</p>
+    <h1 onclick='${function(){alert('ok')}}' style="${{color: "red", "font-size": "5em"}}">Hello, ${this.getAttribute('name')}</h1>
+    `;
+  }
+}
+
+customElements.define('my-component', MyComponent);
+
+//document.body.innerHTML = '<my-component name="Frodo"></my-component>';
+
+const mc = new MyComponent;
+mc.setAttribute('name', 'Legolas');
+document.body.appendChild(mc);
+
+</script>
