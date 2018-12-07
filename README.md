@@ -2,7 +2,7 @@
 
 🚧 Status: In Development 🛠️
 ***
-SpathaJS is a simple and tiny utility library for building fast web interfaces, aimed to speed up the first feedbacks from clients, delaying the initially dilemma of *"which technology should I use/or will be mandatory?" 🤔🤓😶
+SpathaJS is a simple and tiny utility library for building fast web interfaces, aimed to speed up the first feedbacks from clients, delaying the initially dilemma of _"which technology should I use/or will be mandatory?_" 🤔🤓😶
 
 🔧 This micro tool was (inspired) meant to be a JSX-like for UI web platform **prototyping**, avoiding the first battleground with evil stacks and bad configurations that you must learn. Just use what is familiar, the loyal and trusted _cohortes praetorianae_ of Web Development, the eternal Web Standards: vanilla JavaScript, Web APIs, HTML5, CSS3 and the awesome Web Components v1 together.
 
@@ -36,6 +36,11 @@ customElements.define('my-component', MyComponent);
 const mc = new MyComponent;
 mc.setAttribute('name', 'Maximus');
 document.body.appendChild(mc);
+
+var p = document.createElement('p');
+p[innerHTML] = html`Lorem, ipsum dolor sit amet consectetur adipisicing elit. <span style="${{"color": "green"}}">Doloremque</span> odit corporis dolor, sapiente exercitationem, numquam expedita ipsam omnis earum dolores, a laboriosam suscipit quo non voluptatibus accusamus porro. Sequi, exercitationem.`;
+document.body.appendChild(p);
+
 ```
 
 ---
