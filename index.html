@@ -1,39 +1,41 @@
-<DOCTYPE html>
-<script type="module">
+<!DOCTYPE html>
+<head>
+  <script type="module" src="spatha.mjs"></script>
+  <script nomodule src="fallback.js"></script>
+</head>
+<body>
+  <my-component name="Frodo"></my-component>
+  
+  <script type="module">
+    
+    /***********************************************************************************
+    Example Code
+    ************************************************************************************/
+    
+    'use strict';
+    
+    import { innerHTML, html } from './spatha.mjs';
 
-/***********************************************************************************
-Example Code
-************************************************************************************/
+    window.addEventListener('DOMContentLoaded', () => {
 
-import { innerHTML, html } from './spatha.mjs';
-
-class MyComponent extends HTMLElement {
-  static get observedAttributes() { return ['name']; }
-  constructor(...args) {
-    super(...args);
-  }
-  attributeChangedCallback() { this.render(); }
-  connectedCallback() { this.render(); }
-  render() {
-    this[innerHTML] = html`
-    <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>hai</p>
-    <h1 onclick='${function(){alert('ok')}}' style="${{"color": "red", "font-size": "5em"}}">Hello, ${this.getAttribute('name')}</h1>
-    `;
-  }
-}
-
-customElements.define('my-component', MyComponent);
-
-//document.body.innerHTML;
-//document.body["innerHTML"] = '<my-component name="Boromir"></my-component>';
-//document.body[innerHTML] = html`<my-component name="Aragorn"></my-component>`;
-
-const mc = new MyComponent;
-mc.setAttribute('name', 'Legolas');
-document.body.appendChild(mc);
-</script>
-
-
-//html
-<my-component name="Frodo"></my-component>
-
+        class MyComponent extends HTMLElement {
+          static get observedAttributes() { return ['name']; }
+          constructor(...args) {
+            super(...args);
+          }
+          attributeChangedCallback() { this.render(); }
+          connectedCallback() { this.render(); }
+          render() {
+            this[innerHTML] = html`
+            <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>hai</p>
+            <h1 onclick='${function(){alert('ok')}}' style="${{"color": "red", "font-size": "5em"}}">Hello, ${this.getAttribute('name')}</h1>
+            `;
+          }
+        }
+        customElements.define('my-component', MyComponent);
+        const mc = new MyComponent;
+        mc.setAttribute('name', 'Legolas');
+        document.body.appendChild(mc);
+    });
+  </script>
+</body>
