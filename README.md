@@ -32,10 +32,12 @@ class MyComponent extends HTMLElement {
   }
   render() {
     this[innerHTML] = html`
-    <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>
-      <slot name="user-text">ad victoriam!!!!</slot>
-    </p>
-    <h1 onclick='${this.showNodeName}' style="${{"color": "red", "font-size": "5em"}}">Hello, ${this.getAttribute('name')}</h1>
+      <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>
+        <slot name="user-text">ad victoriam!!!!</slot>
+      </p>
+      <h1 onclick='${this.showNodeName}' style="${{"color": "red", "font-size": "5em"}}">
+        Hello, ${this.getAttribute('name')}
+      </h1>
     `;
   }
 }
@@ -47,7 +49,12 @@ mc.setAttribute('name', 'Maximus');
 document.body.appendChild(mc);
 
 var p = document.createElement('p');
-p[innerHTML] = html`Lorem, ipsum dolor sit amet consectetur adipisicing elit. <span style="${{"color": "green"}}">Doloremque</span> odit corporis dolor, sapiente exercitationem, numquam expedita ipsam omnis earum dolores, a laboriosam suscipit quo non voluptatibus accusamus porro. Sequi, exercitationem.`;
+p[innerHTML] = html`
+  Lorem, ipsum dolor sit amet consectetur adipisicing elit. <span style="${{"color": "green"}}">
+  Tincidunt</span> ornare massa eget egestas purus. Bibendum enim facilisis gravida neque convallis a. 
+  Vitae suscipit tellus mauris a diam maecenas. Ultricies leo integer malesuada nunc vel risus commodo 
+  viverra maecenas.
+`;
 document.body.appendChild(p);
 
 ```
