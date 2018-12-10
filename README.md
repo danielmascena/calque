@@ -1,23 +1,27 @@
 # spatha.js 🗡
 
 🚧 Status: In Development 🛠️
+
 ***
-SpathaJS is a simple and tiny utility library for building fast web interfaces, offering a _scutum_ 🛡 as abstraction for some DOM manipulations, build components without the initial obligation to interact with DOM API, like `document.createElement`, `element.addEventListener('event', callback)` and `element.style.color = 'yellow'`for example.
+
+SpathaJS is a simple and tiny utility library for building fast web interfaces, offering a _scutum_ 🛡 as abstraction for some DOM manipulations, build components without the initial obligation to interact with DOM API, like `document.createElement("tag")`, `element.addEventListener('event', callback)` and `element.style.property = "value";` for example.
 
 🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping, avoiding the first battleground with evil stacks and bad configurations in some projects. Just use what is familiar, the loyal and trusted _cohortes praetorianae_ of Web Development, the eternal Web Standards: vanilla JavaScript, Web APIs, HTML5, CSS3 and the awesome Web Components v1 together.
 
-As starting point, was used the [HTML templating implementation](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation) provided by Dr. Axel Rauschmayer at his book.
+The [HTML templating implementation](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation) provided by Dr. Axel Rauschmayer at his book was used as starting point.
 
 ### Nothing new or needed to learned
-The motivation for spathaJS was to provide a light way to use HTML elements inside JavaScript, no weird language extensions, crazy binds, black magic or Jedi tricks here. The only extra features inside and differences from traditional HTML are:
 
-1. Adding Event Listeners easily: use function reference `onevent="myFunction"`, not function invocation `onevent="myFunction()"`.
-2. Passing style through literal objects: use [JSON](https://www.json.org/)-based format `{"border-radius": "7px", "color": "green"}`. **OBS:** single properties names will work `{color: "blue"}` but are better to follow the standard rules.
+The motivation for spathaJS was to provide a light way to use HTML elements inside JavaScript, no weird language extensions, crazy binds, black magic or Jedi tricks here. Grammar in SpathaJS is mostly the same as in HTML, but there are subtle differences to watch out for. The differences from traditional HTML are listed below:
+
+1. Adding Event Listeners smoothly: use function reference `onevent="myFunction"`, not function invocation `onevent="myFunction()"`.
+2. Passing inline CSS properties not only through strings, but by literal objects too: when using styling objects the [JSON](https://www.json.org/)-based format is mandatory, example: `style='{"border-radius": "7px", "color": "green"}'`. **OBS:** single properties names will work `{color: "blue"}` but are better to follow the standard rules.
 3. Avoid use the **innerHTML** property directly (like `document.body.innerHTML` or `document.body["innerHTML"]`), instead, use the `innerHTML` reference (`document.body[innerHTML]`) and the  `html` tagged template function provided by the spathaJS library.
 
 #### Code Example
 
 ```javascript
+
 import { innerHTML, html } from './spatha.mjs';
 
 class MyComponent extends HTMLElement {
