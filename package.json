@@ -1,0 +1,20 @@
+{
+    "name": "barbell.js",
+    "description": "",
+    "version": "0.0.1",
+    "main": "barbell.mjs",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/danielmascena/barbell.js.git"
+    },
+    "keywords": [],
+    "author": "Daniel Mascena",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/danielmascena/barbell.js/issues"
+    },
+    "homepage": "https://github.com/danielmascena/barbell.js"
+  }

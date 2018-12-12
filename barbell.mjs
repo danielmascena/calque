@@ -1,6 +1,5 @@
 /***********************************************************************************
- spatha.js
- Spatha Lib window["🗡"]
+ barbell.js
  @author: danielmascena
 ************************************************************************************/
 
@@ -48,7 +47,7 @@ function html(templateObject, ...substs) {
 }
 
 (function spatha() {
-	window["🗡"] || (window["🗡"] = !function(){     
+	window["🏋️"] || (window["🏋️"] = !function(){     
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get(){ return this.innerHTML;},
       set(arr){

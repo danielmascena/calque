@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <head>
-  <script type="module" src="spatha.mjs"></script>
+  <script type="module" src="barbell.mjs"></script>
   <script nomodule src="fallback.js"></script>
 </head>
 <body>
-  <my-component name="Frodo"></my-component>
+  <my-component name="Arnold"></my-component>
   
   <script type="module">
     
@@ -14,7 +14,7 @@
     
     'use strict';
     
-    import { innerHTML, html } from './spatha.mjs';
+    import { innerHTML, html } from './barbell.mjs';
 
     window.addEventListener('DOMContentLoaded', () => {
 
@@ -27,14 +27,14 @@
           connectedCallback() { this.render(); }
           render() {
             this[innerHTML] = html`
-            <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>hai</p>
-            <h1 onclick='${function(){alert('ok')}}' style="${{"color": "red", "font-size": "5em"}}">Hello, ${this.getAttribute('name')}</h1>
+            <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>Bar’s loaded (see browser console)</p>
+            <h1 onclick='${function(){alert('ok')}}' style="${{"color": "red", "font-size": "5em"}}">Lifter, ${this.getAttribute('name')}</h1>
             `;
           }
         }
         customElements.define('my-component', MyComponent);
         const mc = new MyComponent;
-        mc.setAttribute('name', 'Legolas');
+        mc.setAttribute('name', 'Franco');
         document.body.appendChild(mc);
     });
   </script>
