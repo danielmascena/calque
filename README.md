@@ -6,7 +6,7 @@
 
 BarbellJS is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering a _"piece of equipment"_ as abstraction for some DOM manipulations.  It's similar to writing bits of HTML, but inside of a JavaScript file. Build components with events binding at the own template, avoiding the DOM manipulation step, like `document.createElement("tag")`, `element.addEventListener('event', callback)` and `element.style.property = "value";` for example.
 
-🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, avoiding the first battleground with evil stacks and bad configurations in some projects. Just use what is familiar, the loyal and trusted _Olympic weightlifting_ of Web Development, the eternal Web Standards: vanilla JavaScript, Web APIs, HTML5, CSS3 and the awesome Web Components v1 together.
+🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, avoiding the first battleground with evil stacks and bad configurations in some projects. Just use what is familiar, the loyal and trusted _Olympic weightlifting_ of Web Development, the eternal Web Standards: standard JavaScript (aka vanilla JS), Web APIs, HTML5, CSS3 and the awesome Web Components v1 together.
 
 The [HTML templating implementation](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation) provided by Dr. Axel Rauschmayer at his book was used as starting point.
 
