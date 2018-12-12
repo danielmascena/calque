@@ -4,7 +4,7 @@
 
 ***
 
-SpathaJS is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering a piece of equipment as abstraction for some DOM manipulations, build components without the initial obligation to interact with DOM API, like `document.createElement("tag")`, `element.addEventListener('event', callback)` and `element.style.property = "value";` for example.
+BarbellJS is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering a piece of equipment as abstraction for some DOM manipulations, build components without the initial obligation to interact with DOM API, like `document.createElement("tag")`, `element.addEventListener('event', callback)` and `element.style.property = "value";` for example.
 
 🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, avoiding the first battleground with evil stacks and bad configurations in some projects. Just use what is familiar, the loyal and trusted _Olympic weightlifting_ of Web Development, the eternal Web Standards: vanilla JavaScript, Web APIs, HTML5, CSS3 and the awesome Web Components v1 together.
 
