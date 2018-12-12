@@ -1,12 +1,12 @@
-# spatha.js 🗡
+# barbell.js 🏋️
 
 🚧 Status: In Development 🛠️
 
 ***
 
-SpathaJS is a simple and tiny utility library for building fast web interfaces, offering a _scutum_ 🛡 as abstraction for some DOM manipulations, build components without the initial obligation to interact with DOM API, like `document.createElement("tag")`, `element.addEventListener('event', callback)` and `element.style.property = "value";` for example.
+SpathaJS is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering a piece of equipment as abstraction for some DOM manipulations, build components without the initial obligation to interact with DOM API, like `document.createElement("tag")`, `element.addEventListener('event', callback)` and `element.style.property = "value";` for example.
 
-🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping, avoiding the first battleground with evil stacks and bad configurations in some projects. Just use what is familiar, the loyal and trusted _cohortes praetorianae_ of Web Development, the eternal Web Standards: vanilla JavaScript, Web APIs, HTML5, CSS3 and the awesome Web Components v1 together.
+🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, avoiding the first battleground with evil stacks and bad configurations in some projects. Just use what is familiar, the loyal and trusted _Olympic weightlifting_ of Web Development, the eternal Web Standards: vanilla JavaScript, Web APIs, HTML5, CSS3 and the awesome Web Components v1 together.
 
 The [HTML templating implementation](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation) provided by Dr. Axel Rauschmayer at his book was used as starting point.
 
@@ -22,7 +22,7 @@ The motivation for spathaJS was to provide a light way to use HTML elements insi
 
 ```javascript
 
-import { innerHTML, html } from './spatha.mjs';
+import { innerHTML, html } from './barbell.mjs';
 
 class MyComponent extends HTMLElement {
   static get observedAttributes() { return ['name']; }
@@ -37,7 +37,7 @@ class MyComponent extends HTMLElement {
   render() {
     this[innerHTML] = html`
       <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>
-        <slot name="user-text">ad victoriam!!!!</slot>
+        <slot name="user-text">Mr. Olympia!!!</slot>
       </p>
       <h1 onclick='${this.showNodeName}' style="${{"color": "red", "font-size": "5em"}}">
         Hello, ${this.getAttribute('name')}
@@ -49,7 +49,7 @@ class MyComponent extends HTMLElement {
 customElements.define('my-component', MyComponent);
 
 const mc = new MyComponent;
-mc.setAttribute('name', 'Maximus');
+mc.setAttribute('name', 'Arnold');
 document.body.appendChild(mc);
 
 var p = document.createElement('p');
