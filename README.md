@@ -1,4 +1,4 @@
-# shaula.js 🦂
+# shaula.js
 
 🚧 Status: In Development 🛠️
 
