@@ -1,5 +1,5 @@
 /***********************************************************************************
- barbell.js
+ shaula.js
  @author: danielmascena
 ************************************************************************************/
 
@@ -29,7 +29,7 @@ function html(templateObject, ...substs) {
     }
     if (typeof subst === "function" && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
       let eventType = strMatch[0].slice(3, -2);
-      let _attrID = '_spt-fauxid-' + hashCode();
+      let _attrID = '_sh-fauxid-' + hashCode();
       let hashValue = hashCode(true);
       elemEvents.push({_attrID, hashValue, fn: subst, eventType});
       subst=`' ${_attrID}='"${hashValue}`;
@@ -47,7 +47,7 @@ function html(templateObject, ...substs) {
 }
 
 (function spatha() {
-	window["🏋️"] || (window["🏋️"] = !function(){     
+	window["🦂"] || (window["🦂"] = !function(){     
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get(){ return this.innerHTML;},
       set(arr){
