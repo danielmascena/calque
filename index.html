@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <head>
-  <script type="module" src="barbell.mjs"></script>
+  <script type="module" src="shaula.mjs"></script>
   <script nomodule src="fallback.js"></script>
 </head>
 <body>
-  <my-component name="Arnold"></my-component>
+  <my-component name="Scorpii"></my-component>
   
   <script type="module">
     
@@ -14,7 +14,7 @@
     
     'use strict';
     
-    import { innerHTML, html } from './barbell.mjs';
+    import { innerHTML, html } from './shaula.mjs';
 
     window.addEventListener('DOMContentLoaded', () => {
 
@@ -27,14 +27,14 @@
           connectedCallback() { this.render(); }
           render() {
             this[innerHTML] = html`
-            <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>Bar’s loaded (see browser console)</p>
-            <h1 onclick='${function(){alert('ok')}}' style="${{"color": "red", "font-size": "5em"}}">Lifter, ${this.getAttribute('name')}</h1>
+            <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>&#955; ♏ (see browser console)</p>
+            <h1 onclick='${function(){alert('ok')}}' style="${{"color": "red", "font-size": "5em"}}">Hello, &lambda; ${this.getAttribute('name')}</h1>
             `;
           }
         }
         customElements.define('my-component', MyComponent);
         const mc = new MyComponent;
-        mc.setAttribute('name', 'Franco');
+        mc.setAttribute('name', 'Sco');
         document.body.appendChild(mc);
     });
   </script>
