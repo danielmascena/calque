@@ -1,10 +1,10 @@
-# Shaula
+# ShaulaJS
 
 🚧 Status: In Development 🛠️
 
 ***
 
-ShaulaJS is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering an extra part of the toolkit for everyday web development, _a ✨ stellar system in the constellation of Web Platform_. It's similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
+Shaula is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering an extra part of the toolkit for everyday web development, _a ✨ stellar system in the constellation of Web Platform_. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
 
 🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, avoiding the first battleground with evil stacks and bad configurations in some projects. Just use what is familiar, the loyal and trusted _brightest stars in the nighttime sky_ of Web Development, the eternal Web Standards: [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API), HTML5, CSS3, standard JavaScript (aka vanilla JS) and the awesome Web Components v1 together.
 
@@ -36,11 +36,11 @@ class MyComponent extends HTMLElement {
   }
   render() {
     this[innerHTML] = html`
-      <p id="shaula" onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>
-        <slot name="user-text">&lambda; Sco</slot>
+      <p id="shaula" onblur='${(e)=>console.log(e.target.textContent)}' class='par' name="λ" contenteditable>
+        <slot name="user-text">&#x3bb; Sco</slot>
       </p>
       <h1 onclick='${this.showNodeName}' style="${{"color": "red", "font-size": "5em"}}">
-        Hello, λ Lambda ${this.getAttribute('name')}
+        Hello, &lambda; ${this.getAttribute('name')}
       </h1>
     `;
   }
