@@ -1,12 +1,12 @@
-# barbell.js 🏋️
+# shaula.js 🦂
 
 🚧 Status: In Development 🛠️
 
 ***
 
-BarbellJS is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering a _"piece of equipment"_ as abstraction for some DOM manipulations.  It's similar to writing bits of HTML, but inside of a JavaScript file. Build components with events binding at the own template, avoiding the DOM manipulation step, like `document.createElement("tag")`, `element.addEventListener('event', callback)` and `element.style.property = "value";` for example.
+ShaulaJS is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering an extra part of the toolkit for everyday web development, _a ✨ stellar system in the constellation of Web Platform_. It's similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
 
-🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, avoiding the first battleground with evil stacks and bad configurations in some projects. Just use what is familiar, the loyal and trusted _Olympic weightlifting_ of Web Development, the eternal Web Standards: [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API), HTML5, CSS3, standard JavaScript (aka vanilla JS) and the awesome Web Components v1 together.
+🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, avoiding the first battleground with evil stacks and bad configurations in some projects. Just use what is familiar, the loyal and trusted _brightest stars in the nighttime sky_ of Web Development, the eternal Web Standards: [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API), HTML5, CSS3, standard JavaScript (aka vanilla JS) and the awesome Web Components v1 together.
 
 The [HTML templating implementation](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation) provided by Dr. Axel Rauschmayer at his book was used as starting point.
 
@@ -22,7 +22,7 @@ The motivation for spathaJS was to provide a light way to use HTML elements insi
 
 ```javascript
 
-import { innerHTML, html } from './barbell.mjs';
+import { innerHTML, html } from './shaula.mjs';
 
 class MyComponent extends HTMLElement {
   static get observedAttributes() { return ['name']; }
@@ -36,11 +36,11 @@ class MyComponent extends HTMLElement {
   }
   render() {
     this[innerHTML] = html`
-      <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>
-        <slot name="user-text">Mr. Olympia!!!</slot>
+      <p id="shaula" onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>
+        <slot name="user-text">&lambda; Sco</slot>
       </p>
       <h1 onclick='${this.showNodeName}' style="${{"color": "red", "font-size": "5em"}}">
-        Hello, ${this.getAttribute('name')}
+        Hello, λ Lambda ${this.getAttribute('name')}
       </h1>
     `;
   }
@@ -49,7 +49,7 @@ class MyComponent extends HTMLElement {
 customElements.define('my-component', MyComponent);
 
 const mc = new MyComponent;
-mc.setAttribute('name', 'Arnold');
+mc.setAttribute('name', 'Scorpii');
 document.body.appendChild(mc);
 
 var p = document.createElement('p');
