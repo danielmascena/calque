@@ -1,4 +1,4 @@
-# Lambda Sco
+# Shaula (aka Lambda Sco)
 
 🚧 Status: In Development 🛠️
 
@@ -12,11 +12,11 @@ The [HTML templating implementation](http://exploringjs.com/es6/ch_template-lite
 
 ### Nothing new or needed to learned
 
-The motivation for spathaJS was to provide a light way to use HTML elements inside JavaScript, no weird language extensions, crazy binds, black magic or Jedi tricks here. Grammar in SpathaJS is mostly the same as in HTML, but there are subtle differences to watch out for. The differences from traditional HTML are listed below:
+The motivation for ShaulaJS was to provide a light way to use HTML elements inside JavaScript, no weird language extensions, crazy binds, black magic or Jedi tricks here. Grammar in ShaulaJS is mostly the same as in HTML, but there are subtle differences to watch out for. The differences from traditional HTML are listed below:
 
-1. Adding Event Listeners smoothly: use function reference `onevent="myFunction"`, not function invocation `onevent="myFunction()"`. Note that in HTML, event listener names are written in all lowercase, such as onclick or onmouseover. In some libraries, however, like JSX or lit-html, event listener names are written in camelCase or with the prefix @, such as onClick or @click, respectively. The philosophy behind Barbell JS is to avoid at the most any divergence from common HTML syntax.
+1. Adding Event Listeners smoothly: use function reference `onevent="myFunction"`, not function invocation `onevent="myFunction()"`. Note that in HTML, event listener names are written in all lowercase, such as onclick or onmouseover. In some libraries, however, like JSX or lit-html, event listener names are written in camelCase or with the prefix @, such as onClick or @click, respectively. The philosophy behind ShaulaJS is to avoid at the most any divergence from common HTML syntax.
 2. Passing inline CSS properties not only through strings, but by literal objects too: when using styling objects the [JSON](https://www.json.org/)-based format is mandatory, example: `style='{"border-radius": "7px", "color": "green"}'`. **OBS:** single properties names will work `{color: "blue"}` but are better to follow the standard rules.
-3. Avoid use the **innerHTML** property directly (like `document.body.innerHTML` or `document.body["innerHTML"]`), instead, use the `innerHTML` reference (`document.body[innerHTML]`) and the  `html` tagged template function provided by the spathaJS library.
+3. Avoid use the **innerHTML** property directly (like `document.body.innerHTML` or `document.body["innerHTML"]`), instead, use the `innerHTML` Symbol reference (`document.body[innerHTML]`) and the  `html` tagged template function provided by the ShaulaJS library.
 
 #### Code Example
 
