@@ -46,8 +46,8 @@ function html(templateObject, ...substs) {
   return [result, elemEvents];
 }
 
-(function spatha() {
-	window["🦂"] || (window["🦂"] = !function(){     
+(function shaula() {
+	window["🦂"] || (window["🦂"] = !function(){
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get(){ return this.innerHTML;},
       set(arr){
