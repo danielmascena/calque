@@ -2,6 +2,8 @@
 <head>
   <title>ShaulaJs</title>
   <script type="module" src="shaula.mjs"></script>
+      <script type="module" src="scorpius.mjs"></script>
+    <script type="module" src="index.mjs"></script>
   <script nomodule src="fallback.js"></script>
 </head>
 <body>
@@ -13,34 +15,11 @@
     Example Code
     ************************************************************************************/
 
-    'use strict';
-
-    import { innerHTML, html } from './shaula.mjs';
+    import ScorpiusElement from "./index.mjs";
 
     window.addEventListener('DOMContentLoaded', () => {
 
-        class ScorpiusElement extends HTMLElement {
-          static get observedAttributes() { return ['name']; }
-          constructor(...args) {
-            super(...args);
-            this.stars = ['Antares', 'Lesath', 'Graffias'];
-          }
-          attributeChangedCallback() { this.render(); }
-          connectedCallback() { this.render(); }
-          render() {
-            this[innerHTML] = html`
-              <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>&#955; ♏ (see browser console)</p>
-              <h1 onclick='${function(){alert('ok')}}' style="${{"color": "red", "font-size": "5em"}}">Hello, &lambda; ${this.getAttribute('name')}</h1>
-              <ul>
-              ${this.stars.map(name => html`<li onclick='${ev=>alert(name)}'>${name}</li>`)}
-              </ul>
-            `;
-          }
-        }
-        customElements.define('sco-const', ScorpiusElement);
-        const sco = new ScorpiusElement;
-        sco.setAttribute('name', 'Sco');
-        document.body.appendChild(sco);
+        
     });
   </script>
 </body>
