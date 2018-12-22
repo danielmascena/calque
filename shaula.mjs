@@ -18,11 +18,18 @@ function hashCode(wUppercase) {
 
 function html(templateObject, ...substs) {
   const raw = templateObject.raw;
-  let result = '', elemEvents = [], strMatch;
+  let result = '',
+      elemEvents = [],
+      strMatch;
   substs.forEach((subst, i) => {
     let lit = raw[i];
     if (Array.isArray(subst)) {
-      subst = subst.join('');
+      let tmp = '';
+      subst.some(v=> v._spatha) && (subst.filter(v=> v._spatha).forEach(cur => {
+        elemEvents = [...elemEvents, ...cur.elemEvents];
+        tmp += cur.result
+      }));
+      subst = tmp || subst.join('');
     }
     if (typeof subst === "object" && lit.slice(-7) === 'style="') {
       subst = Object.entries(subst).map((v)=> v.join(":")).join(";");
@@ -43,7 +50,7 @@ function html(templateObject, ...substs) {
   });
   result += raw[raw.length-1];
 
-  return [result, elemEvents];
+  return {result, elemEvents, _shaula: "🦂"};
 }
 
 (function shaula() {
@@ -51,7 +58,7 @@ function html(templateObject, ...substs) {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get(){ return this.innerHTML;},
       set(arr){
-        let [result, elemEvents] = arr;
+        let {result, elemEvents} = arr;
         this.innerHTML = result;
         for (let evt of elemEvents) {
           let elem = this.querySelector(`[${evt._attrID}]`);
