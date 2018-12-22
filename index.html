@@ -5,7 +5,7 @@
   <script nomodule src="fallback.js"></script>
 </head>
 <body>
-  <my-component name="Scorpii"></my-component>
+  <sco-const name="Scorpii"></sco-const>
 
   <script type="module">
 
@@ -19,11 +19,11 @@
 
     window.addEventListener('DOMContentLoaded', () => {
 
-        class MyComponent extends HTMLElement {
+        class ScorpiusElement extends HTMLElement {
           static get observedAttributes() { return ['name']; }
           constructor(...args) {
             super(...args);
-            this.names = ['Antares', 'Lesath', 'Graffias'];
+            this.stars = ['Antares', 'Lesath', 'Graffias'];
           }
           attributeChangedCallback() { this.render(); }
           connectedCallback() { this.render(); }
@@ -32,15 +32,15 @@
               <p id onblur='${(e)=>console.log(e.target.textContent)}' class='par' contenteditable>&#955; ♏ (see browser console)</p>
               <h1 onclick='${function(){alert('ok')}}' style="${{"color": "red", "font-size": "5em"}}">Hello, &lambda; ${this.getAttribute('name')}</h1>
               <ul>
-              ${this.names.map(name => html`<li onclick='${ev=>alert(name)}'>${name}</li>`)}
+              ${this.stars.map(name => html`<li onclick='${ev=>alert(name)}'>${name}</li>`)}
               </ul>
             `;
           }
         }
-        customElements.define('my-component', MyComponent);
-        const mc = new MyComponent;
-        mc.setAttribute('name', 'Sco');
-        document.body.appendChild(mc);
+        customElements.define('sco-const', ScorpiusElement);
+        const sco = new ScorpiusElement;
+        sco.setAttribute('name', 'Sco');
+        document.body.appendChild(sco);
     });
   </script>
 </body>
