@@ -25,9 +25,11 @@ function html(templateObject, ...substs) {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v=> v._spatha) && (subst.filter(v=> v._spatha).forEach(cur => {
-        elemEvents = [...elemEvents, ...cur.elemEvents];
-        tmp += cur.result
+      subst.some(v=> v._spatha) && (subst.forEach(val => {
+      if (val._shaula){
+        elemEvents = [...elemEvents, ...val.elemEvents];
+        tmp += val.result;
+        }
       }));
       subst = tmp || subst.join('');
     }
