@@ -5,7 +5,7 @@
           static get observedAttributes() { return ['name']; }
           constructor(...args) {
             super(...args);
-            this.stars = ['Antares', 'Lesath', 'Graffias'];
+            this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
           }
           attributeChangedCallback() { this.render(); }
           connectedCallback() { this.render(); }

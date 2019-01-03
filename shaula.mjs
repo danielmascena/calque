@@ -25,12 +25,12 @@ function html(templateObject, ...substs) {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v=> v._spatha) && (subst.forEach(val => {
+      subst.some(v=> v._shaula) && subst.forEach(val => {
       if (val._shaula){
         elemEvents = [...elemEvents, ...val.elemEvents];
         tmp += val.result;
         }
-      }));
+      });
       subst = tmp || subst.join('');
     }
     if (typeof subst === "object" && lit.slice(-7) === 'style="') {
