@@ -33,8 +33,13 @@ function html(templateObject, ...substs) {
       });
       subst = tmp || subst.join('');
     }
-    if (typeof subst === "object" && lit.slice(-7) === 'style="') {
-      subst = Object.entries(subst).map((v)=> v.join(":")).join(";");
+    if (typeof subst === "object"){ 
+(lit.slice(-7) === 'style="') &&
+      (subst = Object.entries(subst).map((v)=> v.join(":")).join(";"));
+    if (subst._shaula){ 
+subst = subst.result;
+ subst.elemEvents.length && (elemEvents = [...elemEvents, ...subst.elemEvents];
+    }
     }
     if (typeof subst === "function" && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
       let eventType = strMatch[0].slice(3, -2);
