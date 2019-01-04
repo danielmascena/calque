@@ -20,26 +20,29 @@ function html(templateObject, ...substs) {
   const raw = templateObject.raw;
   let result = '',
       elemEvents = [],
-      strMatch;
+      strMatch,
+      recoverContent = obj => {
+        if (obj._spatha) {
+          obj.elemEvents.length && (elemEvents = [...elemEvents, ...obj.elemEvents]);
+          return obj.result;
+        }
+        return (Object.prototype.toString === obj.toString) ? 
+            (Object.keys(obj).reduce((ac,k)=> ac + `${k}: ${obj[k]}, `, '[Object toString] ')) 
+            : obj;
+      };
   substs.forEach((subst, i) => {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v=> v._shaula) && subst.forEach(val => {
-      if (val._shaula){
-        elemEvents = [...elemEvents, ...val.elemEvents];
-        tmp += val.result;
-        }
+      subst.some(v=> v._shaula) && subst.forEach(obj => {
+        tmp += recoverContent(obj);
       });
       subst = tmp || subst.join('');
     }
-    if (typeof subst === "object"){ 
-(lit.slice(-7) === 'style="') &&
-      (subst = Object.entries(subst).map((v)=> v.join(":")).join(";"));
-    if (subst._shaula){ 
-subst = subst.result;
- subst.elemEvents.length && (elemEvents = [...elemEvents, ...subst.elemEvents];
-    }
+    if (typeof subst === "object"){
+      subst = (lit.slice(-7) === 'style="') ?
+        Object.entries(subst).map((v)=> v.join(":")).join(";")
+        : recoverContent(subst);
     }
     if (typeof subst === "function" && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
       let eventType = strMatch[0].slice(3, -2);
