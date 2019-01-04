@@ -22,19 +22,18 @@ function html(templateObject, ...substs) {
       elemEvents = [],
       strMatch,
       recoverContent = obj => {
-        if (obj._shaula) {
+        if (obj.__shaula) {
           obj.elemEvents.length && (elemEvents = [...elemEvents, ...obj.elemEvents]);
           return obj.result;
         }
         return (Object.prototype.toString === obj.toString) ? 
-            (Object.keys(obj).reduce((acc, key)=> acc + `${k}: ${obj[k]}, `, '[Object toString] ')) 
-            : obj;
+            (Object.keys(obj).reduce((acc, key)=> acc + `${key}: ${obj[key]}, `, '[Object toString] ')) : obj;
       };
   substs.forEach((subst, i) => {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v=> v._shaula) && subst.forEach(obj => {
+      subst.some(v=> v.__shaula) && subst.forEach(obj => {
         tmp += recoverContent(obj);
       });
       subst = tmp || subst.join('');
@@ -60,7 +59,7 @@ function html(templateObject, ...substs) {
   });
   result += raw[raw.length-1];
 
-  return {result, elemEvents, _shaula: "🦂"};
+  return {result, elemEvents, __shaula: "🦂"};
 }
 
 (function shaula() {

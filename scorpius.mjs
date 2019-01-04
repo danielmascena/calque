@@ -16,6 +16,8 @@
               <ul>
               ${this.stars.map(name => html`<li onclick='${ev=>alert(name)}'>${name}</li>`)}
               </ul>
+             ${(this.stars.length > 5) ? html`<p>The constellation is complete</p>` : html`<p>There is some missing stars</p>`}
+             <p> ${ {libsName: "ShaulaJS"} } ${ {toString: () => "method override"} } </p>
             `;
           }
         }
