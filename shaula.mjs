@@ -22,12 +22,12 @@ function html(templateObject, ...substs) {
       elemEvents = [],
       strMatch,
       recoverContent = obj => {
-        if (obj._spatha) {
+        if (obj._shaula) {
           obj.elemEvents.length && (elemEvents = [...elemEvents, ...obj.elemEvents]);
           return obj.result;
         }
         return (Object.prototype.toString === obj.toString) ? 
-            (Object.keys(obj).reduce((ac,k)=> ac + `${k}: ${obj[k]}, `, '[Object toString] ')) 
+            (Object.keys(obj).reduce((acc, key)=> acc + `${k}: ${obj[k]}, `, '[Object toString] ')) 
             : obj;
       };
   substs.forEach((subst, i) => {
