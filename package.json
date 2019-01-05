@@ -1,7 +1,7 @@
 {
     "name": "ShaulaJS",
     "description": "a simple and tiny utility library for building fast web interfaces using regular JavaScript",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "main": "shaula.mjs",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"

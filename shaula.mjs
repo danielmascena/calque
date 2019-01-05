@@ -27,7 +27,7 @@ function html(templateObject, ...substs) {
           return obj.result;
         }
         return (Object.prototype.toString === obj.toString) ? 
-            (Object.keys(obj).reduce((acc, key)=> acc + `${key}: ${obj[key]}, `, '[Object toString] ')) : obj;
+            Object.keys(obj).reduce((acc, key)=> acc + `${key}: ${obj[key]}, `, '[Object toString] ') : obj;
       };
   substs.forEach((subst, i) => {
     let lit = raw[i];
