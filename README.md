@@ -1,12 +1,12 @@
-# Shaula (aka Lambda Sco)
+# SteroidJS
 
 🚧 Status: In Development 🛠️
 
 ***
 
-ShaulaJS is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering an extra part of the toolkit for everyday web development, _a ✨ stellar system in the constellation of Web Platform_. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
+SteroidJS is a simple and tiny utility library for building fast web interfaces using regular JavaScript, offering an extra part of the toolkit for everyday web development, _a ✨ stellar system in the constellation of Web Platform_. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
 
-Paraphrasing the [real one](https://en.wikipedia.org/wiki/Steroid) _SteroidJS have two principal programmable functions: as important components based on the user interface which alter the DOM fluidity; and as the signaling symbol._ 💪
+Paraphrasing the [real one](https://en.wikipedia.org/wiki/Steroid) _SteroidJS have two principal programmable functions: as important components based on the user interface which alter the DOM fluidity; and as the signaling symbol._
 
 🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, and plays very fine with the Web Components v1 major benefit - its component pattern, therefore, the UIs are split into distinct pieces in the application. Breaking the interface into small chunks of code through Web Components bring all the benefits of then. Just use what is familiar, the loyal and trusted _brightest stars in the nighttime sky_ of Web Development, the eternal Web Standards: [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API), HTML5, CSS3, standard JavaScript (aka vanilla JS) and the awesome Web Components all together. #usetheplatform
 
