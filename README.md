@@ -4,7 +4,7 @@
 
 ***
 
-SteroidJS is a simple and tiny utility library for creating UIs using regular JavaScript, offering an extra part of the toolkit for everyday web development, _a ✨ stellar system in the constellation of Web Platform_. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
+SteroidJS is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development, _a ✨ stellar system in the constellation of Web Platform_. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
 
 Paraphrasing the [real one](https://en.wikipedia.org/wiki/Steroid) _SteroidJS have two principal programmable functions: as important components based on the user interface which alter the DOM fluidity; and as the signaling symbol._
 
