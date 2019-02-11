@@ -1,12 +1,12 @@
-# SteroidJS
+# LabelJS
 
 🚧 Status: In Development 🛠️
 
-***
+***, _a ✨ stellar system in the constellation of
 
-SteroidJS is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development, _a ✨ stellar system in the constellation of Web Platform_. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
+label.js is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development using the Web Platform. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
 
-Paraphrasing the [real one](https://en.wikipedia.org/wiki/Steroid) _SteroidJS have two principal programmable functions: as important components based on the user interface which alter the DOM fluidity; and as the signaling symbol._
+Paraphrasing the [homologous](https://en.wikipedia.org/wiki/Label) _label.js is a piece of code affixed to a component, on which is written markup (printed information or symbols) about the element. Information printed directly on a component can also be considered labeling._
 
 🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, and plays very well with the Web Components v1, which one of the major benefit - its component pattern, therefore, the UIs are split into distinct pieces in the application. Breaking the interface into small chunks of code through Web Components bring all the benefits of then. Just use what is familiar, the loyal and trusted _brightest stars in the nighttime sky_ of Web Development, the eternal Web Standards: [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API), HTML5, CSS3, standard JavaScript (aka vanilla JS) and the awesome Web Components all together. #usetheplatform
 
@@ -14,17 +14,17 @@ The [HTML templating implementation](http://exploringjs.com/es6/ch_template-lite
 
 ### Nothing new or needed to learned
 
-The motivation for SteroidJS was to provide a light way to use HTML elements inside JavaScript, together with Web Components, allow the componentization of user interfaces--splitting them up into small chunks of related HTML and JavaScript. Grammar in SteroidJS is mostly the same as in HTML, but there are subtle differences to watch out for. The differences from traditional HTML are listed below:
+The motivation for label.js was to provide a light way to use HTML elements inside JavaScript, together with Web Components, allow the componentization of user interfaces--splitting them up into small chunks of related HTML and JavaScript. Grammar in label.js is mostly the same as in HTML, but there are subtle differences to watch out for. The differences from traditional HTML are listed below:
 
 1. Adding Event Listeners smoothly: use function reference `onevent="myFunction"`, not function invocation `onevent="myFunction()"`. Note that in HTML, event listener names are written in all lowercase, such as onclick or onmouseover. In some libraries, however, like JSX or lit-html, event listener names are written in camelCase or with the prefix @, such as onClick or @click, respectively. The philosophy behind ShaulaJS is to avoid at the most any divergence from common HTML syntax.
 2. Passing inline CSS properties not only through strings, but by literal objects too: when using styling objects the [JSON](https://www.json.org/)-based format is mandatory, example: `style='{"border-radius": "7px", "color": "green"}'`. **OBS:** single properties names will work `{color: "blue"}` but are better to follow the standard rules.
-3. Avoid use the **innerHTML** property directly (like `document.body.innerHTML` or `document.body["innerHTML"]`), instead, use the `innerHTML` Symbol reference (`document.body[innerHTML]`) and the  `html` tagged template function provided by the ShaulaJS library.
+3. Avoid use the **innerHTML** property directly (like `document.body.innerHTML` or `document.body["innerHTML"]`), instead, use the `innerHTML` Symbol reference (`document.body[innerHTML]`) and the  `html` tagged template function provided by the label.js library.
 
 #### Code Example
 
 ```javascript
 
-import { innerHTML, html } from './shaula.mjs';
+import { innerHTML, html } from './label.mjs';
 
 class MyComponent extends HTMLElement {
   static get observedAttributes() { return ['name']; }
