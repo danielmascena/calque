@@ -1,5 +1,5 @@
 /***********************************************************************************
- shaula.js
+ label.js
  @author: danielmascena
 ************************************************************************************/
 
@@ -22,7 +22,7 @@ function html(templateObject, ...substs) {
       elemEvents = [],
       strMatch,
       recoverContent = obj => {
-        if (obj.__shaula) {
+        if (obj.__label) {
           obj.elemEvents.length && (elemEvents = [...elemEvents, ...obj.elemEvents]);
           return obj.result;
         }
@@ -33,7 +33,7 @@ function html(templateObject, ...substs) {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v=> v.__shaula) && subst.forEach(obj => {
+      subst.some(v=> v.__label) && subst.forEach(obj => {
         tmp += recoverContent(obj);
       });
       subst = tmp || subst.join('');
@@ -45,7 +45,7 @@ function html(templateObject, ...substs) {
     }
     if (typeof subst === "function" && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
       let eventType = strMatch[0].slice(3, -2);
-      let _attrID = '_sh-fauxid-' + hashCode();
+      let _attrID = '_lbl-fauxid-' + hashCode();
       let hashValue = hashCode(true);
       elemEvents.push({_attrID, hashValue, fn: subst, eventType});
       subst=`' ${_attrID}='"${hashValue}`;
@@ -59,11 +59,11 @@ function html(templateObject, ...substs) {
   });
   result += raw[raw.length-1];
 
-  return {result, elemEvents, __shaula: "🦂"};
+  return {result, elemEvents, __label: "🏷️"};
 }
 
-(function shaula() {
-	window["🦂"] || (window["🦂"] = !function(){
+(function label() {
+	window["🏷️"] || (window["🏷️"] = !function(){
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get(){ return this.innerHTML;},
       set(arr){
