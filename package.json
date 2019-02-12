@@ -1,7 +1,7 @@
 {
-    "name": "LabelJS",
+    "name": "label-js",
     "description": "a simple and tiny utility library for building fast web interfaces using regular JavaScript",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "main": "index.mjs",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
       "url": "https://github.com/danielmascena/label.js.git"
     },
     "keywords": ["Template Strings", "Tagged Templates", "Utility Function", "JavaScript Library", "HTML-in-JS", "JavaScript Component",  "Web Components"],
-    "author": "Daniel Mascena",
+    "author": "Daniel Mascena <danielmascena@gmail.com>",
     "license": "MIT",
     "bugs": {
       "url": "https://github.com/danielmascena/label.js/issues"
