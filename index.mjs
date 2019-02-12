@@ -5,12 +5,12 @@
 
     'use strict';
 
-    import { innerHTML, html } from './shaula.mjs';
-   import ScorpiusElement from './scorpius.mjs';
+    import { innerHTML, html } from './label.mjs';
+   import CustomElement from './scorpius.mjs';
     
     export function main(){
     
-    const sco = new ScorpiusElement;
+    const sco = new CustomElement;
         sco.setAttribute('name', 'Sco');
         document.body.appendChild(sco);
         

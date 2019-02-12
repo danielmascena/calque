@@ -1,7 +1,7 @@
     
-    import { innerHTML, html } from './shaula.mjs';
+    import { innerHTML, html } from './label.mjs';
     
-    export class ScorpiusElement extends HTMLElement {
+    export class CustomElement extends HTMLElement {
           static get observedAttributes() { return ['name']; }
           constructor(...args) {
             super(...args);
@@ -21,4 +21,4 @@
             `;
           }
         }
-        customElements.define('sco-const', ScorpiusElement);
+        customElements.define('custom', CustomElement);
