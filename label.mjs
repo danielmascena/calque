@@ -42,9 +42,7 @@ function html(templateObject, ...substs) {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v => v.__label) && subst.forEach(obj => {
-        tmp += recoverContent(obj);
-      });
+      subst.some(v => v.__label) && subst.forEach(obj => tmp += recoverContent(obj));
       subst = tmp || subst.join('');
     }
     if (typeof subst === "object") {

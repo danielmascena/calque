@@ -3,7 +3,7 @@
 🚧 Status: In Development 🛠️
 
 *** 98% Web Components
-       2% label.js
+    2% label.js
 
 label.js is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development using the Web Platform. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
 
@@ -22,6 +22,8 @@ The motivation for label.js was to provide a light way to use HTML elements insi
 3. Avoid use the **innerHTML** property directly (like `document.body.innerHTML` or `document.body["innerHTML"]`), instead, use the `innerHTML` Symbol reference (`document.body[innerHTML]`) and the  `html` tagged template function provided by the label.js library.
 
 #### Code Example
+
+Uses [Serve](https://github.com/zeit/serve) as recommended Web Server, run `npm i serve`, then `serve`
 
 ```javascript
 
@@ -58,8 +60,8 @@ document.body.appendChild(mc);
 var p = document.createElement('p');
 p[innerHTML] = html`
   Lorem, ipsum dolor sit amet consectetur adipisicing elit. <span style="${{"color": "green"}}">
-  Tincidunt</span> ornare massa eget egestas purus. Bibendum enim facilisis gravida neque convallis a. 
-  Vitae suscipit tellus mauris a diam maecenas. Ultricies leo integer malesuada nunc vel risus commodo 
+  Tincidunt</span> ornare massa eget egestas purus. Bibendum enim facilisis gravida neque convallis a.
+  Vitae suscipit tellus mauris a diam maecenas. Ultricies leo integer malesuada nunc vel risus commodo
   viverra maecenas.
 `;
 document.body.appendChild(p);
