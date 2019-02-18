@@ -8,7 +8,13 @@
 const innerHTML = Symbol('innerHTML');
 
 function htmlEscape(str) {
-  return str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/`/g, '&#96;');
+  return str
+   .replace(/&/g, '&amp;')
+   .replace(/>/g, '&gt;')
+   .replace(/</g, '&lt;')
+   .replace(/"/g, '&quot;')
+   .replace(/'/g, '&#39;')
+   .replace(/`/g, '&#96;');
 }
 
 function hashCode(wUppercase) {
@@ -27,7 +33,7 @@ function html(templateObject, ...substs) {
     elemEvents = [],
     strMatch,
     recoverContent = obj => {
-      if (obj.__label) {
+      if (obj.\u006C\u0061\u0062\u0065\u006C) {
         obj.elemEvents.length && (elemEvents = [
           ...elemEvents,
           ...obj.elemEvents
@@ -35,14 +41,16 @@ function html(templateObject, ...substs) {
         return obj.result;
       }
       return (Object.prototype.toString === obj.toString)
-        ? Object.keys(obj).reduce((acc, key) => acc + `${key}: ${obj[key]}, `, '[Object toString] ')
+        ? Object.keys(obj).reduce(
+         (acc, key) => acc + `${key}: ${obj[key]}, `, '[Object toString] ')
         : obj;
     };
   substs.forEach((subst, i) => {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v => v.__label) && subst.forEach(obj => tmp += recoverContent(obj));
+      subst.some(v => v.\u006C\u0061\u0062\u0065\u006C) 
+       && subst.forEach(obj => tmp += recoverContent(obj));
       subst = tmp || subst.join('');
     }
     if (typeof subst === "object") {
@@ -50,7 +58,8 @@ function html(templateObject, ...substs) {
         ? Object.entries(subst).map((v) => v.join(":")).join(";")
         : recoverContent(subst);
     }
-    if (typeof subst === "function" && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
+    if (typeof subst === "function" 
+         && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
       let eventType = strMatch[0].slice(3, -2);
       let _attrID = '_lbl-fauxid-' + hashCode();
       let hashValue = hashCode(true);
@@ -66,7 +75,7 @@ function html(templateObject, ...substs) {
   });
   result += raw[raw.length - 1];
 
-  return {result, elemEvents, __label: "🏷️"};
+  return {result, elemEvents, \u006C\u0061\u0062\u0065\u006C: "🏷️"};
 }(function label() {
   window["🏷️"] || (window["🏷️"] = !function() {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
