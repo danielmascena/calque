@@ -33,7 +33,7 @@ function html(templateObject, ...substs) {
     elemEvents = [],
     strMatch,
     recoverContent = obj => {
-      if (obj.\u006C\u0061\u0062\u0065\u006C) {
+      if (obj.\u006C\u0061\u0062\u0065\u006C\u006A\u0073) {
         obj.elemEvents.length && (elemEvents = [
           ...elemEvents,
           ...obj.elemEvents
@@ -49,7 +49,7 @@ function html(templateObject, ...substs) {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v => v.\u006C\u0061\u0062\u0065\u006C) 
+      subst.some(v => v.\u006C\u0061\u0062\u0065\u006C\u006A\u0073) 
        && subst.forEach(obj => tmp += recoverContent(obj));
       subst = tmp || subst.join('');
     }
@@ -75,9 +75,10 @@ function html(templateObject, ...substs) {
   });
   result += raw[raw.length - 1];
 
-  return {result, elemEvents, \u006C\u0061\u0062\u0065\u006C: "🏷️"};
+  return {result, elemEvents, \u006C\u0061\u0062\u0065\u006C\u006A\u0073: "🏷️"};
 }(function label() {
-  window["🏷️"] || (window["🏷️"] = !function() {
+  window.\u006C\u0061\u0062\u0065\u006C\u006A\u0073 === "🏷️" || 
+   (window.\u006C\u0061\u0062\u0065\u006C\u006A\u0073 = function() {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get() {
         return this.innerHTML;
@@ -93,6 +94,7 @@ function html(templateObject, ...substs) {
       enumerable: true,
       configurable: true
     });
+   return "🏷️";
   }());
 })();
 
