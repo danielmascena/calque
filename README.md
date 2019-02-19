@@ -1,15 +1,19 @@
-# LabelJS
+# EnvelopeJS
 
 🚧 Status: In Development 🛠️
 
-*** 98% Web Components
-    2% label.js
 
-label.js is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development using the Web Platform. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
+envelope.js is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development using the Web Platform. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
 
-Install using `npm i labeljs`
+## Install via [npm](https://npmjs.com)
 
-Paraphrasing the [homologous](https://en.wikipedia.org/wiki/Label) _label.js is a piece of code affixed to a component, on which is written markup (printed information or symbols) about the element. Information printed directly on a component can also be considered labeling._
+```sh
+$ npm install --save envelopejs
+```
+
+## Features
+
+Paraphrasing the [homologous](https://en.wikipedia.org/wiki/Envelope) _envelope.js is a common packaging item, usually made of thin, flat material. It is designed to contain a flat object, such as a letter or card._
 
 🔧 This micro-library was meant to be a JSX-like but as a tool for UI prototyping with ordinary JS, and plays very well with the Web Components v1, which one of the major benefit - its component pattern, therefore, the UIs are split into distinct pieces in the application. Breaking the interface into small chunks of code through Web Components bring all the benefits of then. Just use what is familiar, the loyal and trusted _brightest stars in the nighttime sky_ of Web Development, the eternal Web Standards: [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API), HTML5, CSS3, standard JavaScript (aka vanilla JS) and the awesome Web Components all together. #usetheplatform
 
@@ -25,7 +29,12 @@ The motivation for label.js was to provide a light way to use HTML elements insi
 
 #### Code Example
 
-Uses [Serve](https://github.com/zeit/serve) as recommended Web Server, run `npm i serve`, then `serve`
+Uses [Serve](https://github.com/zeit/serve) as recommended Web Server, run:
+
+```sh
+$ npm i serve
+```
+
 
 ```javascript
 
