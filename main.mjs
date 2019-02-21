@@ -4,7 +4,7 @@
 
 'use strict';
 
-import {innerHTML, html} from './label.mjs';
+import {innerHTML, html} from './index.mjs';
 import GenericElement from './generic.mjs';
 
 export default function main() {

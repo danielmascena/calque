@@ -1,5 +1,5 @@
 /***********************************************************************************
- label.js
+ piquant.js
  @author: danielmascena
 ************************************************************************************/
 
@@ -49,7 +49,7 @@ function html(templateObject, ...substs) {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v => v.\u006C\u0061\u0062\u0065\u006C\u006A\u0073) 
+      subst.some(v => v.\u006C\u0061\u0062\u0065\u006C\u006A\u0073)
        && subst.forEach(obj => tmp += recoverContent(obj));
       subst = tmp || subst.join('');
     }
@@ -58,7 +58,7 @@ function html(templateObject, ...substs) {
         ? Object.entries(subst).map((v) => v.join(":")).join(";")
         : recoverContent(subst);
     }
-    if (typeof subst === "function" 
+    if (typeof subst === "function"
          && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
       let eventType = strMatch[0].slice(3, -2);
       let _attrID = '_lbl-fauxid-' + hashCode();
@@ -75,9 +75,9 @@ function html(templateObject, ...substs) {
   });
   result += raw[raw.length - 1];
 
-  return {result, elemEvents, \u006C\u0061\u0062\u0065\u006C\u006A\u0073: "🏷️"};
+  return {result, elemEvents, \u006C\u0061\u0062\u0065\u006C\u006A\u0073: "🌶"};
 }(function label() {
-  window.\u006C\u0061\u0062\u0065\u006C\u006A\u0073 === "🏷️" || 
+  window.\u006C\u0061\u0062\u0065\u006C\u006A\u0073 === "🌶" ||
    (window.\u006C\u0061\u0062\u0065\u006C\u006A\u0073 = function() {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get() {
@@ -94,7 +94,7 @@ function html(templateObject, ...substs) {
       enumerable: true,
       configurable: true
     });
-   return "🏷️";
+   return "🌶";
   }());
 })();
 

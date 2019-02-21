@@ -1,4 +1,4 @@
-import {innerHTML, html} from './label.mjs';
+import {innerHTML, html} from './index.mjs';
 
 export default class GenericElement extends HTMLElement {
   static get observedAttributes() {

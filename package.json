@@ -1,5 +1,5 @@
 {
-    "name": "labeljs",
+    "name": "piquant",
     "description": "a simple and tiny utility library for building fast web interfaces using regular JavaScript",
     "version": "0.0.13",
     "main": "index.mjs",
@@ -8,13 +8,13 @@
     },
     "repository": {
       "type": "git",
-      "url": "https://github.com/danielmascena/label.js.git"
+      "url": "https://github.com/danielmascena/piquant.git"
     },
     "keywords": ["Template Strings", "Tagged Templates", "Utility Function", "JavaScript Library", "HTML-in-JS", "JavaScript Component",  "Web Components"],
     "author": "Daniel Mascena <danielmascena@gmail.com>",
     "license": "MIT",
     "bugs": {
-      "url": "https://github.com/danielmascena/label.js/issues"
+      "url": "https://github.com/danielmascena/piquant/issues"
     },
-    "homepage": "https://labeljs.github.io"
+    "homepage": "https://github.com/danielmascena/piquant"
   }
