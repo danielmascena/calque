@@ -1,7 +1,7 @@
 {
     "name": "piquant",
     "description": "a simple and tiny utility library for building fast web interfaces using regular JavaScript",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "main": "index.mjs",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"

@@ -28,7 +28,7 @@ export default class GenericElement extends HTMLElement {
     ? html `<p>The constellation is complete</p>`
     : html `<p>There is some missing stars</p>`}
        <p> ${ {
-      libsName: "LabelJS"} } ${ {
+      libsName: "PiquantJS"} } ${ {
         toString: () => "method override"} } </p>
       `;
     }

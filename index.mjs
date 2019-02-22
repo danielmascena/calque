@@ -33,7 +33,7 @@ function html(templateObject, ...substs) {
     elemEvents = [],
     strMatch,
     recoverContent = obj => {
-      if (obj.\u006C\u0061\u0062\u0065\u006C\u006A\u0073) {
+      if (obj.piquant) {
         obj.elemEvents.length && (elemEvents = [
           ...elemEvents,
           ...obj.elemEvents
@@ -49,7 +49,7 @@ function html(templateObject, ...substs) {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v => v.\u006C\u0061\u0062\u0065\u006C\u006A\u0073)
+      subst.some(v => v.piquant)
        && subst.forEach(obj => tmp += recoverContent(obj));
       subst = tmp || subst.join('');
     }
@@ -61,7 +61,7 @@ function html(templateObject, ...substs) {
     if (typeof subst === "function"
          && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
       let eventType = strMatch[0].slice(3, -2);
-      let _attrID = '_lbl-fauxid-' + hashCode();
+      let _attrID = '_pqt-fauxid-' + hashCode();
       let hashValue = hashCode(true);
       elemEvents.push({_attrID, hashValue, fn: subst, eventType});
       subst = `' ${_attrID}='"${hashValue}`;
@@ -75,10 +75,11 @@ function html(templateObject, ...substs) {
   });
   result += raw[raw.length - 1];
 
-  return {result, elemEvents, \u006C\u0061\u0062\u0065\u006C\u006A\u0073: "🌶"};
-}(function label() {
-  window.\u006C\u0061\u0062\u0065\u006C\u006A\u0073 === "🌶" ||
-   (window.\u006C\u0061\u0062\u0065\u006C\u006A\u0073 = function() {
+  return {result, elemEvents, piquant: "🌶"};
+}
+(function piquant() {
+  window["🌶"] ||
+   (window["🌶"] = !function() {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get() {
         return this.innerHTML;
@@ -94,7 +95,6 @@ function html(templateObject, ...substs) {
       enumerable: true,
       configurable: true
     });
-   return "🌶";
   }());
 })();
 
