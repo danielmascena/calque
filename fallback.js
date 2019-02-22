@@ -1,8 +1,4 @@
-/***********************************************************************************
- label.js
- @author: danielmascena
-************************************************************************************/
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -20,6 +16,10 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+/***********************************************************************************
+ piquant.js
+ @author: danielmascena
+************************************************************************************/
 var innerHTML = Symbol('innerHTML');
 exports.innerHTML = innerHTML;
 
@@ -45,7 +45,7 @@ function html(templateObject) {
       elemEvents = [],
       strMatch,
       recoverContent = function recoverContent(obj) {
-    if (obj.__label) {
+    if (obj.piquant) {
       obj.elemEvents.length && (elemEvents = [].concat(_toConsumableArray(elemEvents), _toConsumableArray(obj.elemEvents)));
       return obj.result;
     }
@@ -65,7 +65,7 @@ function html(templateObject) {
     if (Array.isArray(subst)) {
       var tmp = '';
       subst.some(function (v) {
-        return v.__label;
+        return v.piquant;
       }) && subst.forEach(function (obj) {
         return tmp += recoverContent(obj);
       });
@@ -81,7 +81,7 @@ function html(templateObject) {
     if (typeof subst === "function" && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
       var eventType = strMatch[0].slice(3, -2);
 
-      var _attrID = '_lbl-fauxid-' + hashCode();
+      var _attrID = '_pqt-fauxid-' + hashCode();
 
       var hashValue = hashCode(true);
       elemEvents.push({
@@ -105,12 +105,12 @@ function html(templateObject) {
   return {
     result: result,
     elemEvents: elemEvents,
-    __label: "🏷️"
+    piquant: "🌶"
   };
 }
 
-(function label() {
-  window["🏷️"] || (window["🏷️"] = !function () {
+(function piquant() {
+  window["🌶"] || (window["🌶"] = !function () {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get: function get() {
         return this.innerHTML;
