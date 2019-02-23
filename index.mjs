@@ -33,7 +33,7 @@ function html(templateObject, ...substs) {
     elemEvents = [],
     strMatch,
     recoverContent = obj => {
-      if (obj.piquant) {
+      if (obj._piquant) {
         obj.elemEvents.length && (elemEvents = [
           ...elemEvents,
           ...obj.elemEvents
@@ -49,12 +49,15 @@ function html(templateObject, ...substs) {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v => v.piquant)
+      subst.some(v => v._piquant)
        && subst.forEach(obj => tmp += recoverContent(obj));
       subst = tmp || subst.join('');
     }
     if (typeof subst === "object") {
-      subst = (lit.slice(-7).match(/style=["']/)
+    /* HTML5 specification says:
+Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
+*/
+      subst = (lit.slice(-8).match(/\s+style=["']/)
         ? Object.entries(subst).map((v) => v.join(":")).join(";")
         : recoverContent(subst);
     }
@@ -75,7 +78,7 @@ function html(templateObject, ...substs) {
   });
   result += raw[raw.length - 1];
 
-  return {result, elemEvents, piquant: "🌶"};
+  return {result, elemEvents, _piquant: "🌶"};
 }
 (function piquant() {
   window["🌶"] ||
