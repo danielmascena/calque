@@ -1,6 +1,6 @@
 /***********************************************************************************
  piquant.js
- @author: danielmascena
+ @author: danielmascena <danielmascena@gmail.com>
 ************************************************************************************/
 
 'use strict';
@@ -54,7 +54,7 @@ function html(templateObject, ...substs) {
       subst = tmp || subst.join('');
     }
     if (typeof subst === "object") {
-      subst = (lit.slice(-7) === 'style="')
+      subst = (lit.slice(-7).match(/style=["']/)
         ? Object.entries(subst).map((v) => v.join(":")).join(";")
         : recoverContent(subst);
     }
