@@ -1,6 +1,6 @@
 {
-    "name": "piquant",
-    "description": "a simple and tiny utility library for building fast web interfaces using regular JavaScript",
+    "name": "engraft",
+    "description": "A simple and tiny utility library for building fast web interfaces using regular JavaScript",
     "version": "0.0.16",
     "main": "index.mjs",
     "scripts": {

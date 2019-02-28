@@ -1,5 +1,5 @@
 /***********************************************************************************
- piquant.js
+ engraft.js
  @author: danielmascena <danielmascena@gmail.com>
 ************************************************************************************/
 
@@ -33,7 +33,7 @@ function html(templateObject, ...substs) {
     elemEvents = [],
     strMatch,
     recoverContent = obj => {
-      if (obj._piquant) {
+      if (obj._engraft) {
         obj.elemEvents.length && (elemEvents = [
           ...elemEvents,
           ...obj.elemEvents
@@ -49,7 +49,7 @@ function html(templateObject, ...substs) {
     let lit = raw[i];
     if (Array.isArray(subst)) {
       let tmp = '';
-      subst.some(v => v._piquant)
+      subst.some(v => v._engraft)
        && subst.forEach(obj => tmp += recoverContent(obj));
       subst = tmp || subst.join('');
     }
@@ -64,7 +64,7 @@ Then, the start tag may have a number of attributes, the syntax for which is des
     if (typeof subst === "function"
          && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
       let eventType = strMatch[0].slice(3, -2);
-      let _attrID = '_pqt-fauxid-' + hashCode();
+      let _attrID = '_egt-fauxid-' + hashCode();
       let hashValue = hashCode(true);
       elemEvents.push({_attrID, hashValue, fn: subst, eventType});
       subst = `' ${_attrID}='"${hashValue}`;
@@ -78,11 +78,11 @@ Then, the start tag may have a number of attributes, the syntax for which is des
   });
   result += raw[raw.length - 1];
 
-  return {result, elemEvents, _piquant: "🌶"};
+  return {result, elemEvents, _engraft: "🎋"};
 }
-(function piquant() {
-  window["🌶"] ||
-   (window["🌶"] = !function() {
+(function engraft() {
+  window["🎋"] ||
+   (window["🎋"] = !function() {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get() {
         return this.innerHTML;
