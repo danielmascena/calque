@@ -1,20 +1,20 @@
 {
     "name": "engraft",
-    "description": "A simple and tiny utility library for building fast web interfaces using regular JavaScript",
-    "version": "0.0.16",
+    "description": "🎋 A simple and tiny utility library for building fast web interfaces using regular JavaScript",
+    "version": "0.0.17",
     "main": "index.mjs",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
       "type": "git",
-      "url": "https://github.com/danielmascena/piquant.git"
+      "url": "https://github.com/danielmascena/engraft.git"
     },
     "keywords": ["Template Strings", "Tagged Templates", "Utility Function", "JavaScript Library", "HTML-in-JS", "JavaScript Component",  "Web Components"],
     "author": "Daniel Mascena <danielmascena@gmail.com>",
     "license": "MIT",
     "bugs": {
-      "url": "https://github.com/danielmascena/piquant/issues"
+      "url": "https://github.com/danielmascena/engraft/issues"
     },
-    "homepage": "https://github.com/danielmascena/piquant"
+    "homepage": "https://github.com/danielmascena/engraft"
   }
