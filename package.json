@@ -2,9 +2,13 @@
   "name": "engraft",
   "description": "🎋 A simple and tiny utility library for building fast web interfaces using regular JavaScript",
   "version": "0.0.17",
-  "main": "lib/engraft.js",
+  "main": "src/engraft.js",
   "scripts": {
-    "build": "babel src --out-dir lib --presets=@babel/env"
+    "lint": "eslint src/engraft.js",
+    "build": "npm run transpiler && npm run copy && npm run uglify",
+    "transpiler": "babel src --out-dir es5 --presets=@babel/env",
+    "copy": "cp src/engraft.js dist/engraft.mjs",
+    "uglify": "mkdir -p dist/ && uglifyjs es5/engraft.js -m -o dist/engraft.min.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +32,8 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4"
+    "@babel/preset-env": "^7.3.4",
+    "eslint": "^5.14.1",
+    "uglify-js": "^3.4.9"
   }
 }

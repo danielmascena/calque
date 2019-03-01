@@ -1,4 +1,4 @@
-import { innerHTML, html } from '../src/engraft.mjs';
+import { innerHTML, html } from '../dist/engraft.mjs';
 
 export default class GenericElement extends HTMLElement {
   static get observedAttributes() {

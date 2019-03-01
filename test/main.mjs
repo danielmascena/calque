@@ -4,7 +4,7 @@
 
 'use strict';
 
-import {innerHTML, html} from '../src/engraft.mjs';
+import {innerHTML, html} from '../dist/engraft.mjs';
 import GenericElement from './generic.mjs';
 
 export default function() {
