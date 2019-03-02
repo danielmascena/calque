@@ -1,16 +1,10 @@
-/***********************************************************************************
- engraft.js
- @author: danielmascena <danielmascena@gmail.com>
-************************************************************************************/
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.html = html;
 exports.innerHTML = void 0;
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -20,6 +14,14 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/***********************************************************************************
+ engraft.js
+ @author: danielmascena <danielmascena@gmail.com>
+************************************************************************************/
+
+/*jshint esversion: 6 */
 var innerHTML = Symbol('innerHTML');
 exports.innerHTML = innerHTML;
 
@@ -45,13 +47,12 @@ function html(templateObject) {
       elemEvents = [],
       strMatch,
       recoverContent = function recoverContent(obj) {
-    if (obj._engraft) {
+    if (obj === null) return "";else if (_typeof(obj) === 'object' && obj._engraft) {
       obj.elemEvents.length && (elemEvents = [].concat(_toConsumableArray(elemEvents), _toConsumableArray(obj.elemEvents)));
       return obj.result;
     }
-
     return Object.prototype.toString === obj.toString ? Object.keys(obj).reduce(function (acc, key) {
-      return acc + "".concat(key, ": ").concat(obj[key], ", ");
+      return acc + "".concat(key, ": ").concat(obj[key], ",\n        ");
     }, '[Object toString] ') : obj;
   };
 

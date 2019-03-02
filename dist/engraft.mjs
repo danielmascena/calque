@@ -3,7 +3,7 @@
  @author: danielmascena <danielmascena@gmail.com>
 ************************************************************************************/
 
-'use strict';
+/*jshint esversion: 6 */
 
 const innerHTML = Symbol('innerHTML');
 
@@ -19,9 +19,9 @@ function htmlEscape(str) {
 
 function hashCode(wUppercase) {
   let text = "",
-    possible = `abcdefghijklmnopqrstuvwxyz${wUppercase
-      ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-      : ""}0123456789`;
+    possible = (`abcdefghijklmnopqrstuvwxyz${wUppercase ?
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      : ""}0123456789`);
   for (let i = 0; i < 15; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   return text;
@@ -33,49 +33,49 @@ function html(templateObject, ...substs) {
     elemEvents = [],
     strMatch,
     recoverContent = obj => {
-      if (obj._engraft) {
+      if (obj === null) return "";
+      else if (typeof obj === 'object' && obj._engraft) {
         obj.elemEvents.length && (elemEvents = [
           ...elemEvents,
           ...obj.elemEvents
         ]);
         return obj.result;
       }
-      return (Object.prototype.toString === obj.toString)
-        ? Object.keys(obj).reduce(
-         (acc, key) => acc + `${key}: ${obj[key]}, `, '[Object toString] ')
-        : obj;
+      return (Object.prototype.toString === obj.toString ?
+        Object.keys(obj).reduce((acc, key) => acc + `${key}: ${obj[key]},
+        `, '[Object toString] ') : obj);
     };
   substs.forEach((subst, i) => {
-    let lit = raw[i];
-    if (Array.isArray(subst)) {
-      let tmp = '';
-      subst.some(v => v._engraft)
-       && subst.forEach(obj => tmp += recoverContent(obj));
-      subst = tmp || subst.join('');
+      let lit = raw[i];
+      if (Array.isArray(subst)) {
+        let tmp = '';
+        subst.some(v => v._engraft) && subst.forEach(obj => tmp += recoverContent(obj));
+        subst = tmp || subst.join('');
+      }
+      if (typeof subst === "object") {
+      /* HTML5 specification says:
+  Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
+  */
+        subst = lit.slice(-8).match(/\s+style=["']/) ?
+          Object.entries(subst).map((v) => v.join(":")).join(";")
+          : recoverContent(subst);
+      }
+      if (typeof subst === "function" &&
+          (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
+        let eventType = strMatch[0].slice(3, -2);
+        let _attrID = '_egt-fauxid-' + hashCode();
+        let hashValue = hashCode(true);
+        elemEvents.push({_attrID, hashValue, fn: subst, eventType});
+        subst = `' ${_attrID}='"${hashValue}`;
+      }
+      if (lit.endsWith('!')) {
+        subst = htmlEscape(subst);
+        lit = lit.slice(0, -1);
+      }
+      result += lit;
+      result += subst;
     }
-    if (typeof subst === "object") {
-    /* HTML5 specification says:
-Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
-*/
-      subst = lit.slice(-8).match(/\s+style=["']/)
-        ? Object.entries(subst).map((v) => v.join(":")).join(";")
-        : recoverContent(subst);
-    }
-    if (typeof subst === "function"
-         && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
-      let eventType = strMatch[0].slice(3, -2);
-      let _attrID = '_egt-fauxid-' + hashCode();
-      let hashValue = hashCode(true);
-      elemEvents.push({_attrID, hashValue, fn: subst, eventType});
-      subst = `' ${_attrID}='"${hashValue}`;
-    }
-    if (lit.endsWith('!')) {
-      subst = htmlEscape(subst);
-      lit = lit.slice(0, -1);
-    }
-    result += lit;
-    result += subst;
-  });
+  );
   result += raw[raw.length - 1];
 
   return {result, elemEvents, _engraft: "🎋"};

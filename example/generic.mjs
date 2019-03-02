@@ -15,6 +15,7 @@ export default class GenericElement extends HTMLElement {
     this.render();
   }
   render() {
+    let someObj = null;
     this[innerHTML] = html `
         <p id onblur='${ e => console.log(e.target.textContent)}' class='par'
           contenteditable>&#955; ♏ (see browser console for see the changes)
@@ -33,6 +34,7 @@ export default class GenericElement extends HTMLElement {
           ${ {libName: "EngraftJS"} }
           ${ {toString: () => "method override"} }
         </p>
+        <span>${someObj}</span>
     `;
   }
 }
