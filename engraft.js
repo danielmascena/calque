@@ -45,7 +45,7 @@ function html(templateObject, ...substs) {
         Object.keys(obj).reduce((acc, key) => acc + `${key}: ${obj[key]},
         `, '[Object toString] ') : obj);
     };
-  substs.forEach((subst, i) => {
+    substs.forEach((subst, i) => {
       let lit = raw[i];
       if (Array.isArray(subst)) {
         let tmp = '';
