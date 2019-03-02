@@ -21,6 +21,5 @@ export default function() {
       neque convallis a. Vitae suscipit tellus mauris a diam maecenas. Ultricies leo
       integer malesuada nunc vel risus commodo viverra maecenas.
   `;
-
   document.body.appendChild(p);
 }

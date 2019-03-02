@@ -17,15 +17,16 @@ export default class GenericElement extends HTMLElement {
   render() {
     let someObj = null;
     this[innerHTML] = html `
-        <p id onblur='${ e => console.log(e.target.textContent)}' class='par'
+        <p id onblur="${ e => console.log(e.target.textContent)}" class='par'
+          onclick="${e => alert(e.target.value)}"
           contenteditable>&#955; ♏ (see browser console for see the changes)
         </p>
-        <h1 onclick='${ function() {
-          alert('ok')}}' style="${ {"color": "red", "font-size": "5em"}}">
+        <h1 onclick="${ function() {
+          alert('ok')}}" style="${ {"color": "red", "font-size": "5em"}}">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
         <ul>
-          ${this.stars.map(name => html `<li onclick='${ev => alert(name)}'>${name}</li>`)}
+          ${this.stars.map(name => html `<li onclick="${ev => alert(name)}">${name}</li>`)}
         </ul>
         ${ (this.stars.length > 5)
             ? html `<p>The constellation is complete</p>`
@@ -34,7 +35,7 @@ export default class GenericElement extends HTMLElement {
           ${ {libName: "EngraftJS"} }
           ${ {toString: () => "method override"} }
         </p>
-        <span>${someObj}</span>
+        <span>${someObj}</span><i>${{}}</i>
     `;
   }
 }

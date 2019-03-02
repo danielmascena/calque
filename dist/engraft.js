@@ -30,7 +30,7 @@ function htmlEscape(str) {
 }
 
 function hashCode(wUppercase) {
-  var text = "",
+  var text = '',
       possible = "abcdefghijklmnopqrstuvwxyz".concat(wUppercase ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "", "0123456789");
 
   for (var i = 0; i < 15; i++) {
@@ -47,13 +47,15 @@ function html(templateObject) {
       elemEvents = [],
       strMatch,
       recoverContent = function recoverContent(obj) {
-    if (obj === null) return "";else if (_typeof(obj) === 'object' && obj._engraft) {
-      obj.elemEvents.length && (elemEvents = [].concat(_toConsumableArray(elemEvents), _toConsumableArray(obj.elemEvents)));
-      return obj.result;
+    if (_typeof(obj) === 'object') {
+      if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;else if (obj._engraft) {
+        obj.elemEvents.length && (elemEvents = [].concat(_toConsumableArray(elemEvents), _toConsumableArray(obj.elemEvents)));
+        return obj.result;
+      }
+      return Object.prototype.toString === obj.toString ? Object.keys(obj).reduce(function (acc, key) {
+        return acc + "".concat(key, ": ").concat(obj[key], ",\n          ");
+      }, '[Object toString] ') : obj;
     }
-    return Object.prototype.toString === obj.toString ? Object.keys(obj).reduce(function (acc, key) {
-      return acc + "".concat(key, ": ").concat(obj[key], ",\n        ");
-    }, '[Object toString] ') : obj;
   };
 
   for (var _len = arguments.length, substs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -63,38 +65,40 @@ function html(templateObject) {
   substs.forEach(function (subst, i) {
     var lit = raw[i];
 
-    if (Array.isArray(subst)) {
-      var tmp = '';
-      subst.some(function (v) {
-        return v._engraft;
-      }) && subst.forEach(function (obj) {
-        return tmp += recoverContent(obj);
-      });
-      subst = tmp || subst.join('');
-    }
+    if (subst !== null) {
+      if (Array.isArray(subst)) {
+        var tmp = '';
+        subst.some(function (v) {
+          return v._engraft;
+        }) && subst.forEach(function (obj) {
+          return tmp += recoverContent(obj);
+        });
+        subst = tmp || subst.join('');
+      }
 
-    if (_typeof(subst) === "object") {
-      /* HTML5 specification says:
-      Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
-      */
-      subst = lit.slice(-8).match(/\s+style=["']/) ? Object.entries(subst).map(function (v) {
-        return v.join(":");
-      }).join(";") : recoverContent(subst);
-    }
+      if (_typeof(subst) === 'object') {
+        /* HTML5 specification says:
+        Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
+        */
+        subst = lit.slice(-8).match(/\s+style=["']/) ? Object.entries(subst).map(function (v) {
+          return v.join(':');
+        }).join(';') : recoverContent(subst);
+      }
 
-    if (typeof subst === "function" && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
-      var eventType = strMatch[0].slice(3, -2);
+      if (typeof subst === 'function' && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
+        var eventType = strMatch[0].slice(3, -2);
 
-      var _attrID = '_egt-fauxid-' + hashCode();
+        var _attrID = "data-engraftjs-fauxid-" + hashCode();
 
-      var hashValue = hashCode(true);
-      elemEvents.push({
-        _attrID: _attrID,
-        hashValue: hashValue,
-        fn: subst,
-        eventType: eventType
-      });
-      subst = "' ".concat(_attrID, "='\"").concat(hashValue);
+        var hashValue = hashCode(true);
+        elemEvents.push({
+          _attrID: _attrID,
+          hashValue: hashValue,
+          fn: subst,
+          eventType: eventType
+        });
+        subst = "".concat(subst.toString(), "\" ").concat(_attrID, "=\"").concat(hashValue);
+      }
     }
 
     if (lit.endsWith('!')) {
@@ -103,18 +107,18 @@ function html(templateObject) {
     }
 
     result += lit;
-    result += subst;
+    result += subst || '';
   });
   result += raw[raw.length - 1];
   return {
     result: result,
     elemEvents: elemEvents,
-    _engraft: "🎋"
+    _engraft: '🎋'
   };
 }
 
 (function engraft() {
-  window["🎋"] || (window["🎋"] = !function () {
+  window['🎋'] || (window['🎋'] = !function () {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get: function get() {
         return this.innerHTML;
