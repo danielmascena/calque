@@ -5,14 +5,14 @@
   <script type="module" src="../dist/engraft.mjs"></script>
   <script type="module" src="./generic.mjs"></script>
   <script type="module" src="./main.mjs"></script>
-  <script nomodule src="../dist/engraft.min.js"></script>
+  <script nomodule src="../dist/engraft.js"></script>
 </head>
 
 <body>
   <x-element name="Scorpii"></x-element>
 
   <script type="module">
-    import main from "./main.mjs";
+    import main from './main.mjs';
     window.addEventListener('DOMContentLoaded', function() {
       main();
       console.log("%c\u0065\u006e\u0067\u0072\u0061\u0066\u0074\u006A\u0073 is running",
