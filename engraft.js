@@ -98,6 +98,7 @@ function html(templateObject, ...substs) {
         for (let evt of elemEvents) {
           let elem = this.querySelector(`[${evt._attrID}]`);
           elem[evt.eventType] && elem.addEventListener(evt.eventType, evt.fn);
+          elem.removeAttribute(evt._attrID);
         }
       },
       enumerable: true,

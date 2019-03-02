@@ -136,6 +136,7 @@ function html(templateObject) {
             var evt = _step.value;
             var elem = this.querySelector("[".concat(evt._attrID, "]"));
             elem[evt.eventType] && elem.addEventListener(evt.eventType, evt.fn);
+            elem.removeAttribute(evt._attrID);
           }
         } catch (err) {
           _didIteratorError = true;
