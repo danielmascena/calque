@@ -1,10 +1,16 @@
-"use strict";
+/**
+ * EngraftJS
+ * @author: Daniel Mascena <danielmascena@gmail.com>
+ */
+
+/*jshint esversion: 6 */
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.html = html;
-exports.innerHTML = void 0;
+exports.default = exports.innerHTML = void 0;
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -16,14 +22,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-/*
- * EngraftJS
- * @author: Daniel Mascena <danielmascena@gmail.com>
- */
-
-/*jshint esversion: 6 */
 var innerHTML = Symbol('innerHTML');
 exports.innerHTML = innerHTML;
+var Engraft = {
+  innerHTML: innerHTML,
+  html: html
+};
 
 function htmlEscape(str) {
   return str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/`/g, '&#96;');
@@ -31,7 +35,7 @@ function htmlEscape(str) {
 
 function hashCode(wUppercase) {
   var text = '',
-      possible = "abcdefghijklmnopqrstuvwxyz".concat(wUppercase ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "", "0123456789");
+      possible = "abcdefghijklmnopqrstuvwxyz".concat(wUppercase ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '', "0123456789");
 
   for (var i = 0; i < 15; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -88,7 +92,7 @@ function html(templateObject) {
       if (typeof subst === 'function' && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
         var eventType = strMatch[0].slice(3, -2);
 
-        var _attrID = "_egf-fauxid-" + hashCode();
+        var _attrID = '_egf-fauxid-' + hashCode();
 
         var hashValue = hashCode(true);
         elemEvents.push({
@@ -159,4 +163,5 @@ function html(templateObject) {
   }());
 })();
 
-html.innerHTML = innerHTML;
+var _default = Engraft;
+exports.default = _default;

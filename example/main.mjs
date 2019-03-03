@@ -4,7 +4,7 @@
 
 'use strict';
 
-import engraft from '../dist/engraft.mjs';
+import Engraft from '../dist/engraft.mjs';
 import GenericElement from './generic.mjs';
 
 export default function() {
@@ -14,7 +14,7 @@ export default function() {
   document.body.appendChild(sco);
 
   let p = document.createElement('p');
-  p[engraft.innerHTML] = engraft.html `
+  p[Engraft.innerHTML] = Engraft.html `
       Lorem, ipsum dolor sit amet consectetur adipisicing elit.
       <span style="${ {'color' : 'green'} }">
       Tincidunt</span> ornare massa eget egestas purus. Bibendum enim facilisis gravida

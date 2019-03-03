@@ -1,11 +1,17 @@
-/*
+/**
  * EngraftJS
  * @author: Daniel Mascena <danielmascena@gmail.com>
  */
 
 /*jshint esversion: 6 */
 
-const innerHTML = Symbol('innerHTML');
+'use strict';
+
+export const innerHTML = Symbol('innerHTML');
+const Engraft = {
+  innerHTML,
+  html,
+};
 
 function htmlEscape(str) {
   return str
@@ -20,14 +26,14 @@ function htmlEscape(str) {
 function hashCode(wUppercase) {
   let text = '',
     possible = (`abcdefghijklmnopqrstuvwxyz${wUppercase ?
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-      : ""}0123456789`);
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+      : ''}0123456789`);
   for (let i = 0; i < 15; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   return text;
 }
 
-function html(templateObject, ...substs) {
+export function html(templateObject, ...substs) {
   const raw = templateObject.raw;
   let result = '',
     elemEvents = [],
@@ -68,7 +74,7 @@ function html(templateObject, ...substs) {
         if (typeof subst === 'function' &&
             (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
           let eventType = strMatch[0].slice(3, -2);
-          let _attrID = "_egf-fauxid-" + hashCode();
+          let _attrID = '_egf-fauxid-' + hashCode();
           let hashValue = hashCode(true);
           elemEvents.push({_attrID, hashValue, fn: subst, eventType});
           subst = `${String(subst)}" ${_attrID}="${hashValue}`;
@@ -86,6 +92,7 @@ function html(templateObject, ...substs) {
 
   return {result, elemEvents, _engraft: '🎋'};
 }
+
 (function engraft() {
   window['🎋'] ||
    (window['🎋'] = !function() {
@@ -107,9 +114,5 @@ function html(templateObject, ...substs) {
     });
   }());
 })();
-html.innerHTML = innerHTML;
 
-export {
-  innerHTML,
-  html
-};
+export default Engraft;
