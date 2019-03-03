@@ -1,10 +1,10 @@
-/***********************************************************************************
+/*
     Example Code
-    ************************************************************************************/
+*/
 
 'use strict';
 
-import {innerHTML, html} from '../dist/engraft.mjs';
+import {html} from '../dist/engraft.mjs';
 import GenericElement from './generic.mjs';
 
 export default function() {
@@ -14,9 +14,9 @@ export default function() {
   document.body.appendChild(sco);
 
   let p = document.createElement('p');
-  p[innerHTML] = html `
+  p[html.innerHTML] = html `
       Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-      <span data-attr="some" style="${ {'color' : 'green'} }" data-attr="text">
+      <span data-attr="some" style="${ {'color' : 'green'} }">
       Tincidunt</span> ornare massa eget egestas purus. Bibendum enim facilisis gravida
       neque convallis a. Vitae suscipit tellus mauris a diam maecenas. Ultricies leo
       integer malesuada nunc vel risus commodo viverra maecenas.

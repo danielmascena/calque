@@ -16,10 +16,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-/***********************************************************************************
- engraft.js
- @author: danielmascena <danielmascena@gmail.com>
-************************************************************************************/
+/*
+ * EngraftJS
+ * @author: Daniel Mascena <danielmascena@gmail.com>
+ */
 
 /*jshint esversion: 6 */
 var innerHTML = Symbol('innerHTML');
@@ -78,7 +78,7 @@ function html(templateObject) {
 
       if (_typeof(subst) === 'object') {
         /* HTML5 specification says:
-        Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
+          Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
         */
         subst = lit.slice(-8).match(/\s+style=["']/) ? Object.entries(subst).map(function (v) {
           return v.join(':');
@@ -158,3 +158,5 @@ function html(templateObject) {
     });
   }());
 })();
+
+html.innerHTML = innerHTML;

@@ -1,7 +1,7 @@
-/***********************************************************************************
- engraft.js
- @author: danielmascena <danielmascena@gmail.com>
-************************************************************************************/
+/*
+ * EngraftJS
+ * @author: Daniel Mascena <danielmascena@gmail.com>
+ */
 
 /*jshint esversion: 6 */
 
@@ -33,7 +33,7 @@ function html(templateObject, ...substs) {
     elemEvents = [],
     strMatch,
     recoverContent = obj => {
-      if (typeof obj === 'object'){
+      if (typeof obj === 'object') {
         if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;
 
         else if (obj._engraft) {
@@ -59,8 +59,8 @@ function html(templateObject, ...substs) {
         }
         if (typeof subst === 'object') {
         /* HTML5 specification says:
-    Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
-    */
+          Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
+        */
           subst = lit.slice(-8).match(/\s+style=["']/) ?
             Object.entries(subst).map((v) => v.join(':')).join(';')
             : recoverContent(subst);
@@ -107,6 +107,7 @@ function html(templateObject, ...substs) {
     });
   }());
 })();
+html.innerHTML = innerHTML;
 
 export {
   innerHTML,

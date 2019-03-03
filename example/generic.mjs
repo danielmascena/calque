@@ -1,3 +1,4 @@
+
 import { innerHTML, html } from '../dist/engraft.mjs';
 
 export default class GenericElement extends HTMLElement {
@@ -6,6 +7,7 @@ export default class GenericElement extends HTMLElement {
   }
   constructor(...args) {
     super(...args);
+    this.num = 7;
     this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
   }
   attributeChangedCallback() {
@@ -18,10 +20,10 @@ export default class GenericElement extends HTMLElement {
     let someObj = null;
     this[innerHTML] = html `
         <p id onblur="${ e => console.log(e.target.textContent) }" class="par"
-          onclick="${e => alert(e.target.value)}"
+          onclick="${() => alert(this.num)}"
           contenteditable>&#955; ♏ (see browser console for see the changes)
         </p>
-        <h1 onclick="${ function() {alert('ok')} }"
+        <h1 onclick="${ function popup() {alert('ok')} }"
           style="${ {'color': 'red', 'font-size': '5em'} }">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
