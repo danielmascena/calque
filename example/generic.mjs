@@ -23,7 +23,7 @@ export default class GenericElement extends HTMLElement {
           onclick="${() => alert(this.num)}"
           contenteditable>&#955; ♏ (see browser console for see the changes)
         </p>
-        <h1 onclick="${ function popup() {alert('ok')} }"
+        <h1 onclick="${ function functionNameRequired() {alert('popup')} }"
           style="${ {'color': 'red', 'font-size': '5em'} }">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>

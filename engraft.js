@@ -1,9 +1,11 @@
-/*
+/**
  * EngraftJS
  * @author: Daniel Mascena <danielmascena@gmail.com>
  */
 
 /*jshint esversion: 6 */
+
+'use strict';
 
 const innerHTML = Symbol('innerHTML');
 
@@ -107,7 +109,6 @@ function html(templateObject, ...substs) {
     });
   }());
 })();
-html.innerHTML = innerHTML;
 
 export {
   innerHTML,
