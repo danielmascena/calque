@@ -33,7 +33,7 @@ function html(templateObject, ...substs) {
     elemEvents = [],
     strMatch,
     recoverContent = obj => {
-      if (typeof obj === 'object'){
+      if (typeof obj === 'object') {
         if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;
 
         else if (obj._engraft) {
