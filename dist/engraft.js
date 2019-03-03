@@ -63,9 +63,9 @@ function html(templateObject) {
   }
 
   substs.forEach(function (subst, i) {
-    var lit = raw[i];
+    var lit = raw[i]; // (subst != null)
 
-    if (subst !== null) {
+    if (subst !== null && subst !== undefined) {
       if (Array.isArray(subst)) {
         var tmp = '';
         subst.some(function (v) {
@@ -88,7 +88,7 @@ function html(templateObject) {
       if (typeof subst === 'function' && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
         var eventType = strMatch[0].slice(3, -2);
 
-        var _attrID = "data-engraftjs-fauxid-" + hashCode();
+        var _attrID = "_egf-fauxid-" + hashCode();
 
         var hashValue = hashCode(true);
         elemEvents.push({
@@ -97,7 +97,7 @@ function html(templateObject) {
           fn: subst,
           eventType: eventType
         });
-        subst = "".concat(subst.toString(), "\" ").concat(_attrID, "=\"").concat(hashValue);
+        subst = "".concat(String(subst), "\" ").concat(_attrID, "=\"").concat(hashValue);
       }
     }
 

@@ -35,7 +35,7 @@ export default class GenericElement extends HTMLElement {
           ${ {libName: 'EngraftJS'} }
           ${ {toString: () => 'method override'} }
         </p>
-        <span>${someObj}</span><i>${{}}</i>
+        <span>${someObj}</span><i>${{}}</i><b>${undefined}</b>
     `;
   }
 }

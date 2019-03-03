@@ -50,7 +50,8 @@ function html(templateObject, ...substs) {
     };
     substs.forEach((subst, i) => {
       let lit = raw[i];
-      if (subst !== null) {
+      // (subst != null)
+      if (subst !== null && subst !== undefined) {
         if (Array.isArray(subst)) {
           let tmp = '';
           subst.some(v => v._engraft) && subst.forEach(obj => tmp += recoverContent(obj));
@@ -67,10 +68,10 @@ function html(templateObject, ...substs) {
         if (typeof subst === 'function' &&
             (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
           let eventType = strMatch[0].slice(3, -2);
-          let _attrID = "data-engraftjs-fauxid-" + hashCode();
+          let _attrID = "_egf-fauxid-" + hashCode();
           let hashValue = hashCode(true);
           elemEvents.push({_attrID, hashValue, fn: subst, eventType});
-          subst = `${subst.toString()}" ${_attrID}="${hashValue}`;
+          subst = `${String(subst)}" ${_attrID}="${hashValue}`;
         }
       }
       if (lit.endsWith('!')) {
