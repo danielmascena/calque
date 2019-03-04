@@ -17,18 +17,18 @@ export default class GenericElement extends HTMLElement {
     this.render();
   }
   render() {
-    let someObj = null;
+    let someObj = null, size = 12;
     this[innerHTML] = html `
         <p id onblur="${ e => console.log(e.target.textContent) }" class="par"
           onclick="${() => alert(this.num)}"
           contenteditable>&#955; ♏ (see browser console for see the changes)
         </p>
         <h1 onclick="${ function functionNameRequired() {alert('popup')} }"
-          style="${ {'color': 'red', 'font-size': '5em'} }">
+          style="${ {'color': 'red', 'font-size': `${size}px`} }">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
         <ul>
-          ${this.stars.map(name => html `<li onclick="${ ev => alert(name) }">${name}</li>`)}
+          ${this.stars.map(name => html `<li style="font-size: ${size*1.5}px" onclick="${ ev => alert(name) }">${name}</li>`)}
         </ul>
         ${ (this.stars.length > 5)
             ? html `<p>The constellation is complete</p>`
