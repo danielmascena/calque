@@ -106,7 +106,8 @@ export function html(templateObject, ...substs) {
         for (let evt of elemEvents) {
           let elem = this.querySelector(`[${evt._attrID}]`);
           let callback = evt.fn;
-          elem[evt.eventType] && elem.addEventListener(evt.eventType, (typeof callback === 'function' ? callback : Function(callback));
+          elem[evt.eventType] && elem.addEventListener(evt.eventType, 
+            (typeof callback === 'function') ? callback : Function(callback));
           elem.removeAttribute(evt._attrID);
         }
       },

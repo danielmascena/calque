@@ -139,7 +139,8 @@ function html(templateObject) {
           for (var _iterator = elemEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var evt = _step.value;
             var elem = this.querySelector("[".concat(evt._attrID, "]"));
-            elem[evt.eventType] && elem.addEventListener(evt.eventType, evt.fn);
+            var callback = evt.fn;
+            elem[evt.eventType] && elem.addEventListener(evt.eventType, typeof callback === 'function' ? callback : Function(callback));
             elem.removeAttribute(evt._attrID);
           }
         } catch (err) {
