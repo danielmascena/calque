@@ -21,12 +21,12 @@ export default class GenericElement extends HTMLElement {
       size = 12, 
       style = {'color': 'red', 'line-height': this.num, 'font-size': `${size*3}px`};
     this[innerHTML] = html `
-        <p id onblur="${ e => console.log(e.target.textContent) }" class="par"
+        <p id onblur="${ e => console.log(e.target.textContent) }" style="${ {"background-color": "lightblue"} }"
           onclick="${() => alert(this.num)}"
           contenteditable>&#955; ♏ (see browser console for see the changes)
         </p>
         <h1 onclick="${ function functionNameRequired() {alert('popup')} }"
-          style="${ style }">
+          style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
         <ul>
