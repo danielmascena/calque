@@ -104,11 +104,13 @@ export function html(templateObject, ...substs) {
         let {result, elemEvents} = arr;
         this.innerHTML = result;
         for (let evt of elemEvents) {
-          let elem = this.querySelector(`[${evt._attrID}]`);
+          let attrID = evt._attrID;
+          let elem = this.querySelector(`[${attrID}]`);
           let callback = evt.fn;
-          elem[evt.eventType] && elem.addEventListener(evt.eventType, 
-            (typeof callback === 'function') ? callback : Function(callback));
-          elem.removeAttribute(evt._attrID);
+          if (!typeof callback === 'function') callback = Function(callback);
+          callback.name || console.error('function must have a name');
+          elem[evt.eventType] && elem.addEventListener(evt.eventType, callback);
+          elem.removeAttribute(attrID);
         }
       },
       enumerable: true,
