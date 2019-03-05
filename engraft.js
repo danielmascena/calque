@@ -73,11 +73,11 @@ export function html(templateObject, ...substs) {
         }
         if (typeof subst === 'function' &&
             (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
-          let eventType = strMatch[0].slice(3, -2);
-          let _attrID = '_egf-fauxid-' + hashCode();
-          let hashValue = hashCode(true);
-          elemEvents.push({_attrID, hashValue, fn: subst, eventType});
-          subst = `${String(subst)}" ${_attrID}="${hashValue}`;
+          let engraftEvent = strMatch[0].slice(3, -2);
+          let engraftID = '_engraft-id-' + hashCode();
+          let engraftValue = hashCode(true);
+          elemEvents.push({engraftID, engraftValue, engraftHandler: subst, engraftEvent});
+          subst = `${String(subst)}" ${engraftID}="${engraftValue}`;
         }
       }
       if (lit.endsWith('!')) {
@@ -105,12 +105,16 @@ export function html(templateObject, ...substs) {
         this.innerHTML = result;
         for (let evt of elemEvents) {
           let attrID = evt._attrID;
+          let isStr;
           let elem = this.querySelector(`[${attrID}]`);
           let callback = evt.fn;
-          if (!typeof callback === 'function') callback = Function(callback);
+          let event 
+          if (elem != null && (typeof callback === 'function' || (isStr = typeof callback === 'string'))) {
+          if (isStr && callback.length > 0 ) callback = Function(callback);
           callback.name || console.error('function must have a name');
           elem[evt.eventType] && elem.addEventListener(evt.eventType, callback);
           elem.removeAttribute(attrID);
+          }
         }
       },
       enumerable: true,
