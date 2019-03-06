@@ -18,7 +18,7 @@ export default class GenericElement extends HTMLElement {
   connectedCallback() {
     this.render();
   }
-  _clickHandler: function clickHandler(){
+  _clickHandler(){
     alert(this.num);
   }
   _changeHandler(){
