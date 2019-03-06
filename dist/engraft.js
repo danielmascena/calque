@@ -70,7 +70,7 @@ function html(templateObject) {
   substs.forEach(function (subst, i) {
     var lit = raw[i];
 
-    if (subst == null) {
+    if (subst == null || _typeof(subst) === 'object' && Object.getOwnPropertyNames(subst).length === 0) {
       subst = '';
     } else {
       if (Array.isArray(subst)) {
@@ -102,7 +102,7 @@ function html(templateObject) {
           eventType: eventType,
           handlerBody: handlerBody
         });
-        subst = "\" ".concat(engraftID, "=\"").concat(engraftIDValue);
+        subst = "".concat(handlerBody, "\" ").concat(engraftID, "=\"").concat(engraftIDValue);
       }
     }
 

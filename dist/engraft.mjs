@@ -59,7 +59,7 @@ export function html(templateObject, ...substs) {
     substs.forEach((subst, i) => {
       
       let lit = raw[i];
-      if (subst == null) {
+      if (subst == null || (typeof subst === 'object' && Object.getOwnPropertyNames(subst).length === 0)) {
         subst = '';
       } else {
         if (Array.isArray(subst)) {
@@ -82,7 +82,7 @@ export function html(templateObject, ...substs) {
           const engraftIDValue = hashCode(true);
           const handlerBody = String(subst);
           elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
-          subst = `" ${engraftID}="${engraftIDValue}`;
+          subst = `${handlerBody}" ${engraftID}="${engraftIDValue}`;
         }
       } 
       if (lit.endsWith('!')) {

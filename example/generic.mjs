@@ -8,6 +8,8 @@ export default class GenericElement extends HTMLElement {
   constructor(...args) {
     super(...args);
     this.num = 7;
+    this.text = 'changed';
+    this._clickHandler = this._clickHandler.bind(this);
     this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
   }
   attributeChangedCallback() {
@@ -18,6 +20,9 @@ export default class GenericElement extends HTMLElement {
   }
   _clickHandler(){
     alert(this.num);
+  }
+  _changeHandler(){
+    console.log(this.text);
   }
   render() {
     let someObj = null, 
@@ -42,7 +47,8 @@ export default class GenericElement extends HTMLElement {
           ${ {libName: 'EngraftJS'} }
           ${ {toString: () => 'method override'} }
         </p>
-        <span>${someObj}</span><i>${{}}</i><b>${undefined}</b>
+        <input onfocus="${() => this._changeHandler.call(this)}" />
+        <span>${someObj}</span><i>${{}}</i><b>${undefined}</b><em>${[]}</em>
     `;
   }
 }
