@@ -8,6 +8,7 @@
 'use strict';
 
 export const innerHTML = Symbol('innerHTML');
+const _engraft = '🎋';
 const Engraft = {
   innerHTML,
   html,
@@ -35,6 +36,7 @@ function hashCode(wUppercase) {
 
 export function html(templateObject, ...substs) {
   const raw = templateObject.raw;
+  
   let result = '',
     elemEvents = [],
     strMatch,
@@ -42,7 +44,7 @@ export function html(templateObject, ...substs) {
       if (typeof obj === 'object') {
         if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;
 
-        else if (obj._engraft) {
+        else if ('_engraft' in obj) {
           obj.elemEvents.length && (elemEvents = [
             ...elemEvents,
             ...obj.elemEvents
@@ -55,12 +57,14 @@ export function html(templateObject, ...substs) {
       }
     };
     substs.forEach((subst, i) => {
+      
       let lit = raw[i];
-      // (subst != null)
-      if (subst !== null && subst !== undefined) {
+      if (subst == null) {
+        subst = '';
+      } else {
         if (Array.isArray(subst)) {
           let tmp = '';
-          subst.some(v => v._engraft) && subst.forEach(obj => tmp += recoverContent(obj));
+          subst.forEach(obj => tmp += recoverContent(obj));
           subst = tmp || subst.join('');
         }
         if (typeof subst === 'object') {
@@ -73,29 +77,30 @@ export function html(templateObject, ...substs) {
         }
         if (typeof subst === 'function' &&
             (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
-          let eventType = strMatch[0].slice(3, -2);
-          let _attrID = '_egf-fauxid-' + hashCode();
-          let hashValue = hashCode(true);
-          elemEvents.push({_attrID, hashValue, fn: subst, eventType});
-          subst = `${String(subst)}" ${_attrID}="${hashValue}`;
+          const eventType = strMatch[0].slice(3, -2);
+          const engraftID = '_engraft-id-' + hashCode();
+          const engraftIDValue = hashCode(true);
+          const handlerBody = String(subst);
+          elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
+          subst = `" ${engraftID}="${engraftIDValue}`;
         }
-      }
+      } 
       if (lit.endsWith('!')) {
         subst = htmlEscape(subst);
         lit = lit.slice(0, -1);
       }
       result += lit;
-      result += (subst || '');
+      result += subst;
     }
   );
   result += raw[raw.length - 1];
 
-  return {result, elemEvents, _engraft: '🎋'};
+  return {result, elemEvents, _engraft};
 }
 
 (function engraft() {
-  window['🎋'] ||
-   (window['🎋'] = !function() {
+  _engraft in window ||
+   (window[_engraft] = !function() {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get() {
         return this.innerHTML;
@@ -103,18 +108,30 @@ export function html(templateObject, ...substs) {
       set(arr) {
         let {result, elemEvents} = arr;
         this.innerHTML = result;
-        for (let evt of elemEvents) {
-          let elem = this.querySelector(`[${evt._attrID}]`);
-          let callback = evt.fn;
-          elem[evt.eventType] && elem.addEventListener(evt.eventType, 
-            (typeof callback === 'function') ? callback : Function(callback));
-          elem.removeAttribute(evt._attrID);
+        for (let event of elemEvents) {
+          let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
+          //let isStr;
+          let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);
+
+          if (elem != null && 
+              typeof eventHandler === 'function') {
+            /*
+            if (isStr && engraftHandler.length > 0) {
+              engraftHandler = Function(handlerBody);
+            }
+            */
+            if (!eventHandler.name && handlerBody.startsWith('function')) {
+              console.error(handlerBody, 'function expression must have a name');
+            }
+            elem[eventType] && elem.addEventListener(eventType, eventHandler);
+            elem.removeAttribute(engraftID);
+          }
         }
       },
       enumerable: true,
       configurable: true
     });
   }());
-})();
+}());
 
 export default Engraft;

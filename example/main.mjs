@@ -32,9 +32,4 @@ export default function() {
   fragment.appendChild(div);
   document.body.appendChild(fragment);
 
-
-
-
-
-
 }

@@ -16,16 +16,19 @@ export default class GenericElement extends HTMLElement {
   connectedCallback() {
     this.render();
   }
+  _clickHandler(){
+    alert(this.num);
+  }
   render() {
     let someObj = null, 
       size = 12, 
       style = {'color': 'red', 'line-height': this.num, 'font-size': `${size*3}px`};
     this[innerHTML] = html `
         <p id onblur="${ e => console.log(e.target.textContent) }" style="${ {"background-color": "lightblue"} }"
-          onclick="${() => alert(this.num)}"
+          onclick="${this._clickHandler}"
           contenteditable>&#955; ♏ (see browser console for see the changes)
         </p>
-        <h1 onclick="${ function functionNameRequired() {alert('popup')} }"
+        <h1 onclick="${ function mustHaveAName() {alert('popup');} }"
           style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
@@ -35,7 +38,7 @@ export default class GenericElement extends HTMLElement {
         ${ (this.stars.length > 5)
             ? html `<p>The constellation is complete</p>`
             : html `<p>There is some missing stars</p>`}
-        <p>
+        <p onclick="${() => alert(this.num)}">
           ${ {libName: 'EngraftJS'} }
           ${ {toString: () => 'method override'} }
         </p>

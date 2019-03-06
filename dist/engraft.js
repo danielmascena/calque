@@ -24,6 +24,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 var innerHTML = Symbol('innerHTML');
 exports.innerHTML = innerHTML;
+var _engraft = '🎋';
 var Engraft = {
   innerHTML: innerHTML,
   html: html
@@ -52,7 +53,7 @@ function html(templateObject) {
       strMatch,
       recoverContent = function recoverContent(obj) {
     if (_typeof(obj) === 'object') {
-      if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;else if (obj._engraft) {
+      if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;else if ('_engraft' in obj) {
         obj.elemEvents.length && (elemEvents = [].concat(_toConsumableArray(elemEvents), _toConsumableArray(obj.elemEvents)));
         return obj.result;
       }
@@ -67,14 +68,14 @@ function html(templateObject) {
   }
 
   substs.forEach(function (subst, i) {
-    var lit = raw[i]; // (subst != null)
+    var lit = raw[i];
 
-    if (subst !== null && subst !== undefined) {
+    if (subst == null) {
+      subst = '';
+    } else {
       if (Array.isArray(subst)) {
         var tmp = '';
-        subst.some(function (v) {
-          return v._engraft;
-        }) && subst.forEach(function (obj) {
+        subst.forEach(function (obj) {
           return tmp += recoverContent(obj);
         });
         subst = tmp || subst.join('');
@@ -91,17 +92,17 @@ function html(templateObject) {
 
       if (typeof subst === 'function' && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
         var eventType = strMatch[0].slice(3, -2);
-
-        var _attrID = '_egf-fauxid-' + hashCode();
-
-        var hashValue = hashCode(true);
+        var engraftID = '_engraft-id-' + hashCode();
+        var engraftIDValue = hashCode(true);
+        var handlerBody = String(subst);
         elemEvents.push({
-          _attrID: _attrID,
-          hashValue: hashValue,
-          fn: subst,
-          eventType: eventType
+          engraftID: engraftID,
+          engraftIDValue: engraftIDValue,
+          eventHandler: subst,
+          eventType: eventType,
+          handlerBody: handlerBody
         });
-        subst = "".concat(String(subst), "\" ").concat(_attrID, "=\"").concat(hashValue);
+        subst = "\" ".concat(engraftID, "=\"").concat(engraftIDValue);
       }
     }
 
@@ -111,18 +112,18 @@ function html(templateObject) {
     }
 
     result += lit;
-    result += subst || '';
+    result += subst;
   });
   result += raw[raw.length - 1];
   return {
     result: result,
     elemEvents: elemEvents,
-    _engraft: '🎋'
+    _engraft: _engraft
   };
 }
 
 (function engraft() {
-  window['🎋'] || (window['🎋'] = !function () {
+  _engraft in window || (window[_engraft] = !function () {
     Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get: function get() {
         return this.innerHTML;
@@ -137,11 +138,28 @@ function html(templateObject) {
 
         try {
           for (var _iterator = elemEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var evt = _step.value;
-            var elem = this.querySelector("[".concat(evt._attrID, "]"));
-            var callback = evt.fn;
-            elem[evt.eventType] && elem.addEventListener(evt.eventType, typeof callback === 'function' ? callback : Function(callback));
-            elem.removeAttribute(evt._attrID);
+            var event = _step.value;
+            var engraftID = event.engraftID,
+                engraftIDValue = event.engraftIDValue,
+                eventHandler = event.eventHandler,
+                eventType = event.eventType,
+                handlerBody = event.handlerBody; //let isStr;
+
+            var elem = this.querySelector("[".concat(engraftID, "=\"").concat(engraftIDValue, "\"]"));
+
+            if (elem != null && typeof eventHandler === 'function') {
+              /*
+              if (isStr && engraftHandler.length > 0) {
+                engraftHandler = Function(handlerBody);
+              }
+              */
+              if (!eventHandler.name && handlerBody.startsWith('function')) {
+                console.error(handlerBody, 'function expression must have a name');
+              }
+
+              elem[eventType] && elem.addEventListener(eventType, eventHandler);
+              elem.removeAttribute(engraftID);
+            }
           }
         } catch (err) {
           _didIteratorError = true;
