@@ -84,3 +84,9 @@ document.body.appendChild(p);
 ---
 
 ⚠️ Warning: ☢️ not optimized for production ☣️
+
+https://www.w3.org/TR/custom-elements/
+
+https://www.w3.org/wiki/WebComponents/
+
+https://github.com/w3c/webcomponents/

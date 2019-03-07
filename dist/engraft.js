@@ -155,6 +155,7 @@ function html(templateObject) {
               */
               if (!eventHandler.name && handlerBody.startsWith('function')) {
                 console.error(handlerBody, 'function expression must have a name');
+                throw new TypeError('function expression must have a name');
               }
 
               elem[eventType] && elem.addEventListener(eventType, eventHandler);

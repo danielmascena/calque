@@ -19,7 +19,7 @@ export default class GenericElement extends HTMLElement {
     this.render();
   }
   _clickHandler(){
-    alert(this.num);
+    alert(this.num++);
   }
   _changeHandler(){
     console.log(this.text);
