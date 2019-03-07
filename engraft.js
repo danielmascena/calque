@@ -80,7 +80,10 @@ export function html(templateObject, ...substs) {
           const eventType = strMatch[0].slice(3, -2);
           const engraftID = '_engraft-id-' + hashCode();
           const engraftIDValue = hashCode(true);
-          const handlerBody = String(subst);
+          let handlerBody = String(subst);
+          if (subst.name.startsWith('bound') && handlerBody.startsWith('function')) {
+            handlerBody = 'function' + subst.name.substring(5) + handlerBody.substring(8);
+          }
           elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
           subst = `${handlerBody}" ${engraftID}="${engraftIDValue}`;
         }

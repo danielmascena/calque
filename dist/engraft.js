@@ -95,6 +95,11 @@ function html(templateObject) {
         var engraftID = '_engraft-id-' + hashCode();
         var engraftIDValue = hashCode(true);
         var handlerBody = String(subst);
+
+        if (subst.name.startsWith('bound') && handlerBody.startsWith('function')) {
+          handlerBody = 'function' + subst.name.substring(5) + handlerBody.substring(8);
+        }
+
         elemEvents.push({
           engraftID: engraftID,
           engraftIDValue: engraftIDValue,
