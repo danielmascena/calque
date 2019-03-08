@@ -84,6 +84,7 @@ export function html(templateObject, ...substs) {
           const engraftIDValue = hashCode(true);
           let handlerBody = String(subst);
           if (subst.name.startsWith('bound ') && handlerBody.startsWith('function ') && handlerBody.includes('native code')) {
+          	//handlerBody = handlerBody.replace(/(function)(.*)/, (match, p1, p2) => [p1, p2].join(subst.name.substring(5)));
             handlerBody = '\'function' + subst.name.substring(5) + handlerBody.substring(9)+'\'';
           }
           elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
