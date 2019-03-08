@@ -59,7 +59,9 @@ export function html(templateObject, ...substs) {
     substs.forEach((subst, i) => {
       
       let lit = raw[i];
-      if (subst == null || (typeof subst === 'object' && Object.getOwnPropertyNames(subst).length === 0)) {
+      if (subst == null || 
+          (typeof subst === 'object' && 
+          Object.getOwnPropertyNames(subst).length === 0)) {
         subst = '';
       } else {
         if (Array.isArray(subst)) {
@@ -81,8 +83,9 @@ export function html(templateObject, ...substs) {
           const engraftID = '_engraft-id-' + hashCode();
           const engraftIDValue = hashCode(true);
           let handlerBody = String(subst);
-          if (subst.name.startsWith('bound') && handlerBody.startsWith('function')) {
-            handlerBody = 'function' + subst.name.substring(5) + handlerBody.substring(8);
+          if (subst.name.startsWith('bound ') && handlerBody.startsWith('function ')) {
+            //handlerBody = 'function' + subst.name.substring(5) + handlerBody.substring(8);
+            handlerBody = handlerBody.replace('function ', subst.name.substring(6));
           }
           elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
           subst = `${handlerBody}" ${engraftID}="${engraftIDValue}`;

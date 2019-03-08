@@ -9,7 +9,7 @@ export default class GenericElement extends HTMLElement {
     super(...args);
     this.num = 7;
     this.text = 'changed';
-    this._clickHandler = this._clickHandler.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
     this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
   }
   attributeChangedCallback() {
@@ -18,10 +18,10 @@ export default class GenericElement extends HTMLElement {
   connectedCallback() {
     this.render();
   }
-  _clickHandler(){
+  clickHandler(){
     alert(this.num++);
   }
-  _changeHandler(){
+  changeHandler(){
     console.log(this.text);
   }
   render() {
@@ -30,11 +30,10 @@ export default class GenericElement extends HTMLElement {
       style = {'color': 'red', 'line-height': this.num, 'font-size': `${size*3}px`};
     this[innerHTML] = html `
         <p id onblur="${ e => console.log(e.target.textContent) }" style="${ {"background-color": "lightblue"} }"
-          onclick="${this._clickHandler}"
+          onclick="${this.clickHandler}"
           contenteditable>&#955; ♏ (see browser console for see the changes)
         </p>
-        <h1 onclick="${ function mustHaveAName() {alert('popup');} }"
-          style="${style}">
+        <h1 onclick="${ function mustHaveAName() {alert('popup');} }" style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
         <ul>
@@ -44,10 +43,10 @@ export default class GenericElement extends HTMLElement {
             ? html `<p>The constellation is complete</p>`
             : html `<p>There is some missing stars</p>`}
         <p onclick="${() => alert(this.num)}">
-          ${ {libName: 'EngraftJS'} }
+          ${ new function(lib){this.libName = lib;}('EngraftJS') }
           ${ {toString: () => 'method override'} }
         </p>
-        <input onfocus="${() => this._changeHandler.call(this)}" />
+        <input onfocus="${() => this.changeHandler.call(this)}" />
         <span>${someObj}</span><i>${{}}</i><b>${undefined}</b><em>${[]}</em>
     `;
   }
