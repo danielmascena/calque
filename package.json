@@ -1,7 +1,7 @@
 {
   "name": "engraft",
   "description": "🎋 A simple and tiny utility library for building fast web interfaces using regular JavaScript",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "main": "dist/engraft.mjs",
   "scripts": {
     "lint": "eslint engraft.js",

@@ -96,9 +96,8 @@ function html(templateObject) {
         var engraftIDValue = hashCode(true);
         var handlerBody = String(subst);
 
-        if (subst.name.startsWith('bound ') && handlerBody.startsWith('function ')) {
-          //handlerBody = 'function' + subst.name.substring(5) + handlerBody.substring(8);
-          handlerBody = handlerBody.replace('function ', subst.name.substring(6));
+        if (subst.name.startsWith('bound ') && handlerBody.startsWith('function ') && handlerBody.includes('native code')) {
+          handlerBody = '\'function' + subst.name.substring(5) + handlerBody.substring(9) + '\'';
         }
 
         elemEvents.push({
