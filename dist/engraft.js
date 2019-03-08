@@ -97,7 +97,9 @@ function html(templateObject) {
         var handlerBody = String(subst);
 
         if (subst.name.startsWith('bound ') && handlerBody.startsWith('function ') && handlerBody.includes('native code')) {
-          handlerBody = '\'function' + subst.name.substring(5) + handlerBody.substring(9) + '\'';
+          handlerBody = handlerBody.replace(/(function)(.*)/, function (match, p1, p2) {
+            return '\'' + [p1, p2].join(subst.name.substring(5)) + '\'';
+          }); //handlerBody = JSON.stringify('function' + subst.name.substring(5) + handlerBody.substring(9));
         }
 
         elemEvents.push({
