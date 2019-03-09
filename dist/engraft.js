@@ -70,7 +70,9 @@ function html(templateObject) {
   substs.forEach(function (subst, i) {
     var lit = raw[i];
 
-    if (subst == null || _typeof(subst) === 'object' && Object.getOwnPropertyNames(subst).length === 0) {
+    var type = _typeof(subst);
+
+    if (subst == null || type === 'object' && Object.getOwnPropertyNames(subst).length === 0) {
       subst = '';
     } else {
       if (Array.isArray(subst)) {
@@ -79,27 +81,24 @@ function html(templateObject) {
           return tmp += recoverContent(obj);
         });
         subst = tmp || subst.join('');
-      }
-
-      if (_typeof(subst) === 'object') {
+      } else if (type === 'object') {
         /* HTML5 specification says:
           Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
         */
         subst = lit.slice(-8).match(/\s+style=["']/) ? Object.entries(subst).map(function (v) {
           return v.join(':');
         }).join(';') : recoverContent(subst);
-      }
-
-      if (typeof subst === 'function' && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
+      } else if (type === 'function' && (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
+        var quote = lit.charAt(lit.length - 1);
+        var charNumber = quote.charCodeAt();
         var eventType = strMatch[0].slice(3, -2);
         var engraftID = '_engraft-id-' + hashCode();
         var engraftIDValue = hashCode(true);
         var handlerBody = String(subst);
 
-        if (subst.name.startsWith('bound ') && handlerBody.startsWith('function ') && handlerBody.includes('native code')) {
-          handlerBody = handlerBody.replace(/(function)(.*)/, function (match, p1, p2) {
-            return '\'' + [p1, p2].join(subst.name.substring(5)) + '\'';
-          }); //handlerBody = JSON.stringify('function' + subst.name.substring(5) + handlerBody.substring(9));
+        if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
+          var toggleQuote = charNumber === 34 ? '\'' : '"';
+          handlerBody = "".concat(toggleQuote).concat(type, " ").concat(subst.name.substring(5), " ").concat(handlerBody.substring(9)).concat(toggleQuote);
         }
 
         elemEvents.push({
@@ -109,7 +108,7 @@ function html(templateObject) {
           eventType: eventType,
           handlerBody: handlerBody
         });
-        subst = "".concat(handlerBody, "\" ").concat(engraftID, "=\"").concat(engraftIDValue);
+        subst = "".concat(handlerBody).concat(quote, " ").concat(engraftID, "=").concat(quote).concat(engraftIDValue);
       }
     }
 
@@ -150,16 +149,10 @@ function html(templateObject) {
                 engraftIDValue = event.engraftIDValue,
                 eventHandler = event.eventHandler,
                 eventType = event.eventType,
-                handlerBody = event.handlerBody; //let isStr;
-
+                handlerBody = event.handlerBody;
             var elem = this.querySelector("[".concat(engraftID, "=\"").concat(engraftIDValue, "\"]"));
 
             if (elem != null && typeof eventHandler === 'function') {
-              /*
-              if (isStr && engraftHandler.length > 0) {
-                engraftHandler = Function(handlerBody);
-              }
-              */
               if (!eventHandler.name && handlerBody.startsWith('function')) {
                 console.error(handlerBody, 'function expression must have a name');
                 throw new TypeError('function expression must have a name');

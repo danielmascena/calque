@@ -69,29 +69,27 @@ export function html(templateObject, ...substs) {
           let tmp = '';
           subst.forEach(obj => tmp += recoverContent(obj));
           subst = tmp || subst.join('');
-        }
-        if (type === 'object') {
+        } else if (type === 'object') {
         /* HTML5 specification says:
           Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
         */
           subst = lit.slice(-8).match(/\s+style=["']/) ?
             Object.entries(subst).map((v) => v.join(':')).join(';')
             : recoverContent(subst);
-        }
-        if (type === 'function' &&
+        } else if (type === 'function' &&
             (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
-            	const quote = lit.charAt(lit.length-1);
-            const toggleQuote = quote === '\"' ? '\"' : '\'';
+          const quote = lit.charAt(lit.length-1);
+          const charNumber = quote.charCodeAt();
           const eventType = strMatch[0].slice(3, -2);
           const engraftID = '_engraft-id-' + hashCode();
           const engraftIDValue = hashCode(true);
           let handlerBody = String(subst);
           if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
-           
-            handlerBody = String.raw`\${toggleQuote}${type} ${subst.name.substring(5)} ${handlerBody.substring(9)} \${toggleQuote}`;
+            const toggleQuote = charNumber === 34 ? '\'' : '"';   
+            handlerBody = `${toggleQuote}${type} ${subst.name.substring(5)} ${handlerBody.substring(9)}${toggleQuote}`;
           }
           elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
-          subst = `${handlerBody}${quote}${engraftID}=${quote}${engraftIDValue}`;
+          subst = `${handlerBody}${quote} ${engraftID}=${quote}${engraftIDValue}`;
         }
       } 
       if (lit.endsWith('!')) {
