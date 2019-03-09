@@ -59,8 +59,9 @@ export function html(templateObject, ...substs) {
     substs.forEach((subst, i) => {
       
       let lit = raw[i];
+      const type = typeof subst;
       if (subst == null || 
-          (typeof subst === 'object' && 
+          (type === 'object' && 
           Object.getOwnPropertyNames(subst).length === 0)) {
         subst = '';
       } else {
@@ -69,7 +70,7 @@ export function html(templateObject, ...substs) {
           subst.forEach(obj => tmp += recoverContent(obj));
           subst = tmp || subst.join('');
         }
-        if (typeof subst === 'object') {
+        if (type === 'object') {
         /* HTML5 specification says:
           Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
         */
@@ -77,16 +78,16 @@ export function html(templateObject, ...substs) {
             Object.entries(subst).map((v) => v.join(':')).join(';')
             : recoverContent(subst);
         }
-        if (typeof subst === 'function' &&
+        if (type === 'function' &&
             (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
+            	const quote = lit.charAt(lit.length-1);
           const eventType = strMatch[0].slice(3, -2);
           const engraftID = '_engraft-id-' + hashCode();
           const engraftIDValue = hashCode(true);
           let handlerBody = String(subst);
-          if (subst.name.startsWith('bound ') && handlerBody.startsWith('function ') && handlerBody.includes('native code')) {
-            handlerBody = handlerBody.replace(/(function)(.*)/, (match, p1, p2) => 
-              '\'' + [p1, p2].join(subst.name.substring(5)) + '\'');
-            //handlerBody = JSON.stringify('function' + subst.name.substring(5) + handlerBody.substring(9));
+          if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
+           
+            handlerBody = String.raw`\${quote}${type} ${subst.name.substring(5)} ${handlerBody.substring(9)} \${quote}`;
           }
           elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
           subst = `${handlerBody}" ${engraftID}="${engraftIDValue}`;
@@ -117,16 +118,12 @@ export function html(templateObject, ...substs) {
         this.innerHTML = result;
         for (let event of elemEvents) {
           let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
-          //let isStr;
           let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);
 
           if (elem != null && 
               typeof eventHandler === 'function') {
-            /*
-            if (isStr && engraftHandler.length > 0) {
-              engraftHandler = Function(handlerBody);
-            }
-            */
+            
+            
             if (!eventHandler.name && handlerBody.startsWith('function')) {
               console.error(handlerBody, 'function expression must have a name');
               throw new TypeError('function expression must have a name');

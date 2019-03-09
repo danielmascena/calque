@@ -25,6 +25,8 @@ The motivation for EngraftJS was to provide a light way to use HTML elements ins
 2. Passing inline CSS properties not only through strings, but by literal objects too: when using styling objects the [JSON](https://www.json.org/)-based format is mandatory, example: `style='{"border-radius": "7px", "color": "green"}'`. **OBS:** single properties names will work `{color: "blue"}` but are better to follow the standard rules.
 3. Avoid use the **innerHTML** property directly (like `document.body.innerHTML` or `document.body["innerHTML"]`), instead, use the `innerHTML` Symbol reference (`document.body[innerHTML]`) and the  `html` tagged template function provided by the EngraftJS library.
 
+_html_ method is primarily a convenience function, and it can be especially useful when manipulating callback events.
+
 #### Code Example
 
 Uses [Serve](https://github.com/zeit/serve) as recommended Web Server, run:
