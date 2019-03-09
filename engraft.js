@@ -81,16 +81,17 @@ export function html(templateObject, ...substs) {
         if (type === 'function' &&
             (strMatch = lit.slice(-15).match(/\son.*=["']$/))) {
             	const quote = lit.charAt(lit.length-1);
+            const toggleQuote = quote === '\"' ? '\"' : '\'';
           const eventType = strMatch[0].slice(3, -2);
           const engraftID = '_engraft-id-' + hashCode();
           const engraftIDValue = hashCode(true);
           let handlerBody = String(subst);
           if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
            
-            handlerBody = String.raw`\${quote}${type} ${subst.name.substring(5)} ${handlerBody.substring(9)} \${quote}`;
+            handlerBody = String.raw`\${toggleQuote}${type} ${subst.name.substring(5)} ${handlerBody.substring(9)} \${toggleQuote}`;
           }
           elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
-          subst = `${handlerBody}" ${engraftID}="${engraftIDValue}`;
+          subst = `${handlerBody}${quote}${engraftID}=${quote}${engraftIDValue}`;
         }
       } 
       if (lit.endsWith('!')) {
