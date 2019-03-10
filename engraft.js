@@ -34,8 +34,8 @@ function hashCode(wUppercase) {
   return text;
 }
 
-export function html(templateObject, ...substs) {
-  const raw = templateObject.raw;
+export function html(literals, ...substs) {
+  const raw = literals.raw;
   
   let result = '',
     elemEvents = [],
@@ -85,7 +85,7 @@ export function html(templateObject, ...substs) {
           const engraftIDValue = hashCode(true);
           let handlerBody = String(subst);
           if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
-            const toggleQuote = charNumber === 34 ? '\'' : '"';   
+            const toggleQuote = charNumber === 34 ? `'` : `"`;   
             handlerBody = `${toggleQuote}${type} ${subst.name.substring(5)} ${handlerBody.substring(9)}${toggleQuote}`;
           }
           elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
