@@ -20,7 +20,7 @@ export default function() {
       Tincidunt</span> ornare massa eget egestas purus. Bibendum enim facilisis gravida
       neque convallis a. Vitae suscipit tellus mauris a diam maecenas. Ultricies leo
       integer malesuada nunc vel risus commodo viverra maecenas.
-  `;
+  `.trim();
   document.body.appendChild(p);
 
   var fragment = document.createDocumentFragment();

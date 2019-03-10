@@ -19,6 +19,8 @@ The [HTML templating implementation](http://exploringjs.com/es6/ch_template-lite
 
 ### Nothing new or needed to learned, just some conveniences
 
+Template tags are simply functions, which allows to create domain-specific languages (DSLs), an important feature of the Template literals additon of ECMAscript 6.
+
 The motivation for EngraftJS was to provide a light way to use HTML elements inside JavaScript, together with Web Components, allow the componentization of user interfaces--splitting them up into small chunks of related HTML and JavaScript. Grammar in EngraftJS is mostly the same as in HTML, but there are subtle differences to watch out for. The differences from traditional HTML are listed below:
 
 1. Adding Event Listeners smoothly: use function reference `onevent="myFunction"`, not function invocation `onevent="myFunction()"`. Note that in HTML, event listener names are written in all lowercase, such as onclick or onmouseover. In some libraries, however, like JSX or lit-html, event listener names are written in camelCase or with the prefix @, such as onClick or @click, respectively. The philosophy behind EngraftJS is to avoid at the most any divergence from common HTML syntax.

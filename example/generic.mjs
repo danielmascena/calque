@@ -48,7 +48,7 @@ export default class GenericElement extends HTMLElement {
         </p>
         <input onfocus="${() => this.changeHandler.call(this)}" />
         <span>${someObj}</span><i>${{}}</i><b>${undefined}</b><em>${[]}</em>
-    `;
+    `.trim();
   }
 }
 
