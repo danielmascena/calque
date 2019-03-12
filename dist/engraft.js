@@ -45,8 +45,8 @@ function hashCode(wUppercase) {
   return text;
 }
 
-function html(templateObject) {
-  var raw = templateObject.raw;
+function html(literals) {
+  var raw = literals.raw;
 
   var result = '',
       elemEvents = [],
@@ -97,7 +97,7 @@ function html(templateObject) {
         var handlerBody = String(subst);
 
         if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
-          var toggleQuote = charNumber === 34 ? '\'' : '"';
+          var toggleQuote = charNumber === 34 ? "'" : "\"";
           handlerBody = "".concat(toggleQuote).concat(type, " ").concat(subst.name.substring(5), " ").concat(handlerBody.substring(9)).concat(toggleQuote);
         }
 
