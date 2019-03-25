@@ -115,15 +115,15 @@ export function html(literals, ...substs) {
       set(arr) {
         let {result, elemEvents} = arr;
         this.innerHTML = result;
+        console.info("Element is in the DOM?: " + this.isConnected);
         for (let event of elemEvents) {
           let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
           let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);
 
           if (elem != null && 
               typeof eventHandler === 'function') {
-            
-            
             if (!eventHandler.name && handlerBody.startsWith('function')) {
+              debugger;
               console.error(handlerBody, 'function expression must have a name');
               throw new TypeError('function expression must have a name');
             }
