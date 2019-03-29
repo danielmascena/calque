@@ -133,7 +133,6 @@ export function html(literals, ...substs) {
         set(arr) {
           let {result, elemEvents} = arr;
           console.info('Element is in the DOM?: ' + this.isConnected);
-
           if (this.isConnected) {
             // Object.is();
           } else {
@@ -155,9 +154,7 @@ export function html(literals, ...substs) {
               }
             }
             this.vdom = JSON.parse(html2json(this));
-            console.log(this.vdom);
-            const parser = new DOMParser();
-            console.log(parser.parseFromString(result, 'text/html'));
+            console.log(xml2json.parser(this.innerHTML, 'html'));
           }
         },
         enumerable: true,

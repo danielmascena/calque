@@ -62,8 +62,7 @@ var Elem = function Elem(e) {
       };
     }
   };
-}; // html2json :: Node -> JSONString
-
+};
 
 var html2json = function html2json(e) {
   return JSON.stringify(Elem(e), null, 2);
@@ -163,52 +162,53 @@ function html(literals) {
       set: function set(arr) {
         var result = arr.result,
             elemEvents = arr.elemEvents;
-        this.innerHTML = result;
-        console.info('Element is in the DOM?: ' + this.isConnected); // Object.is();
+        console.info('Element is in the DOM?: ' + this.isConnected);
 
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        if (this.isConnected) {// Object.is();
+        } else {
+          this.innerHTML = result;
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
 
-        try {
-          for (var _iterator = elemEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var event = _step.value;
-            var engraftID = event.engraftID,
-                engraftIDValue = event.engraftIDValue,
-                eventHandler = event.eventHandler,
-                eventType = event.eventType,
-                handlerBody = event.handlerBody;
-            var elem = this.querySelector("[".concat(engraftID, "=\"").concat(engraftIDValue, "\"]"));
-
-            if (elem != null && typeof eventHandler === 'function') {
-              if (!eventHandler.name && handlerBody.startsWith('function')) {
-                debugger;
-                console.error(handlerBody, 'function expression must have a name');
-                throw new TypeError('function expression must have a name');
-              }
-
-              elem[eventType] && elem.addEventListener(eventType, eventHandler);
-              elem.removeAttribute(engraftID);
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
           try {
-            if (!_iteratorNormalCompletion && _iterator.return != null) {
-              _iterator.return();
+            for (var _iterator = elemEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var event = _step.value;
+              var engraftID = event.engraftID,
+                  engraftIDValue = event.engraftIDValue,
+                  eventHandler = event.eventHandler,
+                  eventType = event.eventType,
+                  handlerBody = event.handlerBody;
+              var elem = this.querySelector("[".concat(engraftID, "=\"").concat(engraftIDValue, "\"]"));
+
+              if (elem != null && typeof eventHandler === 'function') {
+                if (!eventHandler.name && handlerBody.startsWith('function')) {
+                  debugger;
+                  console.error(handlerBody, 'function expression must have a name');
+                  throw new TypeError('function expression must have a name');
+                }
+
+                elem[eventType] && elem.addEventListener(eventType, eventHandler);
+                elem.removeAttribute(engraftID);
+              }
             }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
           } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return != null) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
             }
           }
-        }
 
-        if (this.isConnected) {
           this.vdom = JSON.parse(html2json(this));
-          console.log(this.vdom);
+          console.log(xml2json.parser(this.innerHTML, 'html'));
         }
       },
       enumerable: true,

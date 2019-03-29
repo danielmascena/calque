@@ -47,7 +47,6 @@ const Elem = e => ({
   })
 });
 
-// html2json :: Node -> JSONString
 const html2json = e =>
   JSON.stringify(Elem(e), null, 2);
 
@@ -133,27 +132,29 @@ export function html(literals, ...substs) {
         },
         set(arr) {
           let {result, elemEvents} = arr;
-          this.innerHTML = result;
           console.info('Element is in the DOM?: ' + this.isConnected);
-          // Object.is();
-          for (let event of elemEvents) {
-            let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
-            let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);
-
-            if (elem != null && 
-                typeof eventHandler === 'function') {
-              if (!eventHandler.name && handlerBody.startsWith('function')) {
-                debugger;
-                console.error(handlerBody, 'function expression must have a name');
-                throw new TypeError('function expression must have a name');
-              }
-              elem[eventType] && elem.addEventListener(eventType, eventHandler);
-              elem.removeAttribute(engraftID);
-            }
-          }
           if (this.isConnected) {
+            // Object.is();
+          } else {
+            this.innerHTML = result;
+            
+            for (let event of elemEvents) {
+              let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
+              let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);
+
+              if (elem != null && 
+                  typeof eventHandler === 'function') {
+                if (!eventHandler.name && handlerBody.startsWith('function')) {
+                  debugger;
+                  console.error(handlerBody, 'function expression must have a name');
+                  throw new TypeError('function expression must have a name');
+                }
+                elem[eventType] && elem.addEventListener(eventType, eventHandler);
+                elem.removeAttribute(engraftID);
+              }
+            }
             this.vdom = JSON.parse(html2json(this));
-            console.log(this.vdom);
+            console.log(xml2json.parser(this.innerHTML, 'html'));
           }
         },
         enumerable: true,
