@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.html = html;
 exports.default = exports.innerHTML = void 0;
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -44,6 +46,28 @@ function hashCode(wUppercase) {
 
   return text;
 }
+
+var Elem = function Elem(e) {
+  return {
+    toJSON: function toJSON() {
+      return {
+        tagName: e.tagName,
+        textContent: e.textContent,
+        attributes: Array.from(e.attributes, function (_ref) {
+          var name = _ref.name,
+              value = _ref.value;
+          return [name, value];
+        }),
+        children: Array.from(e.children, Elem)
+      };
+    }
+  };
+}; // html2json :: Node -> JSONString
+
+
+var html2json = function html2json(e) {
+  return JSON.stringify(Elem(e), null, 2);
+};
 
 function html(literals) {
   var raw = literals.raw;
@@ -130,7 +154,9 @@ function html(literals) {
 
 (function engraft() {
   _engraft in window || (window[_engraft] = !function () {
-    Object.defineProperty(HTMLElement.prototype, innerHTML, {
+    var _Object$definePropert;
+
+    Object.defineProperties(HTMLElement.prototype, (_Object$definePropert = {}, _defineProperty(_Object$definePropert, innerHTML, {
       get: function get() {
         return this.innerHTML;
       },
@@ -138,7 +164,8 @@ function html(literals) {
         var result = arr.result,
             elemEvents = arr.elemEvents;
         this.innerHTML = result;
-        console.info("Element is in the DOM?: " + this.isConnected);
+        console.info('Element is in the DOM?: ' + this.isConnected); // Object.is();
+
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -178,10 +205,18 @@ function html(literals) {
             }
           }
         }
+
+        if (this.isConnected) {
+          this.vdom = JSON.parse(html2json(this));
+          console.log(this.vdom);
+        }
       },
       enumerable: true,
       configurable: true
-    });
+    }), _defineProperty(_Object$definePropert, "vdom", {
+      value: {},
+      writable: true
+    }), _Object$definePropert));
   }());
 })();
 
