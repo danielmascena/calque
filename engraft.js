@@ -116,6 +116,7 @@ export function html(literals, ...substs) {
         let {result, elemEvents} = arr;
         this.innerHTML = result;
         console.info("Element is in the DOM?: " + this.isConnected);
+        // Object.is();
         for (let event of elemEvents) {
           let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
           let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);
