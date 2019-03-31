@@ -60,7 +60,7 @@ function HTMLtoJSON(htmlTmpl, Element) {
     textContent:
       e.textContent,
     attributes:
-      Array.from(e.attributes, ({name, value}) => [name, value]),
+      Object.fromEntries(Array.from(e.attributes, ({name, value}) => [name, value])),
     children:
       Array.from(e.children, toJSON)
   });
