@@ -47,26 +47,45 @@ function hashCode(wUppercase) {
   return text;
 }
 
-var Elem = function Elem(e) {
-  return {
-    toJSON: function toJSON() {
-      return {
-        tagName: e.tagName,
-        textContent: e.textContent,
-        attributes: Array.from(e.attributes, function (_ref) {
-          var name = _ref.name,
-              value = _ref.value;
-          return [name, value];
-        }),
-        children: Array.from(e.children, Elem)
-      };
-    }
-  };
-};
+function HTMLtoJSON(htmlTmpl) {
+  var _this = this;
 
-var html2json = function html2json(e) {
-  return JSON.stringify(Elem(e), null, 2);
-};
+  var template;
+
+  if (typeof htmlTmpl === 'string') {
+    var docNode;
+
+    if (window.DOMParser) {
+      var parser = new DOMParser();
+      docNode = parser.parseFromString(htmlTmpl, 'text/html');
+    }
+    /*else { 
+        docNode = new ActiveXObject('Microsoft.XMLDOM');
+        docNode.async = false;
+        docNode.loadXML(txtHTML); 
+    }*/
+
+
+    template = docNode.body;
+  } else if (_typeof(htmlTmpl) === 'object') {
+    template = htmlTmpl;
+  }
+
+  var toJSON = function toJSON(e) {
+    return {
+      tagName: _this !== null && e.tagName === 'BODY' ? _this.tagName : e.tagName,
+      textContent: e.textContent,
+      attributes: Array.from(e.attributes, function (_ref) {
+        var name = _ref.name,
+            value = _ref.value;
+        return [name, value];
+      }),
+      children: Array.from(e.children, toJSON)
+    };
+  };
+
+  return template && toJSON(template);
+}
 
 function html(literals) {
   var raw = literals.raw;
@@ -207,8 +226,8 @@ function html(literals) {
             }
           }
 
-          this.vdom = JSON.parse(html2json(this));
-          console.log(xml2json.parser(this.innerHTML, 'html'));
+          this.vdom = HTMLtoJSON(this);
+          console.log(this.vdom, this.tagName, HTMLtoJSON.call(this, result));
         }
       },
       enumerable: true,

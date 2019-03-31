@@ -34,22 +34,34 @@ function hashCode(wUppercase) {
   return text;
 }
 
-const Elem = e => ({
-  toJSON: () => ({
+function HTMLtoJSON(htmlTmpl) {
+  let template;
+  if (typeof htmlTmpl === 'string') {
+    let docNode;
+    if (window.DOMParser) {
+          const parser = new DOMParser();
+          docNode = parser.parseFromString(htmlTmpl, 'text/html');
+    } /*else { 
+          docNode = new ActiveXObject('Microsoft.XMLDOM');
+          docNode.async = false;
+          docNode.loadXML(htmlTmpl); 
+    }*/
+    template = docNode.body;
+  } else if (typeof htmlTmpl === 'object') {
+    template = htmlTmpl;
+  }
+  const toJSON = e => ({
     tagName: 
-      e.tagName,
+      ((this !== null && e.tagName === 'BODY') ? this.tagName : e.tagName),
     textContent:
       e.textContent,
     attributes:
       Array.from(e.attributes, ({name, value}) => [name, value]),
     children:
-      Array.from(e.children, Elem)
-  })
-});
-
-const html2json = e =>
-  JSON.stringify(Elem(e), null, 2);
-
+      Array.from(e.children, toJSON)
+  });
+  return template && toJSON(template);
+}
 
 export function html(literals, ...substs) {
   const raw = literals.raw;
@@ -153,8 +165,13 @@ export function html(literals, ...substs) {
                 elem.removeAttribute(engraftID);
               }
             }
-            this.vdom = JSON.parse(html2json(this));
-            console.log(xml2json.parser(this.innerHTML, 'html'));
+            this.vdom = HTMLtoJSON(this);
+            
+            console.log(this.vdom
+              , this.tagName
+              , HTMLtoJSON.call(this,result)
+            );
+            
           }
         },
         enumerable: true,
