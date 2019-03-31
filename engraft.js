@@ -34,7 +34,7 @@ function hashCode(wUppercase) {
   return text;
 }
 
-function HTMLtoJSON(htmlTmpl) {
+function HTMLtoJSON(htmlTmpl, Element) {
   let template;
   if (typeof htmlTmpl === 'string') {
     let docNode;
@@ -46,13 +46,17 @@ function HTMLtoJSON(htmlTmpl) {
           docNode.async = false;
           docNode.loadXML(htmlTmpl); 
     }*/
-    template = docNode.body;
+    if (Element != null && Element instanceof HTMLElement) {
+      let {tagName, textContent, attributes} = Element;
+      let children = docNode.body.children;
+      template = {tagName, textContent, attributes, children};
+    }
   } else if (typeof htmlTmpl === 'object') {
     template = htmlTmpl;
   }
   const toJSON = e => ({
     tagName: 
-      ((this !== null && e.tagName === 'BODY') ? this.tagName : e.tagName),
+      e.tagName,
     textContent:
       e.textContent,
     attributes:
@@ -144,12 +148,13 @@ export function html(literals, ...substs) {
         },
         set(arr) {
           let {result, elemEvents} = arr;
+          
           console.info('Element is in the DOM?: ' + this.isConnected);
           if (this.isConnected) {
             // Object.is();
           } else {
             this.innerHTML = result;
-            
+            this.vdom = HTMLtoJSON(result, this);
             for (let event of elemEvents) {
               let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
               let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);
@@ -165,13 +170,6 @@ export function html(literals, ...substs) {
                 elem.removeAttribute(engraftID);
               }
             }
-            this.vdom = HTMLtoJSON(this);
-            
-            console.log(this.vdom
-              , this.tagName
-              , HTMLtoJSON.call(this,result)
-            );
-            
           }
         },
         enumerable: true,

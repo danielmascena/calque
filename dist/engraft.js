@@ -47,9 +47,7 @@ function hashCode(wUppercase) {
   return text;
 }
 
-function HTMLtoJSON(htmlTmpl) {
-  var _this = this;
-
+function HTMLtoJSON(htmlTmpl, Element) {
   var template;
 
   if (typeof htmlTmpl === 'string') {
@@ -62,18 +60,29 @@ function HTMLtoJSON(htmlTmpl) {
     /*else { 
         docNode = new ActiveXObject('Microsoft.XMLDOM');
         docNode.async = false;
-        docNode.loadXML(txtHTML); 
+        docNode.loadXML(htmlTmpl); 
     }*/
 
 
-    template = docNode.body;
+    if (Element != null && Element instanceof HTMLElement) {
+      var tagName = Element.tagName,
+          textContent = Element.textContent,
+          attributes = Element.attributes;
+      var children = docNode.body.children;
+      template = {
+        tagName: tagName,
+        textContent: textContent,
+        attributes: attributes,
+        children: children
+      };
+    }
   } else if (_typeof(htmlTmpl) === 'object') {
     template = htmlTmpl;
   }
 
   var toJSON = function toJSON(e) {
     return {
-      tagName: _this !== null && e.tagName === 'BODY' ? _this.tagName : e.tagName,
+      tagName: e.tagName,
       textContent: e.textContent,
       attributes: Array.from(e.attributes, function (_ref) {
         var name = _ref.name,
@@ -227,7 +236,7 @@ function html(literals) {
           }
 
           this.vdom = HTMLtoJSON(this);
-          console.log(this.vdom, this.tagName, HTMLtoJSON.call(this, result));
+          console.log(this.vdom, HTMLtoJSON(result, this));
         }
       },
       enumerable: true,
