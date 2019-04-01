@@ -47,15 +47,15 @@ function hashCode(wUppercase) {
   return text;
 }
 
-function HTMLtoJSON(htmlTmpl, Element) {
-  var template;
+function HTMLtoJSON(template, Element) {
+  var htmlMarkup;
 
-  if (typeof htmlTmpl === 'string') {
+  if (typeof template === 'string') {
     var docNode;
 
     if (window.DOMParser) {
       var parser = new DOMParser();
-      docNode = parser.parseFromString(htmlTmpl, 'text/html');
+      docNode = parser.parseFromString(template, 'text/html');
     }
     /*else { 
         docNode = new ActiveXObject('Microsoft.XMLDOM');
@@ -69,15 +69,15 @@ function HTMLtoJSON(htmlTmpl, Element) {
           textContent = Element.textContent,
           attributes = Element.attributes;
       var children = docNode.body.children;
-      template = {
+      htmlMarkup = {
         tagName: tagName,
         textContent: textContent,
         attributes: attributes,
         children: children
       };
     }
-  } else if (_typeof(htmlTmpl) === 'object') {
-    template = htmlTmpl;
+  } else if (_typeof(template) === 'object') {
+    htmlMarkup = template;
   }
 
   var toJSON = function toJSON(e) {
@@ -93,7 +93,7 @@ function HTMLtoJSON(htmlTmpl, Element) {
     };
   };
 
-  return template && toJSON(template);
+  return htmlMarkup && toJSON(htmlMarkup);
 }
 
 function html(literals) {
@@ -134,7 +134,8 @@ function html(literals) {
         subst = tmp || subst.join('');
       } else if (type === 'object') {
         /* HTML5 specification says:
-          Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
+          Then, the start tag may have a number of attributes, [...]. 
+          Attributes must be separated from each other by one or more space characters.
         */
         subst = lit.slice(-8).match(/\s+style=["']/) ? Object.entries(subst).map(function (v) {
           return v.join(':');
@@ -192,18 +193,76 @@ function html(literals) {
             elemEvents = arr.elemEvents;
         console.info('Element is in the DOM?: ' + this.isConnected);
 
-        if (this.isConnected) {// Object.is();
+        if (this.isConnected && this.vdom.current) {
+          console.log('here we go');
+          var nextMarkup = HTMLtoJSON(result, this);
+          var previousMarkup = this.vdom.current;
+
+          var searchDiffs = function searchDiffs(previousVDOM, nextVDOM) {
+            var diffs = [],
+                sameKeys = [],
+                delPreviousKeys = [],
+                delNextKeys = [];
+            var copyNext = Object.assign({}, nextVDOM);
+
+            var findDiff = function findDiff(elemPrev, elemNext) {
+              var diff = {
+                textContent: '',
+                attributes: {},
+                children: []
+              };
+              Object.is(elemPrev.textContent, elemNext.textContent) || (diff.textContent = elemNext.textContent);
+              var previousKeys = Object.keys(elemPrev.attributes);
+              var nextKeys = Object.keys(elemNext.attributes);
+              var joinKeys = new Set([].concat(_toConsumableArray(previousKeys), _toConsumableArray(nextKeys)));
+              var _iteratorNormalCompletion = true;
+              var _didIteratorError = false;
+              var _iteratorError = undefined;
+
+              try {
+                for (var _iterator = joinKeys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                  var key = _step.value;
+
+                  if (previousKeys.includes(key)) {
+                    Object.is(elemPrev.attributes[key], elemNext.attributes[key]) || (diff.attributes[key] = elemNext.attributes[key]);
+                  } else {
+                    diff.attributes[key] = elemNext.attributes[key];
+                  }
+                }
+              } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+              } finally {
+                try {
+                  if (!_iteratorNormalCompletion && _iterator.return != null) {
+                    _iterator.return();
+                  }
+                } finally {
+                  if (_didIteratorError) {
+                    throw _iteratorError;
+                  }
+                }
+              }
+            };
+
+            console.log(findDiff(previousVDOM, nextVDOM));
+          };
+
+          var nullify = function nullify() {}; //Node.contains()
+
+
+          searchDiffs(previousMarkup, nextMarkup);
         } else {
           this.innerHTML = result;
-          this.vdom = HTMLtoJSON(result, this);
+          this.vdom['current'] = HTMLtoJSON(result, this);
           console.log(this.vdom);
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
 
           try {
-            for (var _iterator = elemEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var event = _step.value;
+            for (var _iterator2 = elemEvents[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var event = _step2.value;
               var engraftID = event.engraftID,
                   engraftIDValue = event.engraftIDValue,
                   eventHandler = event.eventHandler,
@@ -223,16 +282,16 @@ function html(literals) {
               }
             }
           } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion && _iterator.return != null) {
-                _iterator.return();
+              if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+                _iterator2.return();
               }
             } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
+              if (_didIteratorError2) {
+                throw _iteratorError2;
               }
             }
           }

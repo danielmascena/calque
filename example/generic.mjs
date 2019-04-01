@@ -13,12 +13,14 @@ export default class GenericElement extends HTMLElement {
     this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
   }
   attributeChangedCallback() {
+    console.log('changed');
     this.render();
   }
   connectedCallback() {
     this.render();
   }
   clickHandler(){
+    this.setAttribute('name', 'Lacuna');
     alert(this.num++);
   }
   changeHandler(){

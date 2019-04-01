@@ -151,9 +151,10 @@ export function html(literals, ...substs) {
           let {result, elemEvents} = arr;
           
           console.info('Element is in the DOM?: ' + this.isConnected);
-          if (this.isConnected) {
+          if (this.isConnected && this.vdom.current) {
+            console.log('here we go');
             let nextMarkup = HTMLtoJSON(result, this);
-            let previousMarkup = this.vdom;
+            let previousMarkup = this.vdom.current;
             
             const searchDiffs = (previousVDOM, nextVDOM) => {
               let diffs = [], sameKeys = [], delPreviousKeys = [], delNextKeys = [];
@@ -166,24 +167,27 @@ export function html(literals, ...substs) {
                   children: []
                 }
                 Object.is(elemPrev.textContent, elemNext.textContent) 
-                    && (diff.textContent = elemNext.textContent);
+                    || (diff.textContent = elemNext.textContent);
                 const previousKeys = Object.keys(elemPrev.attributes);
                 const nextKeys = Object.keys(elemNext.attributes);
                 const joinKeys = new Set([...previousKeys, ...nextKeys]);
-                for (let knx of joinKeys) {
-                  if (previousKeys.includes(knx)) {
-                    ;
+                for (let key of joinKeys) {
+                  if (previousKeys.includes(key)) {
+                    Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
+                        || (diff.attributes[key] = elemNext.attributes[key]);
                   } else {
-                    diff.attributes[knx] = elemNext[knx];
+                    diff.attributes[key] = elemNext.attributes[key];
                   }
                 }
               }
+              console.log(findDiff(previousVDOM, nextVDOM));
             }
             const nullify = () => {};
-            //Node.contains() 
+            //Node.contains()
+            searchDiffs(previousMarkup, nextMarkup);
           } else {
             this.innerHTML = result;
-            this.vdom = HTMLtoJSON(result, this);
+            this.vdom['current'] = HTMLtoJSON(result, this);
             console.log(this.vdom);
             for (let event of elemEvents) {
               let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
