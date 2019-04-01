@@ -34,13 +34,13 @@ function hashCode(wUppercase) {
   return text;
 }
 
-function HTMLtoJSON(htmlTmpl, Element) {
-  let template;
-  if (typeof htmlTmpl === 'string') {
+function HTMLtoJSON(template, Element) {
+  let htmlMarkup;
+  if (typeof template === 'string') {
     let docNode;
     if (window.DOMParser) {
           const parser = new DOMParser();
-          docNode = parser.parseFromString(htmlTmpl, 'text/html');
+          docNode = parser.parseFromString(template, 'text/html');
     } /*else { 
           docNode = new ActiveXObject('Microsoft.XMLDOM');
           docNode.async = false;
@@ -49,10 +49,10 @@ function HTMLtoJSON(htmlTmpl, Element) {
     if (Element != null && Element instanceof HTMLElement) {
       let {tagName, textContent, attributes} = Element;
       let children = docNode.body.children;
-      template = {tagName, textContent, attributes, children};
+      htmlMarkup = {tagName, textContent, attributes, children};
     }
-  } else if (typeof htmlTmpl === 'object') {
-    template = htmlTmpl;
+  } else if (typeof template === 'object') {
+    htmlMarkup = template;
   }
   const toJSON = e => ({
     tagName: 
@@ -64,7 +64,7 @@ function HTMLtoJSON(htmlTmpl, Element) {
     children:
       Array.from(e.children, toJSON)
   });
-  return template && toJSON(template);
+  return htmlMarkup && toJSON(htmlMarkup);
 }
 
 export function html(literals, ...substs) {
@@ -104,7 +104,8 @@ export function html(literals, ...substs) {
           subst = tmp || subst.join('');
         } else if (type === 'object') {
         /* HTML5 specification says:
-          Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more space characters.
+          Then, the start tag may have a number of attributes, [...]. 
+          Attributes must be separated from each other by one or more space characters.
         */
           subst = lit.slice(-8).match(/\s+style=["']/) ?
             Object.entries(subst).map((v) => v.join(':')).join(';')
@@ -151,10 +152,39 @@ export function html(literals, ...substs) {
           
           console.info('Element is in the DOM?: ' + this.isConnected);
           if (this.isConnected) {
-            // Object.is();
+            let nextMarkup = HTMLtoJSON(result, this);
+            let previousMarkup = this.vdom;
+            
+            const searchDiffs = (previousVDOM, nextVDOM) => {
+              let diffs = [], sameKeys = [], delPreviousKeys = [], delNextKeys = [];
+              let copyNext = Object.assign({}, nextVDOM);
+              
+              const findDiff = (elemPrev, elemNext) => {
+                let diff = {
+                  textContent: '',
+                  attributes: {},
+                  children: []
+                }
+                Object.is(elemPrev.textContent, elemNext.textContent) 
+                    && (diff.textContent = elemNext.textContent);
+                const previousKeys = Object.keys(elemPrev.attributes);
+                const nextKeys = Object.keys(elemNext.attributes);
+                const joinKeys = new Set([...previousKeys, ...nextKeys]);
+                for (let knx of joinKeys) {
+                  if (previousKeys.includes(knx)) {
+                    ;
+                  } else {
+                    diff.attributes[knx] = elemNext[knx];
+                  }
+                }
+              }
+            }
+            const nullify = () => {};
+            //Node.contains() 
           } else {
             this.innerHTML = result;
             this.vdom = HTMLtoJSON(result, this);
+            console.log(this.vdom);
             for (let event of elemEvents) {
               let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
               let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);

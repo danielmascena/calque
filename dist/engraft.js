@@ -84,11 +84,11 @@ function HTMLtoJSON(htmlTmpl, Element) {
     return {
       tagName: e.tagName,
       textContent: e.textContent,
-      attributes: Array.from(e.attributes, function (_ref) {
+      attributes: Object.fromEntries(Array.from(e.attributes, function (_ref) {
         var name = _ref.name,
             value = _ref.value;
         return [name, value];
-      }),
+      })),
       children: Array.from(e.children, toJSON)
     };
   };
@@ -195,6 +195,8 @@ function html(literals) {
         if (this.isConnected) {// Object.is();
         } else {
           this.innerHTML = result;
+          this.vdom = HTMLtoJSON(result, this);
+          console.log(this.vdom);
           var _iteratorNormalCompletion = true;
           var _didIteratorError = false;
           var _iteratorError = undefined;
@@ -234,9 +236,6 @@ function html(literals) {
               }
             }
           }
-
-          this.vdom = HTMLtoJSON(this);
-          console.log(this.vdom, HTMLtoJSON(result, this));
         }
       },
       enumerable: true,

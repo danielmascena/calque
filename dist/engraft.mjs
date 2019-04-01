@@ -60,7 +60,7 @@ function HTMLtoJSON(htmlTmpl, Element) {
     textContent:
       e.textContent,
     attributes:
-      Array.from(e.attributes, ({name, value}) => [name, value]),
+      Object.fromEntries(Array.from(e.attributes, ({name, value}) => [name, value])),
     children:
       Array.from(e.children, toJSON)
   });
@@ -148,12 +148,14 @@ export function html(literals, ...substs) {
         },
         set(arr) {
           let {result, elemEvents} = arr;
+          
           console.info('Element is in the DOM?: ' + this.isConnected);
           if (this.isConnected) {
             // Object.is();
           } else {
             this.innerHTML = result;
-            
+            this.vdom = HTMLtoJSON(result, this);
+            console.log(this.vdom);
             for (let event of elemEvents) {
               let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
               let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);
@@ -169,12 +171,6 @@ export function html(literals, ...substs) {
                 elem.removeAttribute(engraftID);
               }
             }
-            this.vdom = HTMLtoJSON(this);
-            
-            console.log(this.vdom
-              , HTMLtoJSON(result, this)
-            );
-            
           }
         },
         enumerable: true,
