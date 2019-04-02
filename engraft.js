@@ -13,6 +13,7 @@ const Engraft = {
   innerHTML,
   html,
 };
+const isEmptyObject = (obj) => Object.entries(obj).length === 0 && obj.constructor === Object;
 
 function htmlEscape(str) {
   return str
@@ -47,7 +48,8 @@ function HTMLtoJSON(template, Element) {
           docNode.loadXML(htmlTmpl); 
     }*/
     if (Element != null && Element instanceof HTMLElement) {
-      let {tagName, textContent, attributes} = Element;
+      let {tagName, attributes} = Element;
+      let textContent = docNode.body.textContent;
       let children = docNode.body.children;
       htmlMarkup = {tagName, textContent, attributes, children};
     }
@@ -151,10 +153,10 @@ export function html(literals, ...substs) {
           let {result, elemEvents} = arr;
           
           console.info('Element is in the DOM?: ' + this.isConnected);
-          if (this.isConnected && this.vdom.current) {
+          if (this.isConnected && !isEmptyObject(this.vdom)) {
             console.log('here we go');
             let nextMarkup = HTMLtoJSON(result, this);
-            let previousMarkup = this.vdom.current;
+            let previousMarkup = this.vdom;
             
             const searchDiffs = (previousVDOM, nextVDOM) => {
               let diffs = [], sameKeys = [], delPreviousKeys = [], delNextKeys = [];
@@ -179,15 +181,16 @@ export function html(literals, ...substs) {
                     diff.attributes[key] = elemNext.attributes[key];
                   }
                 }
+                return diff;
               }
-              console.log(findDiff(previousVDOM, nextVDOM));
+              console.log('result diff: ', findDiff(previousVDOM, nextVDOM));
             }
             const nullify = () => {};
             //Node.contains()
             searchDiffs(previousMarkup, nextMarkup);
           } else {
             this.innerHTML = result;
-            this.vdom['current'] = HTMLtoJSON(result, this);
+            this.vdom = HTMLtoJSON(result, this);
             console.log(this.vdom);
             for (let event of elemEvents) {
               let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;

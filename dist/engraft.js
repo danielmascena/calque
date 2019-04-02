@@ -32,6 +32,10 @@ var Engraft = {
   html: html
 };
 
+var isEmptyObject = function isEmptyObject(obj) {
+  return Object.entries(obj).length === 0 && obj.constructor === Object;
+};
+
 function htmlEscape(str) {
   return str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/`/g, '&#96;');
 }
@@ -66,8 +70,8 @@ function HTMLtoJSON(template, Element) {
 
     if (Element != null && Element instanceof HTMLElement) {
       var tagName = Element.tagName,
-          textContent = Element.textContent,
           attributes = Element.attributes;
+      var textContent = docNode.body.textContent;
       var children = docNode.body.children;
       htmlMarkup = {
         tagName: tagName,
@@ -193,10 +197,10 @@ function html(literals) {
             elemEvents = arr.elemEvents;
         console.info('Element is in the DOM?: ' + this.isConnected);
 
-        if (this.isConnected && this.vdom.current) {
+        if (this.isConnected && !isEmptyObject(this.vdom)) {
           console.log('here we go');
           var nextMarkup = HTMLtoJSON(result, this);
-          var previousMarkup = this.vdom.current;
+          var previousMarkup = this.vdom;
 
           var searchDiffs = function searchDiffs(previousVDOM, nextVDOM) {
             var diffs = [],
@@ -243,9 +247,11 @@ function html(literals) {
                   }
                 }
               }
+
+              return diff;
             };
 
-            console.log(findDiff(previousVDOM, nextVDOM));
+            console.log('result diff: ', findDiff(previousVDOM, nextVDOM));
           };
 
           var nullify = function nullify() {}; //Node.contains()
@@ -254,7 +260,7 @@ function html(literals) {
           searchDiffs(previousMarkup, nextMarkup);
         } else {
           this.innerHTML = result;
-          this.vdom['current'] = HTMLtoJSON(result, this);
+          this.vdom = HTMLtoJSON(result, this);
           console.log(this.vdom);
           var _iteratorNormalCompletion2 = true;
           var _didIteratorError2 = false;

@@ -3,7 +3,7 @@ import { innerHTML, html } from '../dist/engraft.mjs';
 
 export default class GenericElement extends HTMLElement {
   static get observedAttributes() {
-    return ['name'];
+    return ['name', 'data-list'];
   }
   constructor(...args) {
     super(...args);
@@ -13,7 +13,7 @@ export default class GenericElement extends HTMLElement {
     this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
   }
   attributeChangedCallback() {
-    console.log('changed');
+    console.log('changed', this.getAttribute('name'));
     this.render();
   }
   connectedCallback() {
@@ -27,10 +27,12 @@ export default class GenericElement extends HTMLElement {
     console.log(this.text);
   }
   render() {
+    console.log(this.getAttribute('name'), this.getAttribute('data-list'));
     let someObj = null, 
       size = 12, 
       style = {'color': 'red', 'line-height': this.num, 'font-size': `${size*3}px`};
     this[innerHTML] = html `
+      Hello ${this.getAttribute('name')}
         <p id onblur="${ e => console.log(e.target.textContent) }" style="${ {"background-color": "lightblue"} }"
           onclick="${this.clickHandler}"
           contenteditable>&#955; ♏ (see browser console for see the changes)
