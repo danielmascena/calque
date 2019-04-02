@@ -193,18 +193,18 @@ function html(literals) {
         return this.innerHTML;
       },
       set: function set(arr) {
+        var _this = this;
+
         var result = arr.result,
             elemEvents = arr.elemEvents;
         console.info('Element is in the DOM?: ' + this.isConnected);
 
         if (this.isConnected && !isEmptyObject(this.vdom)) {
-          console.log('here we go');
           var nextMarkup = HTMLtoJSON(result, this);
           var previousMarkup = this.vdom;
 
           var searchDiffs = function searchDiffs(previousVDOM, nextVDOM) {
-            var diffs = [],
-                sameKeys = [],
+            var sameKeys = [],
                 delPreviousKeys = [],
                 delNextKeys = [];
             var copyNext = Object.assign({}, nextVDOM);
@@ -251,7 +251,15 @@ function html(literals) {
               return diff;
             };
 
-            console.log('result diff: ', findDiff(previousVDOM, nextVDOM));
+            var diff = findDiff(previousVDOM, nextVDOM);
+
+            for (var key in diff) {
+              var value = diff[key];
+
+              if (typeof value === 'string' && value !== '') {
+                _this[key] = value;
+              }
+            }
           };
 
           var nullify = function nullify() {}; //Node.contains()

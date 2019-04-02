@@ -154,12 +154,11 @@ export function html(literals, ...substs) {
           
           console.info('Element is in the DOM?: ' + this.isConnected);
           if (this.isConnected && !isEmptyObject(this.vdom)) {
-            console.log('here we go');
             let nextMarkup = HTMLtoJSON(result, this);
             let previousMarkup = this.vdom;
             
             const searchDiffs = (previousVDOM, nextVDOM) => {
-              let diffs = [], sameKeys = [], delPreviousKeys = [], delNextKeys = [];
+              let sameKeys = [], delPreviousKeys = [], delNextKeys = [];
               let copyNext = Object.assign({}, nextVDOM);
               
               const findDiff = (elemPrev, elemNext) => {
@@ -183,7 +182,14 @@ export function html(literals, ...substs) {
                 }
                 return diff;
               }
-              console.log('result diff: ', findDiff(previousVDOM, nextVDOM));
+              const diff = findDiff(previousVDOM, nextVDOM);
+
+              for (let key in diff) {
+                let value = diff[key];
+                if (typeof value === 'string' && value !== '') {
+                  this[key] = value;
+                }
+              }
             }
             const nullify = () => {};
             //Node.contains()
