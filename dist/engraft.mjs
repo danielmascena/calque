@@ -49,7 +49,7 @@ function HTMLtoJSON(template, Element) {
     }*/
     if (Element != null && Element instanceof HTMLElement) {
       let {tagName, attributes} = Element;
-      let textContent = docNode.body.textContent;
+      let textContent = null;
       let children = docNode.body.children;
       htmlMarkup = {tagName, textContent, attributes, children};
     }
@@ -161,14 +161,18 @@ export function html(literals, ...substs) {
               let sameKeys = [], delPreviousKeys = [], delNextKeys = [];
               let copyNext = Object.assign({}, nextVDOM);
               
-              const findDiff = (elemPrev, elemNext) => {
+              const findDiff = (elemPrev, elemNext, index) => {
                 let diff = {
                   textContent: '',
                   attributes: {},
-                  children: []
+                  children: [],
+                  index
                 }
-                Object.is(elemPrev.textContent, elemNext.textContent) 
-                    || (diff.textContent = elemNext.textContent);
+                if (elemNext.textContent != null 
+                  && !Object.is(elemPrev.textContent, elemNext.textContent)) {
+                    diff.textContent = elemNext.textContent;
+                  }
+                /*
                 const previousKeys = Object.keys(elemPrev.attributes);
                 const nextKeys = Object.keys(elemNext.attributes);
                 const joinKeys = new Set([...previousKeys, ...nextKeys]);
@@ -180,16 +184,19 @@ export function html(literals, ...substs) {
                     diff.attributes[key] = elemNext.attributes[key];
                   }
                 }
+                */
+                diff.children = elemNext.children.map((v, i) => findDiff(elemPrev.children[i], v, i));
                 return diff;
               }
               const diff = findDiff(previousVDOM, nextVDOM);
 
-              for (let key in diff) {
-                let value = diff[key];
-                if (typeof value === 'string' && value !== '') {
-                  this[key] = value;
-                }
-              }
+              const applyDiffs = (diffElem, htmlElem) => {
+                const diffText = diffElem.textContent || '',
+                children = diffElem.children || [];
+                diffText != '' && (htmlElem.textContent = diffText);
+                children.forEach((v, i) => applyDiffs(v, this.children[i]));
+              };
+              applyDiffs(diff, this);
             }
             const nullify = () => {};
             //Node.contains()

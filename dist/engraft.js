@@ -71,7 +71,7 @@ function HTMLtoJSON(template, Element) {
     if (Element != null && Element instanceof HTMLElement) {
       var tagName = Element.tagName,
           attributes = Element.attributes;
-      var textContent = docNode.body.textContent;
+      var textContent = null;
       var children = docNode.body.children;
       htmlMarkup = {
         tagName: tagName,
@@ -209,57 +209,50 @@ function html(literals) {
                 delNextKeys = [];
             var copyNext = Object.assign({}, nextVDOM);
 
-            var findDiff = function findDiff(elemPrev, elemNext) {
+            var findDiff = function findDiff(elemPrev, elemNext, index) {
               var diff = {
                 textContent: '',
                 attributes: {},
-                children: []
+                children: [],
+                index: index
               };
-              Object.is(elemPrev.textContent, elemNext.textContent) || (diff.textContent = elemNext.textContent);
-              var previousKeys = Object.keys(elemPrev.attributes);
-              var nextKeys = Object.keys(elemNext.attributes);
-              var joinKeys = new Set([].concat(_toConsumableArray(previousKeys), _toConsumableArray(nextKeys)));
-              var _iteratorNormalCompletion = true;
-              var _didIteratorError = false;
-              var _iteratorError = undefined;
 
-              try {
-                for (var _iterator = joinKeys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                  var key = _step.value;
-
-                  if (previousKeys.includes(key)) {
-                    Object.is(elemPrev.attributes[key], elemNext.attributes[key]) || (diff.attributes[key] = elemNext.attributes[key]);
-                  } else {
-                    diff.attributes[key] = elemNext.attributes[key];
-                  }
-                }
-              } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-              } finally {
-                try {
-                  if (!_iteratorNormalCompletion && _iterator.return != null) {
-                    _iterator.return();
-                  }
-                } finally {
-                  if (_didIteratorError) {
-                    throw _iteratorError;
-                  }
+              if (elemNext.textContent != null && !Object.is(elemPrev.textContent, elemNext.textContent)) {
+                diff.textContent = elemNext.textContent;
+              }
+              /*
+              const previousKeys = Object.keys(elemPrev.attributes);
+              const nextKeys = Object.keys(elemNext.attributes);
+              const joinKeys = new Set([...previousKeys, ...nextKeys]);
+              for (let key of joinKeys) {
+                if (previousKeys.includes(key)) {
+                  Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
+                      || (diff.attributes[key] = elemNext.attributes[key]);
+                } else {
+                  diff.attributes[key] = elemNext.attributes[key];
                 }
               }
+              */
 
+
+              diff.children = elemNext.children.map(function (v, i) {
+                return findDiff(elemPrev.children[i], v, i);
+              });
               return diff;
             };
 
             var diff = findDiff(previousVDOM, nextVDOM);
 
-            for (var key in diff) {
-              var value = diff[key];
+            var applyDiffs = function applyDiffs(diffElem, htmlElem) {
+              var diffText = diffElem.textContent || '',
+                  children = diffElem.children || [];
+              diffText != '' && (htmlElem.textContent = diffText);
+              children.forEach(function (v, i) {
+                return applyDiffs(v, _this.children[i]);
+              });
+            };
 
-              if (typeof value === 'string' && value !== '') {
-                _this[key] = value;
-              }
-            }
+            applyDiffs(diff, _this);
           };
 
           var nullify = function nullify() {}; //Node.contains()
@@ -270,13 +263,13 @@ function html(literals) {
           this.innerHTML = result;
           this.vdom = HTMLtoJSON(result, this);
           console.log(this.vdom);
-          var _iteratorNormalCompletion2 = true;
-          var _didIteratorError2 = false;
-          var _iteratorError2 = undefined;
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
 
           try {
-            for (var _iterator2 = elemEvents[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              var event = _step2.value;
+            for (var _iterator = elemEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var event = _step.value;
               var engraftID = event.engraftID,
                   engraftIDValue = event.engraftIDValue,
                   eventHandler = event.eventHandler,
@@ -296,16 +289,16 @@ function html(literals) {
               }
             }
           } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
+            _didIteratorError = true;
+            _iteratorError = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-                _iterator2.return();
+              if (!_iteratorNormalCompletion && _iterator.return != null) {
+                _iterator.return();
               }
             } finally {
-              if (_didIteratorError2) {
-                throw _iteratorError2;
+              if (_didIteratorError) {
+                throw _iteratorError;
               }
             }
           }
