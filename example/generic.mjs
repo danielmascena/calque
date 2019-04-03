@@ -9,11 +9,10 @@ export default class GenericElement extends HTMLElement {
     super(...args);
     this.num = 7;
     this.text = 'changed';
-    this.clickHandler = this.clickHandler.bind(this);
     this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
   }
   attributeChangedCallback() {
-    console.log('changed', this.getAttribute('name'));
+    console.log('list', this.getAttribute('data-list'));
     this.render();
   }
   connectedCallback() {
@@ -31,21 +30,28 @@ export default class GenericElement extends HTMLElement {
     let someObj = null, 
       size = 12, 
       style = {'color': 'red', 'line-height': this.num, 'font-size': `${size*3}px`};
-    this[innerHTML] = html `
-      Hello ${this.getAttribute('name')}
+    this[innerHTML] = html`
         <p id onblur="${ e => console.log(e.target.textContent) }" style="${ {"background-color": "lightblue"} }"
-          onclick="${this.clickHandler}"
-          contenteditable>&#955; ♏ (see browser console for see the changes)
+          onclick="${this.clickHandler.bind(this)}" contenteditable>
+          &#955; ♏ (see browser console for see the changes)
+          <ol>
+            ${this.hasAttribute('data-list') 
+              && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
+            <button onclick="${ function addItem(){
+                let oldVal = this.getAttribute('data-list');
+                alert(this);
+              } }">+</button>
+          </ol>
         </p>
-        <h1 onclick="${ function mustHaveAName() {alert('popup');} }" style="${style}">
+        <h1 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }" style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
         <ul>
-          ${this.stars.map((name, i) => html `<li style="font-size: ${size*i}px" onclick="alert('${name}')">${name}</li>`)}
+          ${this.stars.map((name, i) => html`<li style="font-size: ${size*i}px" onclick="alert('${name}')">${name}</li>`)}
         </ul>
         ${ (this.stars.length > 5)
-            ? html `<p>The constellation is complete</p>`
-            : html `<p>There is some missing stars</p>`}
+            ? html`<p>The constellation is complete</p>`
+            : html`<p>There is some missing stars</p>`}
         <p onclick="${() => alert(this.num)}">
           ${ new function(lib){this.libName = lib;}('EngraftJS') }
           ${ {toString: () => 'method override'} }

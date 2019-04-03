@@ -11,6 +11,7 @@ export default function() {
 
   const sco = new GenericElement;
   sco.setAttribute('name', 'Sco');
+  //sco.setAttribute('data-list', '6,7,8');
   document.body.appendChild(sco);
 
   let p = document.createElement('p'), color = 'green';
