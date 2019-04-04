@@ -151,9 +151,9 @@ export function html(literals, ...substs) {
         },
         set(arr) {
           let {result, elemEvents} = arr;
-          
           console.info('Element is in the DOM?: ' + this.isConnected);
-          if (this.isConnected && !isEmptyObject(this.vdom)) {
+
+          if (this.isConnected && !isEmptyObject(this.vdom) && !document.contains(this)) {
             let nextMarkup = HTMLtoJSON(result, this);
             let previousMarkup = this.vdom;
             
@@ -161,16 +161,17 @@ export function html(literals, ...substs) {
               let sameKeys = [], delPreviousKeys = [], delNextKeys = [];
               let copyNext = Object.assign({}, nextVDOM);
               
-              const findDiff = (elemPrev, elemNext, index) => {
+              const findDiff = (elemPrev={textContent: '', children: []}, elemNext, index) => {
                 let diff = {
                   textContent: '',
                   attributes: {},
                   children: [],
                   index
                 }
-                if (elemNext.textContent != null 
-                  && !Object.is(elemPrev.textContent, elemNext.textContent)) {
-                    diff.textContent = elemNext.textContent;
+                const contentPrev = elemPrev.textContent;
+                const contentNext = elemNext.textContent;
+                if (contentNext != null && !Object.is(contentPrev, contentNext)) {
+                    diff.textContent = contentNext;
                   }
                 /*
                 const previousKeys = Object.keys(elemPrev.attributes);
@@ -199,7 +200,6 @@ export function html(literals, ...substs) {
               applyDiffs(diff, this);
             }
             const nullify = () => {};
-            //Node.contains()
             searchDiffs(previousMarkup, nextMarkup);
           } else {
             this.innerHTML = result;

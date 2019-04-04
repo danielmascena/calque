@@ -199,7 +199,7 @@ function html(literals) {
             elemEvents = arr.elemEvents;
         console.info('Element is in the DOM?: ' + this.isConnected);
 
-        if (this.isConnected && !isEmptyObject(this.vdom)) {
+        if (this.isConnected && !isEmptyObject(this.vdom) && !document.contains(this)) {
           var nextMarkup = HTMLtoJSON(result, this);
           var previousMarkup = this.vdom;
 
@@ -209,16 +209,24 @@ function html(literals) {
                 delNextKeys = [];
             var copyNext = Object.assign({}, nextVDOM);
 
-            var findDiff = function findDiff(elemPrev, elemNext, index) {
+            var findDiff = function findDiff() {
+              var elemPrev = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+                textContent: '',
+                children: []
+              };
+              var elemNext = arguments.length > 1 ? arguments[1] : undefined;
+              var index = arguments.length > 2 ? arguments[2] : undefined;
               var diff = {
                 textContent: '',
                 attributes: {},
                 children: [],
                 index: index
               };
+              var contentPrev = elemPrev.textContent;
+              var contentNext = elemNext.textContent;
 
-              if (elemNext.textContent != null && !Object.is(elemPrev.textContent, elemNext.textContent)) {
-                diff.textContent = elemNext.textContent;
+              if (contentNext != null && !Object.is(contentPrev, contentNext)) {
+                diff.textContent = contentNext;
               }
               /*
               const previousKeys = Object.keys(elemPrev.attributes);
@@ -255,8 +263,7 @@ function html(literals) {
             applyDiffs(diff, _this);
           };
 
-          var nullify = function nullify() {}; //Node.contains()
-
+          var nullify = function nullify() {};
 
           searchDiffs(previousMarkup, nextMarkup);
         } else {

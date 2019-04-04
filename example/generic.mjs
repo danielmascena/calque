@@ -12,7 +12,6 @@ export default class GenericElement extends HTMLElement {
     this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
   }
   attributeChangedCallback() {
-    console.log('list', this.getAttribute('data-list'));
     this.render();
   }
   connectedCallback() {
@@ -30,19 +29,24 @@ export default class GenericElement extends HTMLElement {
     let someObj = null, 
       size = 12, 
       style = {'color': 'red', 'line-height': this.num, 'font-size': `${size*3}px`};
+
+    console.log('list', this.getAttribute('data-list'));
     this[innerHTML] = html`
-        <p id onblur="${ e => console.log(e.target.textContent) }" style="${ {"background-color": "lightblue"} }"
+        <div id onblur="${ e => console.log(e.target.textContent) }" style="${ {"background-color": "lightblue"} }"
           onclick="${this.clickHandler.bind(this)}" contenteditable>
           &#955; ♏ (see browser console for see the changes)
           <ol>
             ${this.hasAttribute('data-list') 
               && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
-            <button onclick="${ function addItem(){
-                let oldVal = this.getAttribute('data-list');
-                alert(this);
-              } }">+</button>
           </ol>
-        </p>
+          <button onclick="${ (function addItem(e) {
+              let previousVal = +e.target.previousElementSibling.lastElementChild.textContent;
+              let oldVal = this.getAttribute('data-list');
+              this.setAttribute('data-list', oldVal+','+(++previousVal));
+              console.log(previousVal, oldVal);
+            }).bind(this)
+          }">+</button>
+        </div>
         <h1 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }" style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
