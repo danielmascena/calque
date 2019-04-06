@@ -19,7 +19,7 @@ export default class GenericElement extends HTMLElement {
   }
   clickHandler(){
     this.setAttribute('name', 'Lacuna');
-    alert(this.num++);
+    console.log(this.num++);
   }
   changeHandler(){
     console.log(this.text);
@@ -35,10 +35,10 @@ export default class GenericElement extends HTMLElement {
         <div id onblur="${ e => console.log(e.target.textContent) }" style="${ {"background-color": "lightblue"} }"
           onclick="${this.clickHandler.bind(this)}" contenteditable>
           &#955; ♏ (see browser console for see the changes)
-          <ol>
+          <ul>
             ${this.hasAttribute('data-list') 
               && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
-          </ol>
+          </ul>
           <button onclick="${ (function addItem(e) {
               let previousVal = +e.target.previousElementSibling.lastElementChild.textContent;
               let oldVal = this.getAttribute('data-list');
@@ -50,9 +50,9 @@ export default class GenericElement extends HTMLElement {
         <h1 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }" style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
-        <ul>
+        <ol>
           ${this.stars.map((name, i) => html`<li style="font-size: ${size*i}px" onclick="alert('${name}')">${name}</li>`)}
-        </ul>
+        </ol>
         ${ (this.stars.length > 5)
             ? html`<p>The constellation is complete</p>`
             : html`<p>There is some missing stars</p>`}

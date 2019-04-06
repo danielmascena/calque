@@ -199,7 +199,7 @@ function html(literals) {
             elemEvents = arr.elemEvents;
         console.info('Element is in the DOM?: ' + this.isConnected);
 
-        if (this.isConnected && !isEmptyObject(this.vdom) && !document.contains(this)) {
+        if (this.isConnected && !isEmptyObject(this.vdom) && document.contains(this)) {
           var nextMarkup = HTMLtoJSON(result, this);
           var previousMarkup = this.vdom;
 
@@ -209,25 +209,58 @@ function html(literals) {
                 delNextKeys = [];
             var copyNext = Object.assign({}, nextVDOM);
 
-            var findDiff = function findDiff() {
-              var elemPrev = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-                textContent: '',
-                children: []
-              };
-              var elemNext = arguments.length > 1 ? arguments[1] : undefined;
-              var index = arguments.length > 2 ? arguments[2] : undefined;
+            var findDiff = function findDiff(elemPrev, elemNext) {
+              var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
+              var hasPrev = typeof elemPrev === 'undefined',
+                  hasNext = typeof elemNext === 'undefined';
+
+              if (hasPrev && hasNext) {
+                console.log('nothing to change');
+                return;
+              }
+
+              var elemPrevCopy = Object.assign({}, elemPrev),
+                  elemNextCopy = Object.assign({}, elemNext);
               var diff = {
-                textContent: '',
-                attributes: {},
+                newContent: '',
+                oldContent: '',
                 children: [],
                 index: index
               };
-              var contentPrev = elemPrev.textContent;
-              var contentNext = elemNext.textContent;
 
-              if (contentNext != null && !Object.is(contentPrev, contentNext)) {
-                diff.textContent = contentNext;
+              if (!hasPrev && hasNext) {
+                // remove
+                diff.oldContent = elemPrevCopy.textContent;
+                diff.newContent = '';
+              } else if (hasPrev && !hasNext) {
+                // add
+                diff.oldContent = '';
+                diff.newContent = elemNextCopy.textContent;
+                diff.tagName = elemNextCopy.tagName;
+              } else {
+                // compare
+                var contentPrev = elemPrevCopy.textContent;
+                var contentNext = elemNextCopy.textContent;
+
+                if (!Object.is(contentPrev, contentNext)) {
+                  diff.newContent = contentNext;
+                  diff.oldContent = contentPrev;
+                }
               }
+
+              var chPr = elemPrevCopy.children || [];
+              var chNx = elemNextCopy.children || [];
+              var length = Math.max(chPr.length, chNx.length);
+
+              for (var i = 0; i < length; i++) {
+                var returnedDiff = findDiff(chPr[i], chNx[i], i);
+
+                if (returnedDiff.newContent || returnedDiff.oldContent) {
+                  diff.children.push(returnedDiff);
+                }
+              }
+
+              return diff;
               /*
               const previousKeys = Object.keys(elemPrev.attributes);
               const nextKeys = Object.keys(elemNext.attributes);
@@ -241,29 +274,27 @@ function html(literals) {
                 }
               }
               */
-
-
-              diff.children = elemNext.children.map(function (v, i) {
-                return findDiff(elemPrev.children[i], v, i);
-              });
-              return diff;
             };
 
-            var diff = findDiff(previousVDOM, nextVDOM);
+            var diffs = findDiff(previousVDOM, nextVDOM);
 
             var applyDiffs = function applyDiffs(diffElem, htmlElem) {
-              var diffText = diffElem.textContent || '',
-                  children = diffElem.children || [];
-              diffText != '' && (htmlElem.textContent = diffText);
-              children.forEach(function (v, i) {
-                return applyDiffs(v, _this.children[i]);
-              });
+              if (typeof diffElem === 'undefined') return;
+              var newContent = diffElem.newContent || '';
+              var elem = diffElem.index < 0 ? htmlElem : htmlElem.children[diffElem.index];
+              if (newContent != '') elem.textContent = newContent;
+              var children = diffElem.children;
+
+              if (children.length) {
+                for (var k in children) {
+                  applyDiffs(children[k], elem.children[k]);
+                }
+              }
             };
 
-            applyDiffs(diff, _this);
-          };
+            applyDiffs(diffs, _this);
+          }; //const nullify = () => {};
 
-          var nullify = function nullify() {};
 
           searchDiffs(previousMarkup, nextMarkup);
         } else {

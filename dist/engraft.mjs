@@ -153,7 +153,7 @@ export function html(literals, ...substs) {
           let {result, elemEvents} = arr;
           console.info('Element is in the DOM?: ' + this.isConnected);
 
-          if (this.isConnected && !isEmptyObject(this.vdom) && !document.contains(this)) {
+          if (this.isConnected && !isEmptyObject(this.vdom) && document.contains(this)) {
             let nextMarkup = HTMLtoJSON(result, this);
             let previousMarkup = this.vdom;
             
@@ -161,18 +161,51 @@ export function html(literals, ...substs) {
               let sameKeys = [], delPreviousKeys = [], delNextKeys = [];
               let copyNext = Object.assign({}, nextVDOM);
               
-              const findDiff = (elemPrev={textContent: '', children: []}, elemNext, index) => {
+              const findDiff = (elemPrev, elemNext, index=-1) => {
+                const hasPrev = typeof elemPrev === 'undefined',
+                  hasNext = typeof elemNext === 'undefined';
+
+                if (hasPrev && hasNext) {
+                  console.log('nothing to change');
+                  return;
+                }
+                const elemPrevCopy = Object.assign({}, elemPrev),
+                  elemNextCopy = Object.assign({}, elemNext);
                 let diff = {
-                  textContent: '',
-                  attributes: {},
+                  newContent: '',
+                  oldContent: '',
                   children: [],
                   index
                 }
-                const contentPrev = elemPrev.textContent;
-                const contentNext = elemNext.textContent;
-                if (contentNext != null && !Object.is(contentPrev, contentNext)) {
-                    diff.textContent = contentNext;
+                
+                if (!hasPrev && hasNext) {
+                  // remove
+                  diff.oldContent = elemPrevCopy.textContent;
+                  diff.newContent = '';
+                } else if (hasPrev && !hasNext) {
+                  // add
+                  diff.oldContent = '';
+                  diff.newContent = elemNextCopy.textContent;
+                  diff.tagName = elemNextCopy.tagName;
+                } else {
+                  // compare
+                  const contentPrev = elemPrevCopy.textContent;
+                  const contentNext = elemNextCopy.textContent;
+                  if (!Object.is(contentPrev, contentNext)) {
+                    diff.newContent = contentNext;
+                    diff.oldContent = contentPrev;
                   }
+                }
+                const chPr = elemPrevCopy.children || [];
+                const chNx = elemNextCopy.children || [];
+                const length = Math.max(chPr.length, chNx.length);
+                for (let i = 0; i < length; i++) {
+                  const returnedDiff = findDiff(chPr[i], chNx[i], i);
+                  if (returnedDiff.newContent || returnedDiff.oldContent) {
+                    diff.children.push(returnedDiff);
+                  }
+                }
+                return diff;
                 /*
                 const previousKeys = Object.keys(elemPrev.attributes);
                 const nextKeys = Object.keys(elemNext.attributes);
@@ -186,20 +219,29 @@ export function html(literals, ...substs) {
                   }
                 }
                 */
-                diff.children = elemNext.children.map((v, i) => findDiff(elemPrev.children[i], v, i));
-                return diff;
               }
-              const diff = findDiff(previousVDOM, nextVDOM);
+              const diffs = findDiff(previousVDOM, nextVDOM);
 
               const applyDiffs = (diffElem, htmlElem) => {
-                const diffText = diffElem.textContent || '',
-                children = diffElem.children || [];
-                diffText != '' && (htmlElem.textContent = diffText);
-                children.forEach((v, i) => applyDiffs(v, this.children[i]));
+
+                if (typeof diffElem === 'undefined')
+                  return;
+
+                const newContent = diffElem.newContent || '';
+                let elem = diffElem.index < 0 ? htmlElem : htmlElem.children[diffElem.index];
+                
+                if (newContent != '') 
+                elem.textContent = newContent;
+                const children = diffElem.children;
+                if (children.length) {
+                  for (let k in children) {
+                    applyDiffs(children[k], elem.children[k]);
+                  }
+                }
               };
-              applyDiffs(diff, this);
+              applyDiffs(diffs, this);
             }
-            const nullify = () => {};
+            //const nullify = () => {};
             searchDiffs(previousMarkup, nextMarkup);
           } else {
             this.innerHTML = result;
