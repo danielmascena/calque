@@ -48,10 +48,18 @@ function HTMLtoJSON(template, Element) {
           docNode.loadXML(htmlTmpl); 
     }*/
 		if (Element != null && Element instanceof HTMLElement) {
-			let {tagName, attributes} = Element;
-			let firstChild = docNode.body.firstChild;
-			let children = docNode.body.children;
-			htmlMarkup = {tagName, attributes, firstChild: (firstChild.nodeType === 3 ? firstChild : document.createTextNode('')), children};
+			const {tagName, attributes} = Element,
+				body = docNode.body,
+				firstChild = body.firstChild,
+				textContent = body.textContent,
+				children = docNode.body.children;
+			htmlMarkup = {
+				tagName, 
+				attributes, 
+				textContent,
+				firstChild: (firstChild.nodeType === 3 ? firstChild : document.createTextNode('')), 
+				children
+			};
 		}
 	} else if (typeof template === 'object') {
 		htmlMarkup = template;
@@ -60,7 +68,9 @@ function HTMLtoJSON(template, Element) {
 		tagName: 
       e.tagName,
 		textValue:
-      (e.firstChild && e.firstChild.nodeValue),
+			(e.firstChild && e.firstChild.nodeValue),
+		textContent: 
+			e.textContent,
 		attributes:
       Object.fromEntries(Array.from(e.attributes, ({name, value}) => [name, value])),
 		children:
@@ -160,8 +170,8 @@ export function html(literals, ...substs) {
    					const searchDiffs = (previousVDOM, nextVDOM) => {
               
    						const findDiff = (elemPrev, elemNext, index) => {
-   							const isEmptyPrev = typeof elemPrev === 'undefined',
-   								isEmptyNext = typeof elemNext === 'undefined';
+   							const isEmptyPrev = Object.is(typeof elemPrev, 'undefined'),
+   								isEmptyNext = Object.is(typeof elemNext, 'undefined');
 
    							if (isEmptyPrev && isEmptyNext) {
    								console.log('nothing to change');
@@ -172,7 +182,8 @@ export function html(literals, ...substs) {
    							let diff = {
    								newContent: '',
    								oldContent: '',
-   								children: [],
+									 children: [],
+									 index
    							};
    							if (!isEmptyPrev && isEmptyNext) {
    								// remove
@@ -189,21 +200,25 @@ export function html(literals, ...substs) {
    								// compare
    								const contentPrev = elemPrevCopy.textValue;
    								const contentNext = elemNextCopy.textValue;
-   								if (!Object.is(contentPrev, contentNext)) {
+   								if (contentPrev !== contentNext) {
    									diff.newContent = contentNext;
    									diff.oldContent = contentPrev;
-   									diff.index = index;
+   								} else {
+										 diff.textContent = elemNextCopy.textContent;
    								}
    							}
    							const chPr = elemPrevCopy.children || [];
    							const chNx = elemNextCopy.children || [];
-   							const length = Math.max(chPr.length, chNx.length);
-   							for (let i = 0; i < length; i++) {
-   								const returnedDiff = findDiff(chPr[i], chNx[i], i);
-   								if (returnedDiff.newContent || returnedDiff.oldContent) {
-   									diff.children.push(returnedDiff);
-   								}
-   							}
+								 const length = Math.max(chPr.length, chNx.length);
+								 if (length > 0 && elemPrevCopy.textContent !== elemNextCopy.textContent) {
+									 for (let i = 0; i < length; i++) {
+										 const returnedDiff = findDiff(chPr[i], chNx[i], i);
+										 if ((returnedDiff.newContent || returnedDiff.oldContent) 
+										 	|| (elemPrevCopy.textContent !== elemNextCopy.textContent && returnedDiff.children.length > 0)) {
+											 diff.children.push(returnedDiff);
+										 }
+									 }
+								 }
    							return diff;
    							/*
                 const previousKeys = Object.keys(elemPrev.attributes);
@@ -223,19 +238,18 @@ export function html(literals, ...substs) {
 
    						const applyDiffs = (diffElem, htmlElem) => {
 
-   							let isEmptyDiff = typeof diffElem === 'undefined',
-   								isEmptyHtmlEl = typeof htmlElem === 'undefined';
+   							let isEmptyDiff = Object.is(typeof diffElem, 'undefined'),
+   								isEmptyHtmlEl = Object.is(typeof htmlElem, 'undefined');
                    
    							if (isEmptyDiff && isEmptyHtmlEl) {
    								console.log('no diffs to apply');
    								return;
    							}
-                
    							const children = diffElem.children;
-   							if (children.length) {
+   							if (children.length && diffElem.textContent !== htmlElem.textContent) {
    								for (let elDf of children) {
    									const htmlCh = htmlElem.children;
-   									const elHT = elDf.index < htmlCh.length ? htmlCh[elDf.index] : htmlElem;
+   									const elHT = (elDf.index < htmlCh.length) ? htmlCh[elDf.index] : htmlElem;
    									applyDiffs(elDf, elHT);
    								}
    							}
@@ -245,14 +259,14 @@ export function html(literals, ...substs) {
    									console.log('content updating');
    								} else {
    									const newElem = document.createElement(diffElem.tagName);
-   									newElem.firstChild.nodeValue = diffElem.newContent;
+   									const textNode = document.createTextNode(diffElem.newContent);
+   									newElem.appendChild(textNode);
    									htmlElem.appendChild(newElem);
    								}
    							}
    							else if (diffElem.oldContent) {
    								htmlElem.remove();
    							}
-   							
    						};
    						applyDiffs(diffs, this);
    					}

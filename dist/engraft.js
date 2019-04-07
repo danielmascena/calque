@@ -70,12 +70,15 @@ function HTMLtoJSON(template, Element) {
 
     if (Element != null && Element instanceof HTMLElement) {
       var tagName = Element.tagName,
-          attributes = Element.attributes;
-      var firstChild = docNode.body.firstChild;
-      var children = docNode.body.children;
+          attributes = Element.attributes,
+          body = docNode.body,
+          firstChild = body.firstChild,
+          textContent = body.textContent,
+          children = docNode.body.children;
       htmlMarkup = {
         tagName: tagName,
         attributes: attributes,
+        textContent: textContent,
         firstChild: firstChild.nodeType === 3 ? firstChild : document.createTextNode(''),
         children: children
       };
@@ -88,6 +91,7 @@ function HTMLtoJSON(template, Element) {
     return {
       tagName: e.tagName,
       textValue: e.firstChild && e.firstChild.nodeValue,
+      textContent: e.textContent,
       attributes: Object.fromEntries(Array.from(e.attributes, function (_ref) {
         var name = _ref.name,
             value = _ref.value;
@@ -204,14 +208,9 @@ function html(literals) {
           var previousMarkup = this.vdom;
 
           var searchDiffs = function searchDiffs(previousVDOM, nextVDOM) {
-            var sameKeys = [],
-                delPreviousKeys = [],
-                delNextKeys = [];
-            var copyNext = Object.assign({}, nextVDOM);
-
             var findDiff = function findDiff(elemPrev, elemNext, index) {
-              var isEmptyPrev = typeof elemPrev === 'undefined',
-                  isEmptyNext = typeof elemNext === 'undefined';
+              var isEmptyPrev = Object.is(_typeof(elemPrev), 'undefined'),
+                  isEmptyNext = Object.is(_typeof(elemNext), 'undefined');
 
               if (isEmptyPrev && isEmptyNext) {
                 console.log('nothing to change');
@@ -223,7 +222,8 @@ function html(literals) {
               var diff = {
                 newContent: '',
                 oldContent: '',
-                children: []
+                children: [],
+                index: index
               };
 
               if (!isEmptyPrev && isEmptyNext) {
@@ -242,10 +242,11 @@ function html(literals) {
                 var contentPrev = elemPrevCopy.textValue;
                 var contentNext = elemNextCopy.textValue;
 
-                if (!Object.is(contentPrev, contentNext)) {
+                if (contentPrev !== contentNext) {
                   diff.newContent = contentNext;
                   diff.oldContent = contentPrev;
-                  diff.index = index;
+                } else {
+                  diff.textContent = elemNextCopy.textContent;
                 }
               }
 
@@ -253,11 +254,13 @@ function html(literals) {
               var chNx = elemNextCopy.children || [];
               var length = Math.max(chPr.length, chNx.length);
 
-              for (var i = 0; i < length; i++) {
-                var returnedDiff = findDiff(chPr[i], chNx[i], i);
+              if (length > 0 && elemPrevCopy.textContent !== elemNextCopy.textContent) {
+                for (var i = 0; i < length; i++) {
+                  var returnedDiff = findDiff(chPr[i], chNx[i], i);
 
-                if (returnedDiff.newContent || returnedDiff.oldContent) {
-                  diff.children.push(returnedDiff);
+                  if (returnedDiff.newContent || returnedDiff.oldContent || elemPrevCopy.textContent !== elemNextCopy.textContent && returnedDiff.children.length > 0) {
+                    diff.children.push(returnedDiff);
+                  }
                 }
               }
 
@@ -280,8 +283,8 @@ function html(literals) {
             var diffs = findDiff(previousVDOM, nextVDOM, -1);
 
             var applyDiffs = function applyDiffs(diffElem, htmlElem) {
-              var isEmptyDiff = typeof diffElem === 'undefined',
-                  isEmptyHtmlEl = typeof htmlElem === 'undefined';
+              var isEmptyDiff = Object.is(_typeof(diffElem), 'undefined'),
+                  isEmptyHtmlEl = Object.is(_typeof(htmlElem), 'undefined');
 
               if (isEmptyDiff && isEmptyHtmlEl) {
                 console.log('no diffs to apply');
@@ -290,7 +293,7 @@ function html(literals) {
 
               var children = diffElem.children;
 
-              if (children.length) {
+              if (children.length && diffElem.textContent !== htmlElem.textContent) {
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
                 var _iteratorError = undefined;
@@ -324,7 +327,8 @@ function html(literals) {
                   console.log('content updating');
                 } else {
                   var newElem = document.createElement(diffElem.tagName);
-                  newElem.firstChild.nodeValue = diffElem.newContent;
+                  var textNode = document.createTextNode(diffElem.newContent);
+                  newElem.appendChild(textNode);
                   htmlElem.appendChild(newElem);
                 }
               } else if (diffElem.oldContent) {
