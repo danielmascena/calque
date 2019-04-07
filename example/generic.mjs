@@ -39,7 +39,8 @@ export default class GenericElement extends HTMLElement {
             ${this.hasAttribute('data-list') 
               && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
           </ul>
-          <button onclick="${ (function addItem(e) {
+          <button onclick="${ 
+            (function addItem(e) {
               let previousVal = +e.target.previousElementSibling.lastElementChild.textContent;
               let oldVal = this.getAttribute('data-list');
               this.setAttribute('data-list', oldVal+','+(++previousVal));

@@ -62,21 +62,21 @@ function HTMLtoJSON(template, Element) {
       docNode = parser.parseFromString(template, 'text/html');
     }
     /*else { 
-        docNode = new ActiveXObject('Microsoft.XMLDOM');
-        docNode.async = false;
-        docNode.loadXML(htmlTmpl); 
+          docNode = new ActiveXObject('Microsoft.XMLDOM');
+          docNode.async = false;
+          docNode.loadXML(htmlTmpl); 
     }*/
 
 
     if (Element != null && Element instanceof HTMLElement) {
       var tagName = Element.tagName,
           attributes = Element.attributes;
-      var textContent = null;
+      var firstChild = docNode.body.firstChild;
       var children = docNode.body.children;
       htmlMarkup = {
         tagName: tagName,
-        textContent: textContent,
         attributes: attributes,
+        firstChild: firstChild.nodeType === 3 ? firstChild : document.createTextNode(''),
         children: children
       };
     }
@@ -87,7 +87,7 @@ function HTMLtoJSON(template, Element) {
   var toJSON = function toJSON(e) {
     return {
       tagName: e.tagName,
-      textContent: e.textContent,
+      textValue: e.firstChild && e.firstChild.nodeValue,
       attributes: Object.fromEntries(Array.from(e.attributes, function (_ref) {
         var name = _ref.name,
             value = _ref.value;
@@ -138,9 +138,9 @@ function html(literals) {
         subst = tmp || subst.join('');
       } else if (type === 'object') {
         /* HTML5 specification says:
-          Then, the start tag may have a number of attributes, [...]. 
-          Attributes must be separated from each other by one or more space characters.
-        */
+              Then, the start tag may have a number of attributes, [...]. 
+              Attributes must be separated from each other by one or more space characters.
+            */
         subst = lit.slice(-8).match(/\s+style=["']/) ? Object.entries(subst).map(function (v) {
           return v.join(':');
         }).join(';') : recoverContent(subst);
@@ -209,12 +209,11 @@ function html(literals) {
                 delNextKeys = [];
             var copyNext = Object.assign({}, nextVDOM);
 
-            var findDiff = function findDiff(elemPrev, elemNext) {
-              var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
-              var hasPrev = typeof elemPrev === 'undefined',
-                  hasNext = typeof elemNext === 'undefined';
+            var findDiff = function findDiff(elemPrev, elemNext, index) {
+              var isEmptyPrev = typeof elemPrev === 'undefined',
+                  isEmptyNext = typeof elemNext === 'undefined';
 
-              if (hasPrev && hasNext) {
+              if (isEmptyPrev && isEmptyNext) {
                 console.log('nothing to change');
                 return;
               }
@@ -224,27 +223,29 @@ function html(literals) {
               var diff = {
                 newContent: '',
                 oldContent: '',
-                children: [],
-                index: index
+                children: []
               };
 
-              if (!hasPrev && hasNext) {
+              if (!isEmptyPrev && isEmptyNext) {
                 // remove
-                diff.oldContent = elemPrevCopy.textContent;
+                diff.oldContent = elemPrevCopy.textValue;
                 diff.newContent = '';
-              } else if (hasPrev && !hasNext) {
+                diff.index = -1;
+              } else if (isEmptyPrev && !isEmptyNext) {
                 // add
                 diff.oldContent = '';
-                diff.newContent = elemNextCopy.textContent;
+                diff.newContent = elemNextCopy.textValue;
                 diff.tagName = elemNextCopy.tagName;
+                diff.index = index + 1;
               } else {
                 // compare
-                var contentPrev = elemPrevCopy.textContent;
-                var contentNext = elemNextCopy.textContent;
+                var contentPrev = elemPrevCopy.textValue;
+                var contentNext = elemNextCopy.textValue;
 
                 if (!Object.is(contentPrev, contentNext)) {
                   diff.newContent = contentNext;
                   diff.oldContent = contentPrev;
+                  diff.index = index;
                 }
               }
 
@@ -262,33 +263,72 @@ function html(literals) {
 
               return diff;
               /*
-              const previousKeys = Object.keys(elemPrev.attributes);
-              const nextKeys = Object.keys(elemNext.attributes);
-              const joinKeys = new Set([...previousKeys, ...nextKeys]);
-              for (let key of joinKeys) {
-                if (previousKeys.includes(key)) {
-                  Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
-                      || (diff.attributes[key] = elemNext.attributes[key]);
-                } else {
-                  diff.attributes[key] = elemNext.attributes[key];
-                }
-              }
-              */
+                    const previousKeys = Object.keys(elemPrev.attributes);
+                    const nextKeys = Object.keys(elemNext.attributes);
+                    const joinKeys = new Set([...previousKeys, ...nextKeys]);
+                    for (let key of joinKeys) {
+                      if (previousKeys.includes(key)) {
+                        Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
+                            || (diff.attributes[key] = elemNext.attributes[key]);
+                      } else {
+                        diff.attributes[key] = elemNext.attributes[key];
+                      }
+                    }
+                    */
             };
 
-            var diffs = findDiff(previousVDOM, nextVDOM);
+            var diffs = findDiff(previousVDOM, nextVDOM, -1);
 
             var applyDiffs = function applyDiffs(diffElem, htmlElem) {
-              if (typeof diffElem === 'undefined') return;
-              var newContent = diffElem.newContent || '';
-              var elem = diffElem.index < 0 ? htmlElem : htmlElem.children[diffElem.index];
-              if (newContent != '') elem.textContent = newContent;
+              var isEmptyDiff = typeof diffElem === 'undefined',
+                  isEmptyHtmlEl = typeof htmlElem === 'undefined';
+
+              if (isEmptyDiff && isEmptyHtmlEl) {
+                console.log('no diffs to apply');
+                return;
+              }
+
               var children = diffElem.children;
 
               if (children.length) {
-                for (var k in children) {
-                  applyDiffs(children[k], elem.children[k]);
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                  for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var elDf = _step.value;
+                    var htmlCh = htmlElem.children;
+                    var elHT = elDf.index < htmlCh.length ? htmlCh[elDf.index] : htmlElem;
+                    applyDiffs(elDf, elHT);
+                  }
+                } catch (err) {
+                  _didIteratorError = true;
+                  _iteratorError = err;
+                } finally {
+                  try {
+                    if (!_iteratorNormalCompletion && _iterator.return != null) {
+                      _iterator.return();
+                    }
+                  } finally {
+                    if (_didIteratorError) {
+                      throw _iteratorError;
+                    }
+                  }
                 }
+              }
+
+              if (diffElem.newContent) {
+                if (diffElem.oldContent) {
+                  htmlElem.firstChild.nodeValue = diffElem.newContent;
+                  console.log('content updating');
+                } else {
+                  var newElem = document.createElement(diffElem.tagName);
+                  newElem.firstChild.nodeValue = diffElem.newContent;
+                  htmlElem.appendChild(newElem);
+                }
+              } else if (diffElem.oldContent) {
+                htmlElem.remove();
               }
             };
 
@@ -301,13 +341,13 @@ function html(literals) {
           this.innerHTML = result;
           this.vdom = HTMLtoJSON(result, this);
           console.log(this.vdom);
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
 
           try {
-            for (var _iterator = elemEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var event = _step.value;
+            for (var _iterator2 = elemEvents[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var event = _step2.value;
               var engraftID = event.engraftID,
                   engraftIDValue = event.engraftIDValue,
                   eventHandler = event.eventHandler,
@@ -327,16 +367,16 @@ function html(literals) {
               }
             }
           } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion && _iterator.return != null) {
-                _iterator.return();
+              if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+                _iterator2.return();
               }
             } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
+              if (_didIteratorError2) {
+                throw _iteratorError2;
               }
             }
           }
