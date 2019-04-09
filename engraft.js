@@ -271,7 +271,8 @@ export function html(literals, ...substs) {
    						applyDiffs(diffs, this);
    					}
    					//const nullify = () => {};
-   					searchDiffs(previousMarkup, nextMarkup);
+						 searchDiffs(previousMarkup, nextMarkup);
+						 this.vdom = nextMarkup;
    				} else {
    					this.innerHTML = result;
    					this.vdom = HTMLtoJSON(result, this);

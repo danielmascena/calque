@@ -341,6 +341,7 @@ function html(literals) {
 
 
           searchDiffs(previousMarkup, nextMarkup);
+          this.vdom = nextMarkup;
         } else {
           this.innerHTML = result;
           this.vdom = HTMLtoJSON(result, this);

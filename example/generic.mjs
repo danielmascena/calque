@@ -17,7 +17,8 @@ export default class GenericElement extends HTMLElement {
   connectedCallback() {
     this.render();
   }
-  clickHandler(){
+  clickHandler(event){
+    event.preventDefault();
     this.setAttribute('name', 'Lacuna');
     console.log(this.num++);
   }
@@ -32,18 +33,19 @@ export default class GenericElement extends HTMLElement {
 
     console.log('list', this.getAttribute('data-list'));
     this[innerHTML] = html`
-        <div id onblur="${ e => console.log(e.target.textContent) }" style="${ {"background-color": "lightblue"} }"
-          onclick="${this.clickHandler.bind(this)}" contenteditable>
+        <div id style="${ {"background-color": "lightblue"} }"
+          onclick="${this.clickHandler.bind(this)}">
           &#955; ♏ (see browser console for see the changes)
           <ul>
             ${this.hasAttribute('data-list') 
               && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
           </ul>
           <button onclick="${ 
-            (function addItem(e) {
-              let previousVal = +e.target.previousElementSibling.lastElementChild.textContent;
+            (function addItem(event) {
+              let previousVal = +event.target.previousElementSibling.lastElementChild.textContent;
+              event.stopPropagation();
               let oldVal = this.getAttribute('data-list');
-              this.setAttribute('data-list', oldVal+','+(++previousVal));
+              this.setAttribute('data-list', oldVal + ',' + (++previousVal));
               console.log(previousVal, oldVal);
             }).bind(this)
           }">+</button>
@@ -56,7 +58,7 @@ export default class GenericElement extends HTMLElement {
         </ol>
         ${ (this.stars.length > 5)
             ? html`<p>The constellation is complete</p>`
-            : html`<p>There is some missing stars</p>`}
+            : html`<p onblur="${ e => console.log(e.target.textContent) }" contenteditable>There is some missing stars</p>`}
         <p onclick="${() => alert(this.num)}">
           ${ new function(lib){this.libName = lib;}('EngraftJS') }
           ${ {toString: () => 'method override'} }
