@@ -4,10 +4,9 @@
 
 `"use (con)strict";`
 
-The self-definition of [Constrict](https://www.wordnik.com/words/constrict) resume the goal of the library: _To make smaller or narrower by binding or squeezing._ (1) _To draw together; to render narrower or smaller; to bind; to cramp; to contract or cause to shrink._ (2). 
+The self-definition of [Constrict](https://www.wordnik.com/words/constrict) resume the goal of the library: _To make smaller or narrower by binding or squeezing._; (1) _To draw together; to render narrower or smaller; to bind; to cramp; to contract or cause to shrink._ (2);  from Latin constrict - _bound tightly together_.
 
-The library constrict the workload needed to deal with DOM elements by providing the event binds and other features using the structure web page language: the pseudo HTML representation. This enhance the readabilly of the UI component.
-
+By this definitions, the library pretend to constrict the workload needed to deal with DOM elements by providing the event binds and other features using the structure web page language: the pseudo HTML representation. This enhance the readabilly of the UI component and reduce the boilerplate code demanded.
 
 ConstrictJS is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development using the Web Platform. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
 
