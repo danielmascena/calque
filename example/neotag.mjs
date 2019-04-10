@@ -1,4 +1,6 @@
-import {innerHTML, html} from '../dist/engraft.mjs';
+import {innerHTML, html} from '../dist/constrict.mjs';
+
+'use strict';
 
 function NeoTag() {
     console.log(this.constructor);

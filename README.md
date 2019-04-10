@@ -1,14 +1,17 @@
-# engraft.js 🎋
+# constrict.js 🗜️
 
 🚧 Status: In Development 🛠️
 
+`"use (con)strict";`
 
-EngraftJS is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development using the Web Platform. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
+The self-definition of [Constrict](https://www.wordnik.com/words/constrict) resume the goal of the library: _To make smaller or narrower by binding or squeezing._ (1) _To draw together; to render narrower or smaller; to bind; to cramp; to contract or cause to shrink._ (2). 
+
+ConstrictJS is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development using the Web Platform. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
 
 ## Install via [npm](https://npmjs.com)
 
 ```sh
-$ npm install --save engraft
+$ npm install --save constrict
 ```
 
 ## Features
@@ -21,11 +24,11 @@ The [HTML templating implementation](http://exploringjs.com/es6/ch_template-lite
 
 Template tags are simply functions, which allows to create domain-specific languages (DSLs), an important feature of the Template literals additon of ECMAscript 6.
 
-The motivation for EngraftJS was to provide a light way to use HTML elements inside JavaScript, together with Web Components, allow the componentization of user interfaces--splitting them up into small chunks of related HTML and JavaScript. Grammar in EngraftJS is mostly the same as in HTML, but there are subtle differences to watch out for. The differences from traditional HTML are listed below:
+The motivation for ConstrictJS was to provide a light way to use HTML elements inside JavaScript, together with Web Components, allow the componentization of user interfaces--splitting them up into small chunks of related HTML and JavaScript. Grammar in ConstrictJS is mostly the same as in HTML, but there are subtle differences to watch out for. The differences from traditional HTML are listed below:
 
-1. Adding Event Listeners smoothly: use function reference `onevent="myFunction"`, not function invocation `onevent="myFunction()"`. Note that in HTML, event listener names are written in all lowercase, such as onclick or onmouseover. In some libraries, however, like JSX or lit-html, event listener names are written in camelCase or with the prefix @, such as onClick or @click, respectively. The philosophy behind EngraftJS is to avoid at the most any divergence from common HTML syntax.
+1. Adding Event Listeners smoothly: use function reference `onevent="myFunction"`, not function invocation `onevent="myFunction()"`. Note that in HTML, event listener names are written in all lowercase, such as onclick or onmouseover. In some libraries, however, like JSX or lit-html, event listener names are written in camelCase or with the prefix @, such as onClick or @click, respectively. The philosophy behind ConstrictJS is to avoid at the most any divergence from common HTML syntax.
 2. Passing inline CSS properties not only through strings, but by literal objects too: when using styling objects the [JSON](https://www.json.org/)-based format is mandatory, example: `style='{"border-radius": "7px", "color": "green"}'`. **OBS:** single properties names will work `{color: "blue"}` but are better to follow the standard rules.
-3. Avoid use the **innerHTML** property directly (like `document.body.innerHTML` or `document.body["innerHTML"]`), instead, use the `innerHTML` Symbol reference (`document.body[innerHTML]`) and the  `html` tagged template function provided by the EngraftJS library.
+3. Avoid use the **innerHTML** property directly (like `document.body.innerHTML` or `document.body["innerHTML"]`), instead, use the `innerHTML` Symbol reference (`document.body[innerHTML]`) and the  `html` tagged template function provided by the ConstrictJS library.
 4. Follow the [best practices](https://google.github.io/styleguide/htmlcssguide.html#HTML_Quotation_Marks), we use double quotes for attributes values.
 
 _html_ method is primarily a convenience function, and it can be especially useful when manipulating callback events.

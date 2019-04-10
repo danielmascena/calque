@@ -1,5 +1,5 @@
 /**
- * EngraftJS
+ * ConstrictJS
  * @author: Daniel Mascena <danielmascena@gmail.com>
  */
 
@@ -8,8 +8,8 @@
 'use strict';
 
 export const innerHTML = Symbol('innerHTML');
-const _engraft = '🎋';
-const Engraft = {
+const _constrict = '🗜️';
+const Constrict = {
 	innerHTML,
 	html,
 };
@@ -89,7 +89,7 @@ export function html(literals, ...substs) {
 			if (typeof obj === 'object') {
 				if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;
 
-				else if ('_engraft' in obj) {
+				else if ('_constrict' in obj) {
 					obj.elemEvents.length && (elemEvents = [
 						...elemEvents,
 						...obj.elemEvents
@@ -127,15 +127,15 @@ export function html(literals, ...substs) {
 				const quote = lit.charAt(lit.length-1);
 				const charNumber = quote.charCodeAt();
 				const eventType = strMatch[0].slice(3, -2);
-				const engraftID = '_engraft-id-' + hashCode();
-				const engraftIDValue = hashCode(true);
+				const constrictID = '_constrict-id-' + hashCode();
+				const constrictIDValue = hashCode(true);
 				let handlerBody = String(subst);
 				if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
 					const toggleQuote = charNumber === 34 ? `'` : `"`;   
 					handlerBody = `${toggleQuote}${type} ${subst.name.substring(5)} ${handlerBody.substring(9)}${toggleQuote}`;
 				}
-				elemEvents.push({engraftID, engraftIDValue, eventHandler: subst, eventType, handlerBody});
-				subst = `${handlerBody}${quote} ${engraftID}=${quote}${engraftIDValue}`;
+				elemEvents.push({constrictID, constrictIDValue, eventHandler: subst, eventType, handlerBody});
+				subst = `${handlerBody}${quote} ${constrictID}=${quote}${constrictIDValue}`;
 			}
 		} 
 		if (lit.endsWith('!')) {
@@ -148,12 +148,12 @@ export function html(literals, ...substs) {
 	);
 	result += raw[raw.length - 1];
 
-	return {result, elemEvents, _engraft};
+	return {result, elemEvents, _constrict};
 }
 
-(function engraft() {
-	_engraft in window ||
-   (window[_engraft] = !function() {
+(function constrict() {
+	_constrict in window ||
+   (window[_constrict] = !function() {
    	Object.defineProperties(HTMLElement.prototype, {
    		[innerHTML]: {
    			get() {
@@ -189,7 +189,7 @@ export function html(literals, ...substs) {
    								// remove
    								diff.oldContent = elemPrevCopy.textValue;
    								diff.newContent = '';
-   								diff.index = -1;
+   								diff.index = index;
    							} else if (isEmptyPrev && !isEmptyNext) {
    								// add
    								diff.oldContent = '';
@@ -278,8 +278,8 @@ export function html(literals, ...substs) {
    					this.vdom = HTMLtoJSON(result, this);
    					console.log(this.vdom);
    					for (let event of elemEvents) {
-   						let {engraftID, engraftIDValue, eventHandler, eventType, handlerBody} = event;
-   						let elem = this.querySelector(`[${engraftID}="${engraftIDValue}"]`);
+   						let {constrictID, constrictIDValue, eventHandler, eventType, handlerBody} = event;
+   						let elem = this.querySelector(`[${constrictID}="${constrictIDValue}"]`);
 
    						if (elem != null && 
                   typeof eventHandler === 'function') {
@@ -289,7 +289,7 @@ export function html(literals, ...substs) {
    								throw new TypeError('function expression must have a name');
    							}
    							elem[eventType] && elem.addEventListener(eventType, eventHandler);
-   							elem.removeAttribute(engraftID);
+   							elem.removeAttribute(constrictID);
    						}
    					}
    				}
@@ -305,4 +305,4 @@ export function html(literals, ...substs) {
    }());
 }());
 
-export default Engraft;
+export default Constrict;

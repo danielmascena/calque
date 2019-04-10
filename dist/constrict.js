@@ -1,5 +1,5 @@
 /**
- * EngraftJS
+ * ConstrictJS
  * @author: Daniel Mascena <danielmascena@gmail.com>
  */
 
@@ -26,8 +26,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 var innerHTML = Symbol('innerHTML');
 exports.innerHTML = innerHTML;
-var _engraft = '🎋';
-var Engraft = {
+var _constrict = '🗜️';
+var Constrict = {
   innerHTML: innerHTML,
   html: html
 };
@@ -112,7 +112,7 @@ function html(literals) {
       strMatch,
       recoverContent = function recoverContent(obj) {
     if (_typeof(obj) === 'object') {
-      if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;else if ('_engraft' in obj) {
+      if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;else if ('_constrict' in obj) {
         obj.elemEvents.length && (elemEvents = [].concat(_toConsumableArray(elemEvents), _toConsumableArray(obj.elemEvents)));
         return obj.result;
       }
@@ -152,8 +152,8 @@ function html(literals) {
         var quote = lit.charAt(lit.length - 1);
         var charNumber = quote.charCodeAt();
         var eventType = strMatch[0].slice(3, -2);
-        var engraftID = '_engraft-id-' + hashCode();
-        var engraftIDValue = hashCode(true);
+        var constrictID = '_constrict-id-' + hashCode();
+        var constrictIDValue = hashCode(true);
         var handlerBody = String(subst);
 
         if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
@@ -162,13 +162,13 @@ function html(literals) {
         }
 
         elemEvents.push({
-          engraftID: engraftID,
-          engraftIDValue: engraftIDValue,
+          constrictID: constrictID,
+          constrictIDValue: constrictIDValue,
           eventHandler: subst,
           eventType: eventType,
           handlerBody: handlerBody
         });
-        subst = "".concat(handlerBody).concat(quote, " ").concat(engraftID, "=").concat(quote).concat(engraftIDValue);
+        subst = "".concat(handlerBody).concat(quote, " ").concat(constrictID, "=").concat(quote).concat(constrictIDValue);
       }
     }
 
@@ -184,12 +184,12 @@ function html(literals) {
   return {
     result: result,
     elemEvents: elemEvents,
-    _engraft: _engraft
+    _constrict: _constrict
   };
 }
 
-(function engraft() {
-  _engraft in window || (window[_engraft] = !function () {
+(function constrict() {
+  _constrict in window || (window[_constrict] = !function () {
     var _Object$definePropert;
 
     Object.defineProperties(HTMLElement.prototype, (_Object$definePropert = {}, _defineProperty(_Object$definePropert, innerHTML, {
@@ -230,7 +230,7 @@ function html(literals) {
                 // remove
                 diff.oldContent = elemPrevCopy.textValue;
                 diff.newContent = '';
-                diff.index = -1;
+                diff.index = index;
               } else if (isEmptyPrev && !isEmptyNext) {
                 // add
                 diff.oldContent = '';
@@ -353,12 +353,12 @@ function html(literals) {
           try {
             for (var _iterator2 = elemEvents[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
               var event = _step2.value;
-              var engraftID = event.engraftID,
-                  engraftIDValue = event.engraftIDValue,
+              var constrictID = event.constrictID,
+                  constrictIDValue = event.constrictIDValue,
                   eventHandler = event.eventHandler,
                   eventType = event.eventType,
                   handlerBody = event.handlerBody;
-              var elem = this.querySelector("[".concat(engraftID, "=\"").concat(engraftIDValue, "\"]"));
+              var elem = this.querySelector("[".concat(constrictID, "=\"").concat(constrictIDValue, "\"]"));
 
               if (elem != null && typeof eventHandler === 'function') {
                 if (!eventHandler.name && handlerBody.startsWith('function')) {
@@ -368,7 +368,7 @@ function html(literals) {
                 }
 
                 elem[eventType] && elem.addEventListener(eventType, eventHandler);
-                elem.removeAttribute(engraftID);
+                elem.removeAttribute(constrictID);
               }
             }
           } catch (err) {
@@ -396,5 +396,5 @@ function html(literals) {
   }());
 })();
 
-var _default = Engraft;
+var _default = Constrict;
 exports.default = _default;

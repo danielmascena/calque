@@ -4,7 +4,7 @@
 
 'use strict';
 
-import Engraft, {html, innerHTML} from '../dist/engraft.mjs';
+import Constrict, {html, innerHTML} from '../dist/constrict.mjs';
 import GenericElement from './generic.mjs';
 
 export default function() {
@@ -15,7 +15,7 @@ export default function() {
   document.body.appendChild(sco);
 
   let p = document.createElement('p'), color = 'green';
-  p[Engraft.innerHTML] = Engraft.html `
+  p[Constrict.innerHTML] = Constrict.html `
       Lorem, ipsum dolor sit amet consectetur adipisicing elit.
       <span style="color: ${color}">
       Tincidunt</span> ornare massa eget egestas purus. Bibendum enim facilisis gravida

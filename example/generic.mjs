@@ -1,5 +1,5 @@
 
-import { innerHTML, html } from '../dist/engraft.mjs';
+import { innerHTML, html } from '../dist/constrict.mjs';
 
 export default class GenericElement extends HTMLElement {
   static get observedAttributes() {
@@ -49,6 +49,13 @@ export default class GenericElement extends HTMLElement {
               console.log(previousVal, oldVal);
             }).bind(this)
           }">+</button>
+          <button onclick="${
+            (function removeItem(event) {
+              let list = this.getAttribute('data-list');
+              let lastIndex = list.lastIndexOf(',');
+              this.setAttribute('data-list', list.slice(0, lastIndex));
+            }).bind(this) 
+          }">-</button>
         </div>
         <h1 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }" style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}
@@ -60,7 +67,7 @@ export default class GenericElement extends HTMLElement {
             ? html`<p>The constellation is complete</p>`
             : html`<p onblur="${ e => console.log(e.target.textContent) }" contenteditable>There is some missing stars</p>`}
         <p onclick="${() => alert(this.num)}">
-          ${ new function(lib){this.libName = lib;}('EngraftJS') }
+          ${ new function(lib){this.libName = lib;}('ConstrictJS') }
           ${ {toString: () => 'method override'} }
         </p>
         <input onfocus="${() => this.changeHandler.call(this)}" />

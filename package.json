@@ -1,18 +1,18 @@
 {
-  "name": "engraft",
+  "name": "constrict",
   "description": "🎋 A simple and tiny utility library for building fast web interfaces using regular JavaScript",
-  "version": "0.0.33",
-  "main": "dist/engraft.mjs",
+  "version": "0.0.34",
+  "main": "dist/constrict.mjs",
   "scripts": {
-    "lint": "eslint engraft.js",
+    "lint": "eslint constrict.js",
     "build": "npm run transpiler && npm run copy && npm run uglify",
-    "transpiler": "babel engraft.js --out-dir dist --presets=@babel/env",
-    "copy": "cp engraft.js dist/engraft.mjs",
-    "uglify": "mkdir -p dist/ && uglifyjs dist/engraft.js -m -o dist/engraft.min.js"
+    "transpiler": "babel constrict.js --out-dir dist --presets=@babel/env",
+    "copy": "cp constrict.js dist/constrict.mjs",
+    "uglify": "mkdir -p dist/ && uglifyjs dist/constrict.js -m -o dist/constrict.min.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/danielmascena/engraft.git"
+    "url": "https://github.com/danielmascena/constrict.git"
   },
   "keywords": [
     "Template Strings",
@@ -26,9 +26,9 @@
   "author": "Daniel Mascena <danielmascena@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/danielmascena/engraft/issues"
+    "url": "https://github.com/danielmascena/constrict/issues"
   },
-  "homepage": "https://github.com/danielmascena/engraft",
+  "homepage": "https://github.com/danielmascena/constrict",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
