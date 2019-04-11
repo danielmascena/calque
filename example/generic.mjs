@@ -2,38 +2,38 @@
 import { innerHTML, html } from '../dist/constrict.mjs';
 
 export default class GenericElement extends HTMLElement {
-  static get observedAttributes() {
-    return ['name', 'data-list'];
-  }
-  constructor(...args) {
-    super(...args);
-    this.num = 7;
-    this.text = 'changed';
-    this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
-  }
-  attributeChangedCallback() {
-    this.render();
-  }
-  connectedCallback() {
-    this.render();
-  }
-  clickHandler(event){
-    event.preventDefault();
-    this.setAttribute('name', 'Lacuna');
-    console.log(this.num++);
-  }
-  changeHandler(){
-    console.log(this.text);
-  }
-  render() {
-    console.log(this.getAttribute('name'), this.getAttribute('data-list'));
-    let someObj = null, 
-      size = 12, 
-      style = {'color': 'red', 'line-height': this.num, 'font-size': `${size*3}px`};
+	static get observedAttributes() {
+		return ['name', 'data-list'];
+	}
+	constructor(...args) {
+		super(...args);
+		this.num = 7;
+		this.text = 'changed';
+		this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
+	}
+	attributeChangedCallback() {
+		this.render();
+	}
+	connectedCallback() {
+		this.render();
+	}
+	clickHandler(event){
+		event.preventDefault();
+		this.setAttribute('name', 'Lacuna');
+		console.log(this.num++);
+	}
+	changeHandler(){
+		console.log(this.text);
+	}
+	render() {
+		console.log(this.getAttribute('name'), this.getAttribute('data-list'));
+		let someObj = null, 
+			size = 12, 
+			style = {'color': 'red', 'line-height': this.num, 'font-size': `${size*3}px`};
 
-    console.log('list', this.getAttribute('data-list'));
-    this[innerHTML] = html`
-        <div id style="${ {"background-color": "lightblue"} }"
+		console.log('list', this.getAttribute('data-list'));
+		this[innerHTML] = html`
+        <div id style="${ {'background-color': 'lightblue'} }"
           onclick="${this.clickHandler.bind(this)}">
           &#955; ♏ (see browser console for see the changes)
           <ul>
@@ -41,21 +41,24 @@ export default class GenericElement extends HTMLElement {
               && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
           </ul>
           <button onclick="${ 
-            (function addItem(event) {
-              let previousVal = +event.target.previousElementSibling.lastElementChild.textContent;
-              event.stopPropagation();
-              let oldVal = this.getAttribute('data-list');
-              this.setAttribute('data-list', oldVal + ',' + (++previousVal));
-              console.log(previousVal, oldVal);
-            }).bind(this)
-          }">+</button>
+	(function addItem(event) {
+    const ulElem = event.target.previousElementSibling;
+    let len = ulElem.children.length;
+		let previousVal = (len == 0) ? len : +ulElem.lastElementChild.textContent;
+		event.stopPropagation();
+    let oldVal = this.getAttribute('data-list');
+    let strPreVal = typeof oldVal !== 'undefined' ? oldVal + ',' : '';
+		this.setAttribute('data-list', strPreVal.concat(++previousVal));
+		console.log(previousVal, oldVal);
+	}).bind(this)
+}">+</button>
           <button onclick="${
-            (function removeItem(event) {
-              let list = this.getAttribute('data-list');
-              let lastIndex = list.lastIndexOf(',');
-              this.setAttribute('data-list', list.slice(0, lastIndex));
-            }).bind(this) 
-          }">-</button>
+	(function removeItem() {
+		let list = this.getAttribute('data-list');
+		let lastIndex = list.lastIndexOf(',');
+		this.setAttribute('data-list', list.slice(0, lastIndex));
+	}).bind(this) 
+}">-</button>
         </div>
         <h1 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }" style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}
@@ -64,8 +67,8 @@ export default class GenericElement extends HTMLElement {
           ${this.stars.map((name, i) => html`<li style="font-size: ${size*i}px" onclick="alert('${name}')">${name}</li>`)}
         </ol>
         ${ (this.stars.length > 5)
-            ? html`<p>The constellation is complete</p>`
-            : html`<p onblur="${ e => console.log(e.target.textContent) }" contenteditable>There is some missing stars</p>`}
+		? html`<p>The constellation is complete</p>`
+		: html`<p onblur="${ e => console.log(e.target.textContent) }" contenteditable>There is some missing stars</p>`}
         <p onclick="${() => alert(this.num)}">
           ${ new function(lib){this.libName = lib;}('ConstrictJS') }
           ${ {toString: () => 'method override'} }
@@ -73,7 +76,7 @@ export default class GenericElement extends HTMLElement {
         <input onfocus="${() => this.changeHandler.call(this)}" />
         <span>${someObj}</span><i>${{}}</i><b>${undefined}</b><em>${[]}</em>
     `;
-  }
+	}
 }
 
 customElements.define('x-element', GenericElement);

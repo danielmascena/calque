@@ -289,50 +289,51 @@ function html(literals) {
               if (isEmptyDiff && isEmptyHtmlEl) {
                 console.log('no diffs to apply');
                 return;
-              }
-
-              var children = diffElem.children;
-
-              if (children.length && diffElem.textContent !== htmlElem.textContent) {
-                var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
-
-                try {
-                  for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var elDf = _step.value;
-                    var htmlCh = htmlElem.children;
-                    var elHT = elDf.index < htmlCh.length ? htmlCh[elDf.index] : htmlElem;
-                    applyDiffs(elDf, elHT);
+              } else if (diffElem.textContent !== htmlElem.textContent) {
+                if (diffElem.newContent) {
+                  if (diffElem.oldContent) {
+                    //parentNode.replaceChild(newChild, oldChild);
+                    htmlElem.firstChild.nodeValue = diffElem.newContent;
+                    console.log('content updating');
+                  } else {
+                    var newElem = document.createElement(diffElem.tagName);
+                    var textNode = document.createTextNode(diffElem.newContent);
+                    newElem.appendChild(textNode);
+                    htmlElem.appendChild(newElem);
                   }
-                } catch (err) {
-                  _didIteratorError = true;
-                  _iteratorError = err;
-                } finally {
+                } else if (diffElem.oldContent) {
+                  htmlElem.remove();
+                }
+
+                var children = diffElem.children;
+
+                if (children.length > 0) {
+                  var _iteratorNormalCompletion = true;
+                  var _didIteratorError = false;
+                  var _iteratorError = undefined;
+
                   try {
-                    if (!_iteratorNormalCompletion && _iterator.return != null) {
-                      _iterator.return();
+                    for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                      var elDf = _step.value;
+                      var htmlCh = htmlElem.children;
+                      var elHT = elDf.index < htmlCh.length ? htmlCh[elDf.index] : htmlElem;
+                      applyDiffs(elDf, elHT);
                     }
+                  } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
                   } finally {
-                    if (_didIteratorError) {
-                      throw _iteratorError;
+                    try {
+                      if (!_iteratorNormalCompletion && _iterator.return != null) {
+                        _iterator.return();
+                      }
+                    } finally {
+                      if (_didIteratorError) {
+                        throw _iteratorError;
+                      }
                     }
                   }
                 }
-              }
-
-              if (diffElem.newContent) {
-                if (diffElem.oldContent) {
-                  htmlElem.firstChild.nodeValue = diffElem.newContent;
-                  console.log('content updating');
-                } else {
-                  var newElem = document.createElement(diffElem.tagName);
-                  var textNode = document.createTextNode(diffElem.newContent);
-                  newElem.appendChild(textNode);
-                  htmlElem.appendChild(newElem);
-                }
-              } else if (diffElem.oldContent) {
-                htmlElem.remove();
               }
             };
 

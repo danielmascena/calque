@@ -244,35 +244,38 @@ export function html(literals, ...substs) {
    							if (isEmptyDiff && isEmptyHtmlEl) {
    								console.log('no diffs to apply');
    								return;
-   							}
-   							const children = diffElem.children;
-   							if (children.length && diffElem.textContent !== htmlElem.textContent) {
-   								for (let elDf of children) {
-   									const htmlCh = htmlElem.children;
-   									const elHT = (elDf.index < htmlCh.length) ? htmlCh[elDf.index] : htmlElem;
-   									applyDiffs(elDf, elHT);
+   							} else if ((diffElem.textContent !== htmlElem.textContent) 
+										|| (diffElem.newContent !== htmlElem.firstChild.nodeValue)) {
+   								if (diffElem.newContent) {
+   									if (diffElem.oldContent) {
+   										//parentNode.replaceChild(newChild, oldChild);
+   										htmlElem.firstChild.nodeValue = diffElem.newContent;
+   										console.log('content updating');
+   									} else {
+   										const newElem = document.createElement(diffElem.tagName);
+   										const textNode = document.createTextNode(diffElem.newContent);
+   										newElem.appendChild(textNode);
+   										htmlElem.appendChild(newElem);
+   									}
    								}
-   							}
-   							if (diffElem.newContent) {
-   								if (diffElem.oldContent) {
-   									htmlElem.firstChild.nodeValue = diffElem.newContent;
-   									console.log('content updating');
-   								} else {
-   									const newElem = document.createElement(diffElem.tagName);
-   									const textNode = document.createTextNode(diffElem.newContent);
-   									newElem.appendChild(textNode);
-   									htmlElem.appendChild(newElem);
+   								else if (diffElem.oldContent) {
+   									htmlElem.remove();
    								}
-   							}
-   							else if (diffElem.oldContent) {
-   								htmlElem.remove();
+   								const children = diffElem.children;
+   								if (children.length > 0) {
+   									for (let elDf of children) {
+   										const htmlCh = htmlElem.children;
+   										const elHT = (elDf.index < htmlCh.length) ? htmlCh[elDf.index] : htmlElem;
+   										applyDiffs(elDf, elHT);
+   									}
+   								}
    							}
    						};
    						applyDiffs(diffs, this);
-   					}
+   					};
    					//const nullify = () => {};
-						 searchDiffs(previousMarkup, nextMarkup);
-						 this.vdom = nextMarkup;
+   					searchDiffs(previousMarkup, nextMarkup);
+   					this.vdom = nextMarkup;
    				} else {
    					this.innerHTML = result;
    					this.vdom = HTMLtoJSON(result, this);
