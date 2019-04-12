@@ -211,12 +211,6 @@ function html(literals) {
             var findDiff = function findDiff(elemPrev, elemNext, index) {
               var isEmptyPrev = Object.is(_typeof(elemPrev), 'undefined'),
                   isEmptyNext = Object.is(_typeof(elemNext), 'undefined');
-
-              if (isEmptyPrev && isEmptyNext) {
-                console.log('nothing to change');
-                return;
-              }
-
               var elemPrevCopy = Object.assign({}, elemPrev),
                   elemNextCopy = Object.assign({}, elemNext);
               var diff = {
@@ -226,58 +220,64 @@ function html(literals) {
                 index: index
               };
 
-              if (!isEmptyPrev && isEmptyNext) {
-                // remove
-                diff.oldContent = elemPrevCopy.textValue;
-                diff.newContent = '';
-                diff.index = index;
-              } else if (isEmptyPrev && !isEmptyNext) {
-                // add
-                diff.oldContent = '';
-                diff.newContent = elemNextCopy.textValue;
-                diff.tagName = elemNextCopy.tagName;
-                diff.index = index + 1;
-              } else {
-                // compare
-                var contentPrev = elemPrevCopy.textValue;
-                var contentNext = elemNextCopy.textValue;
-
-                if (contentPrev !== contentNext) {
-                  diff.newContent = contentNext;
-                  diff.oldContent = contentPrev;
+              if (isEmptyPrev && isEmptyNext) {
+                console.log('nothing to change');
+                return;
+              } else if (elemPrevCopy.textContent !== elemNextCopy.textContent) {
+                if (!isEmptyPrev && isEmptyNext) {
+                  // remove
+                  diff.oldContent = elemPrevCopy.textValue;
+                  diff.newContent = '';
+                  diff.index = index;
+                } else if (isEmptyPrev && !isEmptyNext) {
+                  // add
+                  diff.oldContent = '';
+                  diff.newContent = elemNextCopy.textValue;
+                  diff.tagName = elemNextCopy.tagName;
+                  diff.index = index + 1;
                 } else {
-                  diff.textContent = elemNextCopy.textContent;
-                }
-              }
+                  // compare
+                  var contentPrev = elemPrevCopy.textValue;
+                  var contentNext = elemNextCopy.textValue;
 
-              var chPr = elemPrevCopy.children || [];
-              var chNx = elemNextCopy.children || [];
-              var length = Math.max(chPr.length, chNx.length);
-
-              if (length > 0 && elemPrevCopy.textContent !== elemNextCopy.textContent) {
-                for (var i = 0; i < length; i++) {
-                  var returnedDiff = findDiff(chPr[i], chNx[i], i);
-
-                  if (returnedDiff.newContent || returnedDiff.oldContent || elemPrevCopy.textContent !== elemNextCopy.textContent && returnedDiff.children.length > 0) {
-                    diff.children.push(returnedDiff);
+                  if (contentPrev !== contentNext) {
+                    diff.newContent = contentNext;
+                    diff.oldContent = contentPrev;
+                  } else {
+                    diff.textContent = elemNextCopy.textContent;
                   }
                 }
+
+                var chPr = elemPrevCopy.children || [];
+                var chNx = elemNextCopy.children || [];
+                var length = Math.max(chPr.length, chNx.length);
+
+                if (length > 0) {
+                  for (var i = 0; i < length; i++) {
+                    var returnedDiff = findDiff(chPr[i], chNx[i], i);
+
+                    if (returnedDiff.newContent || returnedDiff.oldContent || elemPrevCopy.textContent !== elemNextCopy.textContent && returnedDiff.children.length > 0) {
+                      diff.children.push(returnedDiff);
+                    }
+                  }
+                }
+                /*
+                const previousKeys = Object.keys(elemPrev.attributes);
+                const nextKeys = Object.keys(elemNext.attributes);
+                const joinKeys = new Set([...previousKeys, ...nextKeys]);
+                for (let key of joinKeys) {
+                if (previousKeys.includes(key)) {
+                Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
+                || (diff.attributes[key] = elemNext.attributes[key]);
+                } else {
+                diff.attributes[key] = elemNext.attributes[key];
+                }
+                }
+                */
+
               }
 
               return diff;
-              /*
-                    const previousKeys = Object.keys(elemPrev.attributes);
-                    const nextKeys = Object.keys(elemNext.attributes);
-                    const joinKeys = new Set([...previousKeys, ...nextKeys]);
-                    for (let key of joinKeys) {
-                      if (previousKeys.includes(key)) {
-                        Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
-                            || (diff.attributes[key] = elemNext.attributes[key]);
-                      } else {
-                        diff.attributes[key] = elemNext.attributes[key];
-                      }
-                    }
-                    */
             };
 
             var diffs = findDiff(previousVDOM, nextVDOM, -1);
@@ -289,7 +289,7 @@ function html(literals) {
               if (isEmptyDiff && isEmptyHtmlEl) {
                 console.log('no diffs to apply');
                 return;
-              } else if (diffElem.textContent !== htmlElem.textContent) {
+              } else if (diffElem.textContent !== htmlElem.textContent || diffElem.newContent !== htmlElem.firstChild.nodeValue) {
                 if (diffElem.newContent) {
                   if (diffElem.oldContent) {
                     //parentNode.replaceChild(newChild, oldChild);
@@ -316,7 +316,7 @@ function html(literals) {
                     for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                       var elDf = _step.value;
                       var htmlCh = htmlElem.children;
-                      var elHT = elDf.index < htmlCh.length ? htmlCh[elDf.index] : htmlElem;
+                      var elHT = elDf.index <= htmlCh.length ? htmlCh[elDf.index] : htmlElem;
                       applyDiffs(elDf, elHT);
                     }
                   } catch (err) {
