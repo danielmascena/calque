@@ -1,5 +1,5 @@
 /**
- * ConstrictJS
+ * CalqueJS
  * @author: Daniel Mascena <danielmascena@gmail.com>
  */
 
@@ -26,7 +26,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 var innerHTML = Symbol('innerHTML');
 exports.innerHTML = innerHTML;
-var _constrict = '🗜️';
+var _constrict = '📑';
 var Constrict = {
   innerHTML: innerHTML,
   html: html

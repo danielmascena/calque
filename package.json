@@ -1,18 +1,18 @@
 {
-  "name": "constrict",
+  "name": "calque",
   "description": "🎋 A simple and tiny utility library for building fast web interfaces using regular JavaScript",
-  "version": "0.0.34",
-  "main": "dist/constrict.mjs",
+  "version": "0.0.35",
+  "main": "dist/calque.mjs",
   "scripts": {
-    "lint": "eslint constrict.js",
+    "lint": "eslint calque.js",
     "build": "npm run transpiler && npm run copy && npm run uglify",
-    "transpiler": "babel constrict.js --out-dir dist --presets=@babel/env",
-    "copy": "cp constrict.js dist/constrict.mjs",
-    "uglify": "mkdir -p dist/ && uglifyjs dist/constrict.js -m -o dist/constrict.min.js"
+    "transpiler": "babel calque.js --out-dir dist --presets=@babel/env",
+    "copy": "cp calque.js dist/calque.mjs",
+    "uglify": "mkdir -p dist/ && uglifyjs dist/calque.js -m -o dist/calque.min.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/danielmascena/constrict.git"
+    "url": "https://github.com/danielmascena/calque.git"
   },
   "keywords": [
     "Template Strings",
@@ -26,9 +26,9 @@
   "author": "Daniel Mascena <danielmascena@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/danielmascena/constrict/issues"
+    "url": "https://github.com/danielmascena/calque/issues"
   },
-  "homepage": "https://github.com/danielmascena/constrict",
+  "homepage": "https://github.com/danielmascena/calque",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",

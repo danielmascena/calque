@@ -1,5 +1,5 @@
 /**
- * ConstrictJS
+ * CalqueJS
  * @author: Daniel Mascena <danielmascena@gmail.com>
  */
 
@@ -8,7 +8,7 @@
 'use strict';
 
 export const innerHTML = Symbol('innerHTML');
-const _constrict = '🗜️';
+const _constrict = '📑';
 const Constrict = {
 	innerHTML,
 	html,

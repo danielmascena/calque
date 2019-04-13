@@ -1,5 +1,5 @@
 
-import { innerHTML, html } from '../dist/constrict.mjs';
+import { innerHTML, html } from '../dist/calque.mjs';
 
 export default class GenericElement extends HTMLElement {
 	static get observedAttributes() {

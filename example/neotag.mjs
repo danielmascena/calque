@@ -1,4 +1,4 @@
-import {innerHTML, html} from '../dist/constrict.mjs';
+import {innerHTML, html} from '../dist/calque.mjs';
 
 'use strict';
 
