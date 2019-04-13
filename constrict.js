@@ -203,6 +203,7 @@ export function html(literals, ...substs) {
    									if (contentPrev !== contentNext) {
    										diff.newContent = contentNext;
    										diff.oldContent = contentPrev;
+   										diff.tagName = elemNextCopy.tagName;
    									} else {
    										diff.textContent = elemNextCopy.textContent;
    									}
