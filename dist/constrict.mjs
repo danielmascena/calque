@@ -184,22 +184,22 @@ export function html(literals, ...substs) {
    								console.log('nothing to change');
    								return;
    							} else if (elemPrevCopy.textContent !== elemNextCopy.textContent) {
-   								
-   								if (!isEmptyPrev && isEmptyNext) {
+									 
+   								const contentPrev = elemPrevCopy.textValue;
+   								const contentNext = elemNextCopy.textValue;
+   								if (contentPrev && !contentNext) {
    									// remove
-   									diff.oldContent = elemPrevCopy.textValue;
-   									diff.newContent = '';
+   									diff.oldContent = contentPrev;
+   									diff.newContent = contentNext;
    									diff.index = index;
    								} else if (isEmptyPrev && !isEmptyNext) {
    									// add
    									diff.oldContent = '';
-   									diff.newContent = elemNextCopy.textValue;
+   									diff.newContent = contentNext;
    									diff.tagName = elemNextCopy.tagName;
    									diff.index = index + 1;
    								} else {
    									// compare
-   									const contentPrev = elemPrevCopy.textValue;
-   									const contentNext = elemNextCopy.textValue;
    									if (contentPrev !== contentNext) {
    										diff.newContent = contentNext;
    										diff.oldContent = contentPrev;
@@ -225,14 +225,14 @@ export function html(literals, ...substs) {
 									const nextKeys = Object.keys(elemNext.attributes);
 									const joinKeys = new Set([...previousKeys, ...nextKeys]);
 									for (let key of joinKeys) {
-									 if (previousKeys.includes(key)) {
-										 Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
-										 || (diff.attributes[key] = elemNext.attributes[key]);
-									 } else {
-										 diff.attributes[key] = elemNext.attributes[key];
-									 }
-								 }
-								 */
+										if (previousKeys.includes(key)) {
+											Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
+											|| (diff.attributes[key] = elemNext.attributes[key]);
+										} else {
+											diff.attributes[key] = elemNext.attributes[key];
+										}
+									}
+								 	*/
    							}
    							return diff;
    						};
@@ -248,6 +248,7 @@ export function html(literals, ...substs) {
    								return;
    							} else if ((diffElem.textContent !== htmlElem.textContent) 
 										|| (diffElem.newContent !== htmlElem.firstChild.nodeValue)) {
+   								
    								if (diffElem.newContent) {
    									if (diffElem.oldContent) {
    										//parentNode.replaceChild(newChild, oldChild);
@@ -267,7 +268,7 @@ export function html(literals, ...substs) {
    								if (children.length > 0) {
    									for (let elDf of children) {
    										const htmlCh = htmlElem.children;
-   										const elHT = (elDf.index <= htmlCh.length) ? htmlCh[elDf.index] : htmlElem;
+   										const elHT = (elDf.index < htmlCh.length) ? htmlCh[elDf.index] : htmlElem;
    										applyDiffs(elDf, elHT);
    									}
    								}

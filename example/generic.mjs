@@ -33,8 +33,8 @@ export default class GenericElement extends HTMLElement {
 
 		console.log('list', this.getAttribute('data-list'));
 		this[innerHTML] = html`
-        <div id style="${ {'background-color': 'lightblue'} }"
-          onclick="${this.clickHandler.bind(this)}">
+				<h2 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }">Who am I?</h2>
+        <div id style="${ {'background-color': 'lightblue'} }">
           &#955; ♏ (see browser console for see the changes)
           <ul>
             ${this.hasAttribute('data-list') 
@@ -42,12 +42,12 @@ export default class GenericElement extends HTMLElement {
           </ul>
           <button onclick="${ 
 	(function addItem(event) {
-    const ulElem = event.target.previousElementSibling;
-    let len = ulElem.children.length;
+		const ulElem = event.target.previousElementSibling;
+		let len = ulElem.children.length;
 		let previousVal = (len == 0) ? len : +ulElem.lastElementChild.textContent;
 		event.stopPropagation();
-    let oldVal = this.getAttribute('data-list');
-    let strPreVal = typeof oldVal !== 'undefined' ? oldVal + ',' : '';
+		let oldVal = this.getAttribute('data-list');
+		let strPreVal = oldVal !== '' ? oldVal + ',' : '';
 		this.setAttribute('data-list', strPreVal.concat(++previousVal));
 		console.log(previousVal, oldVal);
 	}).bind(this)
@@ -60,7 +60,7 @@ export default class GenericElement extends HTMLElement {
 	}).bind(this) 
 }">-</button>
         </div>
-        <h1 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }" style="${style}">
+        <h1 onclick="${ this.clickHandler.bind(this) }" style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}
         </h1>
         <ol>

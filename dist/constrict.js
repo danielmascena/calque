@@ -224,22 +224,22 @@ function html(literals) {
                 console.log('nothing to change');
                 return;
               } else if (elemPrevCopy.textContent !== elemNextCopy.textContent) {
-                if (!isEmptyPrev && isEmptyNext) {
+                var contentPrev = elemPrevCopy.textValue;
+                var contentNext = elemNextCopy.textValue;
+
+                if (contentPrev && !contentNext) {
                   // remove
-                  diff.oldContent = elemPrevCopy.textValue;
-                  diff.newContent = '';
+                  diff.oldContent = contentPrev;
+                  diff.newContent = contentNext;
                   diff.index = index;
                 } else if (isEmptyPrev && !isEmptyNext) {
                   // add
                   diff.oldContent = '';
-                  diff.newContent = elemNextCopy.textValue;
+                  diff.newContent = contentNext;
                   diff.tagName = elemNextCopy.tagName;
                   diff.index = index + 1;
                 } else {
                   // compare
-                  var contentPrev = elemPrevCopy.textValue;
-                  var contentNext = elemNextCopy.textValue;
-
                   if (contentPrev !== contentNext) {
                     diff.newContent = contentNext;
                     diff.oldContent = contentPrev;
@@ -316,7 +316,7 @@ function html(literals) {
                     for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                       var elDf = _step.value;
                       var htmlCh = htmlElem.children;
-                      var elHT = elDf.index <= htmlCh.length ? htmlCh[elDf.index] : htmlElem;
+                      var elHT = elDf.index < htmlCh.length ? htmlCh[elDf.index] : htmlElem;
                       applyDiffs(elDf, elHT);
                     }
                   } catch (err) {
