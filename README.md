@@ -1,14 +1,12 @@
 # calque.js 📑
+/kalk/
 
 🚧 Status: In Development 🛠️
-
-`"use (con)strict";`
 
 The self-definition of [calque](https://en.wikipedia.org/wiki/Calque) resume the goal of the library: _In linguistics, a calque /kælk/ or loan translation is a word or phrase borrowed from another language by literal, word-for-word or root-for-root translation. Used as a verb, "to calque" means to borrow a word or phrase from another language while translating its components, so as to create a new lexeme in the target language._
 
 
-
-CalqueJS is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny utility library for creating UIs using regular JavaScript, as an extra part of the toolkit for everyday web development using the Web Platform. The power of this lone star at the client-side scripting, is similar to writing bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element, avoiding `document.createElement("tag")` and `element.addEventListener('event', callback)` for example.
+CalqueJS is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny helper utility library for creating UIs using regular JavaScript, as an addon for the Web Platform. The power of CalqueJS is offering a declarative way to writing client-side scripting using bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element.
 
 ## Install via [npm](https://npmjs.com)
 
