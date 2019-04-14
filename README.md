@@ -1,4 +1,4 @@
-# calque.js 🗜️
+# calque.js 📑
 
 🚧 Status: In Development 🛠️
 

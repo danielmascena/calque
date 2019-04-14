@@ -1,6 +1,6 @@
 {
   "name": "calque",
-  "description": "🎋 A simple and tiny utility library for building fast web interfaces using regular JavaScript",
+  "description": "📑 A simple and tiny utility library for building fast web interfaces using regular JavaScript",
   "version": "0.0.35",
   "main": "dist/calque.mjs",
   "scripts": {
