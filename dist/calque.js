@@ -12,8 +12,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.html = html;
 exports.default = exports.innerHTML = void 0;
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -26,8 +24,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 var innerHTML = Symbol('innerHTML');
 exports.innerHTML = innerHTML;
-var _constrict = '📑';
-var Constrict = {
+var _calque = '📑';
+var Calque = {
   innerHTML: innerHTML,
   html: html
 };
@@ -112,7 +110,7 @@ function html(literals) {
       strMatch,
       recoverContent = function recoverContent(obj) {
     if (_typeof(obj) === 'object') {
-      if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;else if ('_constrict' in obj) {
+      if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;else if ('_calque' in obj) {
         obj.elemEvents.length && (elemEvents = [].concat(_toConsumableArray(elemEvents), _toConsumableArray(obj.elemEvents)));
         return obj.result;
       }
@@ -152,8 +150,8 @@ function html(literals) {
         var quote = lit.charAt(lit.length - 1);
         var charNumber = quote.charCodeAt();
         var eventType = strMatch[0].slice(3, -2);
-        var constrictID = '_constrict-id-' + hashCode();
-        var constrictIDValue = hashCode(true);
+        var calqueID = '_calque-id-' + hashCode();
+        var calqueIDValue = hashCode(true);
         var handlerBody = String(subst);
 
         if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
@@ -162,13 +160,13 @@ function html(literals) {
         }
 
         elemEvents.push({
-          constrictID: constrictID,
-          constrictIDValue: constrictIDValue,
+          calqueID: calqueID,
+          calqueIDValue: calqueIDValue,
           eventHandler: subst,
           eventType: eventType,
           handlerBody: handlerBody
         });
-        subst = "".concat(handlerBody).concat(quote, " ").concat(constrictID, "=").concat(quote).concat(constrictIDValue);
+        subst = "".concat(handlerBody).concat(quote, " ").concat(calqueID, "=").concat(quote).concat(calqueIDValue);
       }
     }
 
@@ -184,21 +182,23 @@ function html(literals) {
   return {
     result: result,
     elemEvents: elemEvents,
-    _constrict: _constrict
+    _calque: _calque
   };
 }
 
-(function constrict() {
-  _constrict in window || (window[_constrict] = !function () {
-    var _Object$definePropert;
-
-    Object.defineProperties(HTMLElement.prototype, (_Object$definePropert = {}, _defineProperty(_Object$definePropert, innerHTML, {
+(function calque() {
+  _calque in window || (window[_calque] = !function () {
+    Object.defineProperty(HTMLElement.prototype, innerHTML, {
       get: function get() {
         return this.innerHTML;
       },
       set: function set(arr) {
         var _this = this;
 
+        this.vdom || Object.defineProperty(this, 'vdom', {
+          value: {},
+          writable: true
+        });
         var result = arr.result,
             elemEvents = arr.elemEvents;
         console.info('Element is in the DOM?: ' + this.isConnected);
@@ -267,12 +267,12 @@ function html(literals) {
                 const nextKeys = Object.keys(elemNext.attributes);
                 const joinKeys = new Set([...previousKeys, ...nextKeys]);
                 for (let key of joinKeys) {
-                if (previousKeys.includes(key)) {
-                Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
-                || (diff.attributes[key] = elemNext.attributes[key]);
-                } else {
-                diff.attributes[key] = elemNext.attributes[key];
-                }
+                	if (previousKeys.includes(key)) {
+                		Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
+                		|| (diff.attributes[key] = elemNext.attributes[key]);
+                	} else {
+                		diff.attributes[key] = elemNext.attributes[key];
+                	}
                 }
                 */
 
@@ -355,12 +355,12 @@ function html(literals) {
           try {
             for (var _iterator2 = elemEvents[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
               var event = _step2.value;
-              var constrictID = event.constrictID,
-                  constrictIDValue = event.constrictIDValue,
+              var calqueID = event.calqueID,
+                  calqueIDValue = event.calqueIDValue,
                   eventHandler = event.eventHandler,
                   eventType = event.eventType,
                   handlerBody = event.handlerBody;
-              var elem = this.querySelector("[".concat(constrictID, "=\"").concat(constrictIDValue, "\"]"));
+              var elem = this.querySelector("[".concat(calqueID, "=\"").concat(calqueIDValue, "\"]"));
 
               if (elem != null && typeof eventHandler === 'function') {
                 if (!eventHandler.name && handlerBody.startsWith('function')) {
@@ -370,7 +370,7 @@ function html(literals) {
                 }
 
                 elem[eventType] && elem.addEventListener(eventType, eventHandler);
-                elem.removeAttribute(constrictID);
+                elem.removeAttribute(calqueID);
               }
             }
           } catch (err) {
@@ -391,12 +391,9 @@ function html(literals) {
       },
       enumerable: true,
       configurable: true
-    }), _defineProperty(_Object$definePropert, "vdom", {
-      value: {},
-      writable: true
-    }), _Object$definePropert));
+    });
   }());
 })();
 
-var _default = Constrict;
+var _default = Calque;
 exports.default = _default;

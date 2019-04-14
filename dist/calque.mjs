@@ -8,8 +8,8 @@
 'use strict';
 
 export const innerHTML = Symbol('innerHTML');
-const _constrict = '📑';
-const Constrict = {
+const _calque = '📑';
+const Calque = {
 	innerHTML,
 	html,
 };
@@ -89,7 +89,7 @@ export function html(literals, ...substs) {
 			if (typeof obj === 'object') {
 				if (obj === null || Object.getOwnPropertyNames(obj).length === 0) return;
 
-				else if ('_constrict' in obj) {
+				else if ('_calque' in obj) {
 					obj.elemEvents.length && (elemEvents = [
 						...elemEvents,
 						...obj.elemEvents
@@ -127,15 +127,15 @@ export function html(literals, ...substs) {
 				const quote = lit.charAt(lit.length-1);
 				const charNumber = quote.charCodeAt();
 				const eventType = strMatch[0].slice(3, -2);
-				const constrictID = '_constrict-id-' + hashCode();
-				const constrictIDValue = hashCode(true);
+				const calqueID = '_calque-id-' + hashCode();
+				const calqueIDValue = hashCode(true);
 				let handlerBody = String(subst);
 				if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
 					const toggleQuote = charNumber === 34 ? `'` : `"`;   
 					handlerBody = `${toggleQuote}${type} ${subst.name.substring(5)} ${handlerBody.substring(9)}${toggleQuote}`;
 				}
-				elemEvents.push({constrictID, constrictIDValue, eventHandler: subst, eventType, handlerBody});
-				subst = `${handlerBody}${quote} ${constrictID}=${quote}${constrictIDValue}`;
+				elemEvents.push({calqueID, calqueIDValue, eventHandler: subst, eventType, handlerBody});
+				subst = `${handlerBody}${quote} ${calqueID}=${quote}${calqueIDValue}`;
 			}
 		} 
 		if (lit.endsWith('!')) {
@@ -148,168 +148,165 @@ export function html(literals, ...substs) {
 	);
 	result += raw[raw.length - 1];
 
-	return {result, elemEvents, _constrict};
+	return {result, elemEvents, _calque};
 }
 
-(function constrict() {
-	_constrict in window ||
-   (window[_constrict] = !function() {
-   	Object.defineProperties(HTMLElement.prototype, {
-   		[innerHTML]: {
-   			get() {
-   				return this.innerHTML;
-   			},
-   			set(arr) {
-   				let {result, elemEvents} = arr;
-   				console.info('Element is in the DOM?: ' + this.isConnected);
+(function calque() {
+	_calque in window || (window[_calque] = !function() {
+   	Object.defineProperty(HTMLElement.prototype, innerHTML, {
+			get() {
+				return this.innerHTML;
+			},
+			set(arr) {
+				this.vdom || Object.defineProperty(this, 'vdom', {
+					value: {},
+					writable: true
+				});
+				let {result, elemEvents} = arr;
+				console.info('Element is in the DOM?: ' + this.isConnected);
 
-   				if (this.isConnected && !isEmptyObject(this.vdom) && document.contains(this)) {
-   					let nextMarkup = HTMLtoJSON(result, this);
-   					let previousMarkup = this.vdom;
-            
-   					const searchDiffs = (previousVDOM, nextVDOM) => {
-              
-   						const findDiff = (elemPrev, elemNext, index) => {
-   							const isEmptyPrev = Object.is(typeof elemPrev, 'undefined'),
-   								isEmptyNext = Object.is(typeof elemNext, 'undefined');
-   							const elemPrevCopy = Object.assign({}, elemPrev),
-   								elemNextCopy = Object.assign({}, elemNext);
-   							let diff = {
-   								newContent: '',
-   								oldContent: '',
-   								children: [],
-   								index
-   							};
-   							if (isEmptyPrev && isEmptyNext) {
-   								console.log('nothing to change');
-   								return;
-   							} else if (elemPrevCopy.textContent !== elemNextCopy.textContent) {
-									 
-   								const contentPrev = elemPrevCopy.textValue;
-   								const contentNext = elemNextCopy.textValue;
-   								if (contentPrev && !contentNext) {
-   									// remove
-   									diff.oldContent = contentPrev;
-   									diff.newContent = contentNext;
-   									diff.index = index;
-   								} else if (isEmptyPrev && !isEmptyNext) {
-   									// add
-   									diff.oldContent = '';
-   									diff.newContent = contentNext;
-   									diff.tagName = elemNextCopy.tagName;
-   									diff.index = index + 1;
-   								} else {
-   									// compare
-   									if (contentPrev !== contentNext) {
-   										diff.newContent = contentNext;
-   										diff.oldContent = contentPrev;
-   										diff.tagName = elemNextCopy.tagName;
-   									} else {
-   										diff.textContent = elemNextCopy.textContent;
-   									}
-   								}
-   								const chPr = elemPrevCopy.children || [];
-   								const chNx = elemNextCopy.children || [];
-   								const length = Math.max(chPr.length, chNx.length);
-   								if (length > 0) {
-   									for (let i = 0; i < length; i++) {
-   										const returnedDiff = findDiff(chPr[i], chNx[i], i);
-   										if ((returnedDiff.newContent || returnedDiff.oldContent) 
-													|| (elemPrevCopy.textContent !== elemNextCopy.textContent 
-													&& returnedDiff.children.length > 0)) {
-   											diff.children.push(returnedDiff);
-   										}
-   									}
-   								}
-   								/*
-								 	const previousKeys = Object.keys(elemPrev.attributes);
-									const nextKeys = Object.keys(elemNext.attributes);
-									const joinKeys = new Set([...previousKeys, ...nextKeys]);
-									for (let key of joinKeys) {
-										if (previousKeys.includes(key)) {
-											Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
-											|| (diff.attributes[key] = elemNext.attributes[key]);
-										} else {
-											diff.attributes[key] = elemNext.attributes[key];
+				if (this.isConnected && !isEmptyObject(this.vdom) && document.contains(this)) {
+					let nextMarkup = HTMLtoJSON(result, this);
+					let previousMarkup = this.vdom;
+					
+					const searchDiffs = (previousVDOM, nextVDOM) => {
+						
+						const findDiff = (elemPrev, elemNext, index) => {
+							const isEmptyPrev = Object.is(typeof elemPrev, 'undefined'),
+								isEmptyNext = Object.is(typeof elemNext, 'undefined');
+							const elemPrevCopy = Object.assign({}, elemPrev),
+								elemNextCopy = Object.assign({}, elemNext);
+							let diff = {
+								newContent: '',
+								oldContent: '',
+								children: [],
+								index
+							};
+							if (isEmptyPrev && isEmptyNext) {
+								console.log('nothing to change');
+								return;
+							} else if (elemPrevCopy.textContent !== elemNextCopy.textContent) {
+									
+								const contentPrev = elemPrevCopy.textValue;
+								const contentNext = elemNextCopy.textValue;
+								if (contentPrev && !contentNext) {
+									// remove
+									diff.oldContent = contentPrev;
+									diff.newContent = contentNext;
+									diff.index = index;
+								} else if (isEmptyPrev && !isEmptyNext) {
+									// add
+									diff.oldContent = '';
+									diff.newContent = contentNext;
+									diff.tagName = elemNextCopy.tagName;
+									diff.index = index + 1;
+								} else {
+									// compare
+									if (contentPrev !== contentNext) {
+										diff.newContent = contentNext;
+										diff.oldContent = contentPrev;
+										diff.tagName = elemNextCopy.tagName;
+									} else {
+										diff.textContent = elemNextCopy.textContent;
+									}
+								}
+								const chPr = elemPrevCopy.children || [];
+								const chNx = elemNextCopy.children || [];
+								const length = Math.max(chPr.length, chNx.length);
+								if (length > 0) {
+									for (let i = 0; i < length; i++) {
+										const returnedDiff = findDiff(chPr[i], chNx[i], i);
+										if ((returnedDiff.newContent || returnedDiff.oldContent) 
+												|| (elemPrevCopy.textContent !== elemNextCopy.textContent 
+												&& returnedDiff.children.length > 0)) {
+											diff.children.push(returnedDiff);
 										}
 									}
-								 	*/
-   							}
-   							return diff;
-   						};
-   						const diffs = findDiff(previousVDOM, nextVDOM, -1);
-										
-   						const applyDiffs = (diffElem, htmlElem) => {
+								}
+								/*
+								const previousKeys = Object.keys(elemPrev.attributes);
+								const nextKeys = Object.keys(elemNext.attributes);
+								const joinKeys = new Set([...previousKeys, ...nextKeys]);
+								for (let key of joinKeys) {
+									if (previousKeys.includes(key)) {
+										Object.is(elemPrev.attributes[key], elemNext.attributes[key]) 
+										|| (diff.attributes[key] = elemNext.attributes[key]);
+									} else {
+										diff.attributes[key] = elemNext.attributes[key];
+									}
+								}
+								*/
+							}
+							return diff;
+						};
+						const diffs = findDiff(previousVDOM, nextVDOM, -1);
+									
+						const applyDiffs = (diffElem, htmlElem) => {
 
-   							let isEmptyDiff = Object.is(typeof diffElem, 'undefined'),
-   								isEmptyHtmlEl = Object.is(typeof htmlElem, 'undefined');
-                   
-   							if (isEmptyDiff && isEmptyHtmlEl) {
-   								console.log('no diffs to apply');
-   								return;
-   							} else if ((diffElem.textContent !== htmlElem.textContent) 
-										|| (diffElem.newContent !== htmlElem.firstChild.nodeValue)) {
-   								
-   								if (diffElem.newContent) {
-   									if (diffElem.oldContent) {
-   										//parentNode.replaceChild(newChild, oldChild);
-   										htmlElem.firstChild.nodeValue = diffElem.newContent;
-   										console.log('content updating');
-   									} else {
-   										const newElem = document.createElement(diffElem.tagName);
-   										const textNode = document.createTextNode(diffElem.newContent);
-   										newElem.appendChild(textNode);
-   										htmlElem.appendChild(newElem);
-   									}
-   								}
-   								else if (diffElem.oldContent) {
-   									htmlElem.remove();
-   								}
-   								const children = diffElem.children;
-   								if (children.length > 0) {
-   									for (let elDf of children) {
-   										const htmlCh = htmlElem.children;
-   										const elHT = (elDf.index < htmlCh.length) ? htmlCh[elDf.index] : htmlElem;
-   										applyDiffs(elDf, elHT);
-   									}
-   								}
-   							}
-   						};
-   						applyDiffs(diffs, this);
-   					};
-   					//const nullify = () => {};
-   					searchDiffs(previousMarkup, nextMarkup);
-   					this.vdom = nextMarkup;
-   				} else {
-   					this.innerHTML = result;
-   					this.vdom = HTMLtoJSON(result, this);
-   					console.log(this.vdom);
-   					for (let event of elemEvents) {
-   						let {constrictID, constrictIDValue, eventHandler, eventType, handlerBody} = event;
-   						let elem = this.querySelector(`[${constrictID}="${constrictIDValue}"]`);
+							let isEmptyDiff = Object.is(typeof diffElem, 'undefined'),
+								isEmptyHtmlEl = Object.is(typeof htmlElem, 'undefined');
+									
+							if (isEmptyDiff && isEmptyHtmlEl) {
+								console.log('no diffs to apply');
+								return;
+							} else if ((diffElem.textContent !== htmlElem.textContent) 
+									|| (diffElem.newContent !== htmlElem.firstChild.nodeValue)) {
+								
+								if (diffElem.newContent) {
+									if (diffElem.oldContent) {
+										//parentNode.replaceChild(newChild, oldChild);
+										htmlElem.firstChild.nodeValue = diffElem.newContent;
+										console.log('content updating');
+									} else {
+										const newElem = document.createElement(diffElem.tagName);
+										const textNode = document.createTextNode(diffElem.newContent);
+										newElem.appendChild(textNode);
+										htmlElem.appendChild(newElem);
+									}
+								}
+								else if (diffElem.oldContent) {
+									htmlElem.remove();
+								}
+								const children = diffElem.children;
+								if (children.length > 0) {
+									for (let elDf of children) {
+										const htmlCh = htmlElem.children;
+										const elHT = (elDf.index < htmlCh.length) ? htmlCh[elDf.index] : htmlElem;
+										applyDiffs(elDf, elHT);
+									}
+								}
+							}
+						};
+						applyDiffs(diffs, this);
+					};
+					//const nullify = () => {};
+					searchDiffs(previousMarkup, nextMarkup);
+					this.vdom = nextMarkup;
+				} else {
+					this.innerHTML = result;
+					this.vdom = HTMLtoJSON(result, this);
+					console.log(this.vdom);
+					for (let event of elemEvents) {
+						let {calqueID, calqueIDValue, eventHandler, eventType, handlerBody} = event;
+						let elem = this.querySelector(`[${calqueID}="${calqueIDValue}"]`);
 
-   						if (elem != null && 
-                  typeof eventHandler === 'function') {
-   							if (!eventHandler.name && handlerBody.startsWith('function')) {
-   								debugger;
-   								console.error(handlerBody, 'function expression must have a name');
-   								throw new TypeError('function expression must have a name');
-   							}
-   							elem[eventType] && elem.addEventListener(eventType, eventHandler);
-   							elem.removeAttribute(constrictID);
-   						}
-   					}
-   				}
-   			},
-   			enumerable: true,
-   			configurable: true
-   		},
-   		vdom: {
-   			value: {},
-   			writable: true
-   		}
-   	});
-   }());
+						if (elem != null && 
+								typeof eventHandler === 'function') {
+							if (!eventHandler.name && handlerBody.startsWith('function')) {
+								debugger;
+								console.error(handlerBody, 'function expression must have a name');
+								throw new TypeError('function expression must have a name');
+							}
+							elem[eventType] && elem.addEventListener(eventType, eventHandler);
+							elem.removeAttribute(calqueID);
+						}
+					}
+				}
+			},
+			enumerable: true,
+			configurable: true
+		});
+	}());
 }());
 
-export default Constrict;
+export default Calque;

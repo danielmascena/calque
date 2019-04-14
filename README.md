@@ -3,10 +3,10 @@
 
 🚧 Status: In Development 🛠️
 
-The self-definition of [calque](https://en.wikipedia.org/wiki/Calque) resume the goal of the library: _In linguistics, a calque /kælk/ or loan translation is a word or phrase borrowed from another language by literal, word-for-word or root-for-root translation. Used as a verb, "to calque" means to borrow a word or phrase from another language while translating its components, so as to create a new lexeme in the target language._
+First thing first, what is a [calque](https://en.wikipedia.org/wiki/Calque): _In linguistics, a calque /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together._
 
 
-CalqueJS is a JavaScript micro-library aimed at help building web user interfaces. A simple and tiny helper utility library for creating UIs using regular JavaScript, as an addon for the Web Platform. The power of CalqueJS is offering a declarative way to writing client-side scripting using bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element.
+With that said, the CalqueJS is a JavaScript micro-library aimed at help building user interfaces for the Web Platform. Thus, not intend to be more one to do that, but present itself as a simple and tiny helper utility library for creating HTML elements using regular JavaScript, especially, as an addon for Web Components 🚾. The power of CalqueJS is to offer a declarative way to writing client-side scripting using bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element.
 
 ## Install via [npm](https://npmjs.com)
 
@@ -22,7 +22,7 @@ For more details about The [HTML templating](http://exploringjs.com/es6/ch_templ
 
 ### Nothing new or needed to learned, just some conveniences
 
-Template tags are simply functions, which allows to create domain-specific languages (DSLs), an important feature of the Template literals additon of ECMAscript 6.
+Template tags are simply functions, which allows to create domain-specific languages (DSLs), an important feature of the Template literals added at the ECMAscript 6 version.
 
 The motivation for CalqueJS was to provide a light way to use HTML elements inside JavaScript, together with Web Components, allow the componentization of user interfaces--splitting them up into small chunks of related HTML and JavaScript. Grammar in CalqueJS is mostly the same as in HTML, but there are subtle differences to watch out for. The differences from traditional HTML are listed below:
 
