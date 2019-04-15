@@ -38,27 +38,40 @@ export default class GenericElement extends HTMLElement {
           &#955; ♏ (see browser console for see the changes)
           <ul>
             ${this.hasAttribute('data-list') 
-              && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
+							&& this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
           </ul>
           <button onclick="${ 
 	(function addItem(event) {
-		const ulElem = event.target.previousElementSibling;
-		let len = ulElem.children.length;
-		let previousVal = (len == 0) ? len : +ulElem.lastElementChild.textContent;
-		event.stopPropagation();
-		let oldVal = this.getAttribute('data-list');
-		let strPreVal = oldVal !== '' ? oldVal + ',' : '';
-		this.setAttribute('data-list', strPreVal.concat(++previousVal));
-		console.log(previousVal, oldVal);
+		if (this.hasAttribute('data-list')) {
+			const ulElem = event.target.previousElementSibling;
+			let len = ulElem.children && ulElem.children.length;
+			let previousVal = len ? +ulElem.lastElementChild.textContent : 0;
+			event.stopPropagation();
+			let oldVal = this.getAttribute('data-list');
+			let strPreVal = oldVal !== '' ? oldVal + ',' : '';
+			this.setAttribute('data-list', strPreVal.concat(++previousVal));
+			console.log(previousVal, oldVal);
+		} else {
+			console.warn('No data-list attribute found');
+		}
 	}).bind(this)
 }">+</button>
           <button onclick="${
 	(function removeItem() {
-		let list = this.getAttribute('data-list');
-		let lastIndex = list.lastIndexOf(',');
-		this.setAttribute('data-list', list.slice(0, lastIndex));
+		if (this.hasAttribute('data-list')) {
+			let list = this.getAttribute('data-list');
+			let lastIndex = list.lastIndexOf(',');
+			this.setAttribute('data-list', list.slice(0, lastIndex));
+		} else {
+			console.warn('No data-list attribute found');
+		}
 	}).bind(this) 
 }">-</button>
+<button onclick="${
+	(function removeAll() {
+		this.hasAttribute('data-list') && this.setAttribute('data-list', '');
+	}).bind(this)
+}">Remove All</button>
         </div>
         <h1 onclick="${ this.clickHandler.bind(this) }" style="${style}">
           Hello, &lambda; ${this.getAttribute('name')}

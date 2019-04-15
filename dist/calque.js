@@ -1,5 +1,5 @@
 /**
- * CalqueJS
+ * CalqueJS /kalk/
  * @author: Daniel Mascena <danielmascena@gmail.com>
  */
 
@@ -304,7 +304,8 @@ function html(literals) {
                   }
                 } else if (diffElem.oldContent) {
                   htmlElem.remove();
-                }
+                } //Element.attributes 
+
 
                 var children = diffElem.children;
 

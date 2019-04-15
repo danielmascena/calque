@@ -1,5 +1,5 @@
 /**
- * CalqueJS
+ * CalqueJS /kalk/
  * @author: Daniel Mascena <danielmascena@gmail.com>
  */
 
@@ -267,6 +267,7 @@ export function html(literals, ...substs) {
 								else if (diffElem.oldContent) {
 									htmlElem.remove();
 								}
+								//Element.attributes 
 								const children = diffElem.children;
 								if (children.length > 0) {
 									for (let elDf of children) {

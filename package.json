@@ -1,14 +1,15 @@
 {
   "name": "calque",
   "description": "📑A simple and tiny utility library for building fast web interfaces using regular JavaScript",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "main": "dist/calque.mjs",
   "scripts": {
     "lint": "eslint calque.js",
     "build": "npm run transpiler && npm run copy && npm run uglify",
     "transpiler": "babel calque.js --out-dir dist --presets=@babel/env",
     "copy": "cp calque.js dist/calque.mjs",
-    "uglify": "mkdir -p dist/ && uglifyjs dist/calque.js -m -o dist/calque.min.js"
+    "uglify": "mkdir -p dist/ && uglifyjs dist/calque.js -m -o dist/calque.min.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -33,9 +34,9 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
+    "babel-jest": "^24.7.1",
     "eslint": "^5.16.0",
     "eslint-plugin-wc": "^1.0.0",
-    "jest": "^24.1.0",
     "uglify-js": "^3.4.9"
   }
 }
