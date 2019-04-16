@@ -224,6 +224,7 @@ function html(literals) {
                 console.log('nothing to change');
                 return;
               } else if (elemPrevCopy.textContent !== elemNextCopy.textContent) {
+                diff.tagName = elemNextCopy.tagName;
                 var contentPrev = elemPrevCopy.textValue;
                 var contentNext = elemNextCopy.textValue;
 
@@ -274,6 +275,7 @@ function html(literals) {
                 		diff.attributes[key] = elemNext.attributes[key];
                 	}
                 }
+                Element.attributes 
                 */
 
               }
@@ -290,50 +292,32 @@ function html(literals) {
               if (isEmptyDiff && isEmptyHtmlEl) {
                 console.log('no diffs to apply');
                 return;
-              } else if (diffElem.textContent !== htmlElem.textContent || diffElem.newContent !== htmlElem.firstChild.nodeValue) {
-                if (diffElem.newContent) {
-                  if (diffElem.oldContent) {
-                    //parentNode.replaceChild(newChild, oldChild);
-                    htmlElem.firstChild.nodeValue = diffElem.newContent;
-                    console.log('content updating');
-                  } else {
-                    var newElem = document.createElement(diffElem.tagName);
-                    var textNode = document.createTextNode(diffElem.newContent);
-                    newElem.appendChild(textNode);
-                    htmlElem.appendChild(newElem);
+              } else {
+                var diffChildren = diffElem.children,
+                    htmlLen = htmlElem.children.length;
+
+                if (diffChildren.length > 0 && diffElem.textContent !== htmlElem.textContent) {
+                  for (var i = diffChildren.length - 1; i >= 0; i--) {
+                    var elDf = diffChildren[i];
+                    var elHT = elDf.index < htmlLen ? htmlElem.children[elDf.index] : htmlElem;
+                    applyDiffs(elDf, elHT);
                   }
-                } else if (diffElem.oldContent) {
-                  htmlElem.remove();
-                } //Element.attributes 
+                }
 
-
-                var children = diffElem.children;
-
-                if (children.length > 0) {
-                  var _iteratorNormalCompletion = true;
-                  var _didIteratorError = false;
-                  var _iteratorError = undefined;
-
-                  try {
-                    for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                      var elDf = _step.value;
-                      var htmlCh = htmlElem.children;
-                      var elHT = elDf.index < htmlCh.length ? htmlCh[elDf.index] : htmlElem;
-                      applyDiffs(elDf, elHT);
+                if (diffElem.newContent !== htmlElem.firstChild.nodeValue) {
+                  if (diffElem.newContent) {
+                    if (diffElem.oldContent) {
+                      //parentNode.replaceChild(newChild, oldChild);
+                      htmlElem.firstChild.nodeValue = diffElem.newContent;
+                      console.log('content updating');
+                    } else {
+                      var newElem = document.createElement(diffElem.tagName);
+                      var textNode = document.createTextNode(diffElem.newContent);
+                      newElem.appendChild(textNode);
+                      htmlElem.appendChild(newElem);
                     }
-                  } catch (err) {
-                    _didIteratorError = true;
-                    _iteratorError = err;
-                  } finally {
-                    try {
-                      if (!_iteratorNormalCompletion && _iterator.return != null) {
-                        _iterator.return();
-                      }
-                    } finally {
-                      if (_didIteratorError) {
-                        throw _iteratorError;
-                      }
-                    }
+                  } else if (diffElem.oldContent) {
+                    htmlElem.remove();
                   }
                 }
               }
@@ -349,13 +333,13 @@ function html(literals) {
           this.innerHTML = result;
           this.vdom = HTMLtoJSON(result, this);
           console.log(this.vdom);
-          var _iteratorNormalCompletion2 = true;
-          var _didIteratorError2 = false;
-          var _iteratorError2 = undefined;
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
 
           try {
-            for (var _iterator2 = elemEvents[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              var event = _step2.value;
+            for (var _iterator = elemEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var event = _step.value;
               var calqueID = event.calqueID,
                   calqueIDValue = event.calqueIDValue,
                   eventHandler = event.eventHandler,
@@ -375,16 +359,16 @@ function html(literals) {
               }
             }
           } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
+            _didIteratorError = true;
+            _iteratorError = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-                _iterator2.return();
+              if (!_iteratorNormalCompletion && _iterator.return != null) {
+                _iterator.return();
               }
             } finally {
-              if (_didIteratorError2) {
-                throw _iteratorError2;
+              if (_didIteratorError) {
+                throw _iteratorError;
               }
             }
           }
