@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * CalqueJS /kalk/
  * @author: Daniel Mascena <danielmascena@gmail.com>
@@ -42,11 +43,7 @@ function HTMLtoJSON(template, Element) {
 		if (window.DOMParser) {
 			const parser = new DOMParser();
 			docNode = parser.parseFromString(template, 'text/html');
-		} /*else { 
-          docNode = new ActiveXObject('Microsoft.XMLDOM');
-          docNode.async = false;
-          docNode.loadXML(htmlTmpl); 
-    }*/
+		}
 		if (Element != null && Element instanceof HTMLElement) {
 			const {tagName, attributes} = Element,
 				body = docNode.body,
@@ -72,7 +69,7 @@ function HTMLtoJSON(template, Element) {
 		textContent: 
 			e.textContent,
 		attributes:
-      Object.fromEntries(Array.from(e.attributes, ({name, value}) => [name, value])),
+      Array.from(e.attributes, ({name, value}) => ({[name]: value})),
 		children:
       Array.from(e.children, toJSON)
 	});
@@ -131,6 +128,7 @@ export function html(literals, ...substs) {
 				const calqueIDValue = hashCode(true);
 				let handlerBody = String(subst);
 				if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
+					// eslint-disable-next-line quotes
 					const toggleQuote = charNumber === 34 ? `'` : `"`;   
 					handlerBody = `${toggleQuote}${type} ${subst.name.substring(5)} ${handlerBody.substring(9)}${toggleQuote}`;
 				}
@@ -296,6 +294,7 @@ export function html(literals, ...substs) {
 						if (elem != null && 
 								typeof eventHandler === 'function') {
 							if (!eventHandler.name && handlerBody.startsWith('function')) {
+								// eslint-disable-next-line no-debugger
 								debugger;
 								console.error(handlerBody, 'function expression must have a name');
 								throw new TypeError('function expression must have a name');

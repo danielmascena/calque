@@ -1,4 +1,4 @@
-import {innerHTML, html} from '../dist/calque';
+import {innerHTML, html} from '../calque';
 
 test('testing for a returned object', () => {
 	const c = html``;
@@ -19,8 +19,8 @@ test('checking for the event bound', () => {
 });
 
 test('checking for the presence of vdom property', () => {
-    const p = document.createElement('p');
-    expect(p.vdom).toBeUndefined();
-    p[innerHTML]=html`some text <span>goes</span> here`;
-    expect(p.vdom).toBeDefined();
+	const p = document.createElement('p');
+	expect(p.vdom).toBeUndefined();
+	p[innerHTML] = html`some text <span>goes</span> here`;
+	expect(p.vdom).toBeDefined();
 })

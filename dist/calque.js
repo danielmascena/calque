@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 /**
  * CalqueJS /kalk/
  * @author: Daniel Mascena <danielmascena@gmail.com>
@@ -19,6 +21,8 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -59,12 +63,6 @@ function HTMLtoJSON(template, Element) {
       var parser = new DOMParser();
       docNode = parser.parseFromString(template, 'text/html');
     }
-    /*else { 
-          docNode = new ActiveXObject('Microsoft.XMLDOM');
-          docNode.async = false;
-          docNode.loadXML(htmlTmpl); 
-    }*/
-
 
     if (Element != null && Element instanceof HTMLElement) {
       var tagName = Element.tagName,
@@ -90,11 +88,11 @@ function HTMLtoJSON(template, Element) {
       tagName: e.tagName,
       textValue: e.firstChild && e.firstChild.nodeValue,
       textContent: e.textContent,
-      attributes: Object.fromEntries(Array.from(e.attributes, function (_ref) {
+      attributes: Array.from(e.attributes, function (_ref) {
         var name = _ref.name,
             value = _ref.value;
-        return [name, value];
-      })),
+        return _defineProperty({}, name, value);
+      }),
       children: Array.from(e.children, toJSON)
     };
   };
@@ -155,6 +153,7 @@ function html(literals) {
         var handlerBody = String(subst);
 
         if (subst.name.startsWith('bound ') && handlerBody.startsWith(type) && handlerBody.includes('native code')) {
+          // eslint-disable-next-line quotes
           var toggleQuote = charNumber === 34 ? "'" : "\"";
           handlerBody = "".concat(toggleQuote).concat(type, " ").concat(subst.name.substring(5), " ").concat(handlerBody.substring(9)).concat(toggleQuote);
         }
@@ -349,6 +348,7 @@ function html(literals) {
 
               if (elem != null && typeof eventHandler === 'function') {
                 if (!eventHandler.name && handlerBody.startsWith('function')) {
+                  // eslint-disable-next-line no-debugger
                   debugger;
                   console.error(handlerBody, 'function expression must have a name');
                   throw new TypeError('function expression must have a name');

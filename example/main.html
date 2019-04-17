@@ -1,7 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Welcome to CalqueJS</title>
+  <style type="text/css">
+    @font-face {
+      font-family: 'Julius Sans One';
+      src: url(./fonts/JuliusSansOne-Regular.ttf) format('truetype');
+    }
+    @font-face {
+      font-family: 'Josefin Sans';
+      src: url(./fonts/JosefinSans-Regular.ttf) format('truetype');
+    }
+    h1 {
+      margin-bottom: 5rem;
+    }
+    .libname { 
+      font-family: 'Julius Sans One', sans-serif;
+      color: #FF642E;
+    }
+    body {
+      font-family: 'Josefin Sans', sans-serif;
+      color: #444C5E;
+      background-color: #F5F0E5;
+    }
+    a {
+      text-decoration: none;
+      color: #055B5C;
+    }
+  </style>
   <script type="module" src="../dist/calque.mjs"></script>
   <script type="module" src="./generic.mjs"></script>
   <script type="module" src="./neotag.mjs"></script>
@@ -11,16 +37,16 @@
 
 <body>
   <main>
-    <h3><code>"use calque";</code></h3>
-  <x-element name="Scorpii" data-list="1,2,3,4"></x-element>
-  <script type="module">
-    import main from './main.mjs';
-    window.addEventListener('DOMContentLoaded', () => {
-      main();
-      console.log("%c📑\u0063\u0061\u006c\u0071\u0075\u0065\u006A\u0073 is running",
-      "color: green; background-color: black; font-size:35px");
-    });
-  </script>
+    <h1 class='libname'>CalqueJS</h1>
+    <x-element text="click (en)" data-list="1,2,3,4"></x-element>
+    <script type="module">
+      import main from './main.mjs';
+      window.addEventListener('DOMContentLoaded', () => {
+        main();
+        console.log("%c📑\u0063\u0061\u006c\u0071\u0075\u0065\u006A\u0073 is running",
+        "color: green; background-color: black; font-size:35px");
+      });
+    </script>
   </main>
 </body>
 </html>

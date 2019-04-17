@@ -1,15 +1,15 @@
 {
   "name": "calque",
   "description": "📑A simple and tiny utility library for building fast web interfaces using regular JavaScript",
-  "version": "0.0.38",
+  "version": "0.0.40",
   "main": "dist/calque.mjs",
   "scripts": {
+    "build": "npm run lint && npm run test && npm run transpiler && npm run copy && npm run uglify",
     "lint": "eslint calque.js",
-    "build": "npm run transpiler && npm run copy && npm run uglify",
+    "test": "jest",
     "transpiler": "babel calque.js --out-dir dist --presets=@babel/env",
     "copy": "cp calque.js dist/calque.mjs",
-    "uglify": "mkdir -p dist/ && uglifyjs dist/calque.js -m -o dist/calque.min.js",
-    "test": "jest"
+    "uglify": "mkdir -p dist/ && uglifyjs dist/calque.js -m -o dist/calque.min.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,8 @@
     "Tagged Templates",
     "Utility Function",
     "JavaScript Library",
+    "Vanilla JavaScript",
+    "EcmaScript",
     "HTML-in-JS",
     "JavaScript Component",
     "Web Components"
