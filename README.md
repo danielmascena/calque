@@ -5,10 +5,9 @@
 
 🚧 Status: In Development 🛠️
 
-First thing first, what is a [calque](https://en.wikipedia.org/wiki/Calque): _In linguistics, a calque /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together._
+CalqueJS is a JavaScript micro-library aimed at help building user interfaces for the Web Platform. Thus, not intend to be more one to do that, but present itself as a simple and tiny helper utility library for creating HTML elements using regular JavaScript, especially, as an addon for Web Components 🚾. The power of CalqueJS is to offer a declarative way to writing client-side scripting using bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element.
 
-
-With that said, the CalqueJS is a JavaScript micro-library aimed at help building user interfaces for the Web Platform. Thus, not intend to be more one to do that, but present itself as a simple and tiny helper utility library for creating HTML elements using regular JavaScript, especially, as an addon for Web Components 🚾. The power of CalqueJS is to offer a declarative way to writing client-side scripting using bits of HTML, but inside of a JavaScript file. Build components with a light abstraction for some DOM manipulations like events binding at the own template element.
+A [calque](https://en.wikipedia.org/wiki/Calque): _In linguistics, a calque /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together._
 
 ## Install via [npm](https://npmjs.com)
 
@@ -90,6 +89,10 @@ p[innerHTML] = html`
 document.body.appendChild(p);
 
 ```
+
+### Roadmap
+There's quite a few things to be done:
+- Attributes updating
 
 ---
 
