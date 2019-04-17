@@ -1,3 +1,5 @@
+![ogImage](calque.png)
+
 # calque.js 📑
 /kalk/
 
