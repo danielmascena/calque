@@ -1,7 +1,7 @@
 {
   "name": "calque",
-  "description": "📑A simple and tiny utility library for building fast web interfaces using regular JavaScript",
-  "version": "0.0.40",
+  "description": "📑A micro helper/utility library for building fast web interfaces using 🍦vanilla JavaScript",
+  "version": "0.0.41",
   "main": "dist/calque.mjs",
   "scripts": {
     "build": "npm run lint && npm run test && npm run transpiler && npm run copy && npm run uglify",

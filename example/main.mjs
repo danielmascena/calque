@@ -7,6 +7,9 @@
 import Calque, {html, innerHTML} from '../dist/calque.mjs';
 //import GenericElement from './generic.mjs';
 
+/**
+ * Plain JavaScript
+ */
 export default function() {
 
 	/*

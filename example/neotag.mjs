@@ -2,6 +2,9 @@ import {innerHTML, html} from '../dist/calque.mjs';
 
 'use strict';
 
+/**
+ * ES5 Web Component style
+ */
 function NeoTag() {
 	console.log(this.constructor);
 	this.count = 0;
