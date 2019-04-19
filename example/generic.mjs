@@ -12,7 +12,7 @@ export default class GenericElement extends HTMLElement {
 		this.text = 'hitted';
 		this.stars = ['Antares', 'Lesath', 'Graffias', 'Dschubba'];
 	}
-	attributeChangedCallback() {
+	attributeChangedCallback(attrName, oldValue, newValue) {
 		this.render();
 	}
 	connectedCallback() {
@@ -91,4 +91,4 @@ export default class GenericElement extends HTMLElement {
 	}
 }
 
-customElements.define('x-element', GenericElement);
+window.customElements.define('x-element', GenericElement);
