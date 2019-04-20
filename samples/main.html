@@ -28,6 +28,7 @@
       color: #055B5C;
     }
   </style>
+  <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../dist/calque.mjs"></script>
   <script type="module" src="./generic.mjs"></script>
   <script type="module" src="./neotag.mjs"></script>
@@ -39,6 +40,7 @@
   <main>
     <h1 class='libname'>CalqueJS</h1>
     <x-element text="click (en)" data-list="1,2,3,4"></x-element>
+    <my-component name="Calque"></my-component>
     <script type="module">
       import main from './main.mjs';
       window.addEventListener('DOMContentLoaded', () => {

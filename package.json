@@ -1,6 +1,6 @@
 {
   "name": "calque",
-  "description": "📑A micro helper/utility library for building fast web interfaces using 🍦vanilla JavaScript",
+  "description": "📑A utility library for building web interfaces using 🍦vanilla JavaScript",
   "version": "0.0.41",
   "main": "dist/calque.mjs",
   "scripts": {
@@ -39,6 +39,10 @@
     "babel-jest": "^24.7.1",
     "eslint": "^5.16.0",
     "eslint-plugin-wc": "^1.0.0",
+    "mocha": "^6.1.4",
     "uglify-js": "^3.4.9"
+  },
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^2.2.10"
   }
 }
