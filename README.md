@@ -27,7 +27,7 @@ Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wi
 import { innerHTML, html } from '../dist/calque.mjs';
 
 customElements.define('my-component', class extends HTMLElement {
-  static get observedAttributes() { return ['name']; }
+  static get observedAttributes() { return ['text', 'data-list'];}
   constructor(...args) {
     super(...args);
   }
@@ -47,6 +47,23 @@ customElements.define('my-component', class extends HTMLElement {
       <h3 onclick='${this.showNodeName.bind(this)}' style="${{[colorProp]: "red", "font-size": name.length+"em"}}">
         Hello, &lambda; ${name}
       </h3>
+      <div>
+         <ul>
+         ${this.hasAttribute('data-list') 
+							&& this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
+         </ul>
+          <button onclick="${
+	(function removeItem() {
+		if (this.hasAttribute('data-list')) {
+			let list = this.getAttribute('data-list');
+			let lastIndex = list.lastIndexOf(',');
+			this.setAttribute('data-list', list.slice(0, lastIndex));
+		} else {
+			console.warn('No data-list attribute found');
+		}
+	}).bind(this) 
+}">-</button>
+        </div>
     `;
   }
 });
