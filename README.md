@@ -48,9 +48,7 @@ customElements.define('my-component', class extends HTMLElement {
         Hello, &lambda; ${name}
       </h3>
       <div>
-         <ul>
-         ${this.hasAttribute('data-list') && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
-</ul>
+         <ul>${this.hasAttribute('data-list') && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}</ul>
           <button onclick="${
 	(function removeItem() {
 		if (this.hasAttribute('data-list')) {
