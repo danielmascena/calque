@@ -104,7 +104,9 @@ $ npm install --save calque
 
 ## Features
 
-🔧The motivation for CalqueJS comes basically inspired for what [JSX](https://reactjs.org/docs/introducing-jsx.html) represents for [React](https://reactjs.org/), I must say that it's very boring to use React without JSX, because it simplify the coding of a React component using a common HTML grammar. With the advent of Web Components, it's now possible to achieve some features provide by frameworks and libraries, but using the timeless advantage of the native web. The component pattern is one of the major benefit of Web Components, which enables to break the UI into distinct and small chunks of code providing a modular and reusable component to be used in many different contexts.
+🔧The motivation for CalqueJS comes basically inspired for what [JSX](https://reactjs.org/docs/introducing-jsx.html) represents for [React](https://reactjs.org/), I must say that it's very boring to use React without JSX, because it simplify the coding of a React component using a common HTML grammar. 
+
+With the advent of Web Components, it's now possible to achieve some features provide by frameworks and libraries, but using the timeless advantage of the native web. The component pattern is one of the major benefit of Web Components, which enables to break the UI into distinct and small chunks of code providing a modular and reusable component to be used in many different contexts.
 
 ### Simplify web interface implementation.
 
@@ -142,6 +144,7 @@ There's quite a few things to be done:
 
 ---
 ☑️ Suitable for web UI prototyping 👌
+
 ☢️ Not optimized for production ☣️ (use at your own risk)
 
 
@@ -149,11 +152,7 @@ There's quite a few things to be done:
 
 
 https://github.com/w3c/webcomponents/
-
 https://www.w3.org/wiki/WebComponents/
-
 https://w3c.github.io/webcomponents/
-
 https://developers.google.com/web/fundamentals/web-components/customelements
-
 https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
