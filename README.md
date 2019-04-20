@@ -11,7 +11,7 @@
 ![license-badge](https://flat.badgen.net/npm/license/calque)
 
 
-CalqueJS is a tiny utility library (_~7KB_) aimed to help building interfaces easily for the native web platform. The goal is to offer a declarative way to code UI components by writing bits of HTML, rather the traditional client-side scripting. It is based on the Web Standards only, so is 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs to transcript the HTML-like template into the base element. This approach suits perfectly as an addon for reusable [Web Components] 🚾(https://www.webcomponents.org/). *No framework, no transpilation needed* \o/ #usetheplatform 
+CalqueJS is a tiny utility library (_~7KB_) aimed to help building interfaces easily for the native web platform. The goal is to offer a declarative way to code UI components by writing bits of HTML, rather the traditional client-side scripting. It is based only on the Web Standards, so is 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs to "transcript" the HTML-like template content into the base element. This approach suits to aid as an add-on for reusable [Web Components] 🚾(https://www.webcomponents.org/). *No framework, no transpilation needed* \o/ #usetheplatform 
 
 Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together._ This definition, resumes the approach behind CalqueJS, maximize the readability, avoid some boilerplate code, and enhance the component using a solid and well-known markup language to bootstrapping the content.
 
@@ -88,7 +88,7 @@ $ npm install --save calque
 
 ## Features
 
-🔧The motivation for CalqueJS comes inspired basically for what [JSX](https://reactjs.org/docs/introducing-jsx.html) represents for [React](https://reactjs.org/), I must say that it's very boring to use React without JSX, because it simplify to build a React component using common HTML grammar. With the advent of Web Components, it's possible to achieve some features provide by frameworks and libraries, but using the timeless advantage of the native web. The component pattern is one of the major benefit of Web Components, which enables to break the UI into distinct and small chunks of code providing a modular and reusable component to be used in many different contexts.
+🔧The motivation for CalqueJS comes basically inspired for what [JSX](https://reactjs.org/docs/introducing-jsx.html) represents for [React](https://reactjs.org/), I must say that it's very boring to use React without JSX, because it simplify the coding of a React component using a common HTML grammar. With the advent of Web Components, it's now possible to achieve some features provide by frameworks and libraries, but using the timeless advantage of the native web. The component pattern is one of the major benefit of Web Components, which enables to break the UI into distinct and small chunks of code providing a modular and reusable component to be used in many different contexts.
 
 ### Simplify web interface implementation.
 
