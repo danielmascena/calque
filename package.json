@@ -1,7 +1,7 @@
 {
   "name": "calque",
   "description": "📑A utility library for building web interfaces using 🍦vanilla JavaScript",
-  "version": "0.0.41",
+  "version": "0.0.42",
   "main": "dist/calque.mjs",
   "scripts": {
     "build": "npm run lint && npm run test && npm run transpiler && npm run copy && npm run uglify",
@@ -36,13 +36,11 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
+    "@webcomponents/webcomponentsjs": "^2.2.10",
     "babel-jest": "^24.7.1",
     "eslint": "^5.16.0",
     "eslint-plugin-wc": "^1.0.0",
     "mocha": "^6.1.4",
     "uglify-js": "^3.4.9"
-  },
-  "dependencies": {
-    "@webcomponents/webcomponentsjs": "^2.2.10"
   }
 }

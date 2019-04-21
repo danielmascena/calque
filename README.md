@@ -38,31 +38,44 @@ customElements.define('my-component', class extends HTMLElement {
   showNodeName() {
     alert(this.nodeName);
     this.setAttribute('name', 'Neo name');
-	}
+  }
   render() {
     const colorProp = 'color';
     const name = this.getAttribute('name');
     this[innerHTML] = html`
-      <p id="shaula" onblur='${(e)=>console.log(e.target.textContent)}' contenteditable>
+      <p id="shaula" 
+        onblur="${(e)=>console.log(e.target.textContent)}" 
+        contenteditable>
         Temporary text
       </p>
-      <h3 onclick='${this.showNodeName.bind(this)}' style="${{[colorProp]: "red", "font-size": name.length+"em"}}">
+      <h3 onclick="${this.showNodeName.bind(this)}" 
+        style="${
+          {
+            [colorProp]: "red", 
+            "font-size": name.length+"em"
+          }
+        }">
         Hello, &lambda; ${name}
       </h3>
       <div>
-         <ul>${this.hasAttribute('data-list') && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}</ul>
-          <button onclick="${
-	(function removeItem() {
-		if (this.hasAttribute('data-list')) {
-			let list = this.getAttribute('data-list');
-			let lastIndex = list.lastIndexOf(',');
-			this.setAttribute('data-list', list.slice(0, lastIndex));
-		} else {
-			console.warn('No data-list attribute found');
-		}
-	}).bind(this) 
-}">-</button>
-        </div>
+        <ul>
+        ${
+          this.hasAttribute('data-list') 
+          && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)
+        }
+        </ul>
+        <button onclick="${
+          (function removeItem() {
+            if (this.hasAttribute('data-list')) {
+              let list = this.getAttribute('data-list');
+              let lastIndex = list.lastIndexOf(',');
+              this.setAttribute('data-list', list.slice(0, lastIndex));
+            } else {
+              console.warn('No data-list attribute found');
+            }
+          }).bind(this) 
+        }">-</button>
+      </div>
     `;
   }
 });
@@ -97,12 +110,24 @@ customElements.define('neo-tag', NeoTag);
 document.body.appendChild(document.createElement('neo-tag'));
 ```
 
-## Install via [npm](https://npmjs.com)
+### A delightful and light VDOM-like approach
 
+![ogImage](calquejs_video.gif)
+
+⚠️ **Warning**: The component built using CalqueJS it's intended to be concise and reflect the template content, with that said, the component DOM tree shouldn't be modified via DOM API (removing or adding new nodes).
+
+
+## Install via:
+
+1. [NPM](https://npmjs.com) (Terminal)
 ```sh
 $ npm install --save calque
 ```
 
+2. [UNPKG](https://unpkg.com/) (Web Browser)
+```html
+<script type="module" src="https://unpkg.com/calque@:version/dist/calque.mjs"></script>
+```
 
 ## Features
 
@@ -110,9 +135,11 @@ $ npm install --save calque
 
 With the advent of Web Components, it's now possible to achieve some features provide by frameworks and libraries, but using the timeless advantage of the native web. The component pattern is one of the major benefit of Web Components, which enables to break the UI into distinct and small chunks of code providing a modular and reusable component to be used in many different contexts.
 
+
 ### Simplify web interface implementation.
 
 Nothing new or needed to learned, the mantra is 🙏: _no 3rd party library APIs to interact, just some conveniences_. **Using CalqueJS is as easy as use template tags**. This feature was added at ES6 as he Template literals, which are simply functions that allows to create domain-specific languages (DSLs). For more details about The [HTML templating](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation), access the book _ExploringJS_ by Dr. Axel Rauschmayer.
+
 
 ### Some subtle differences and gotchas
 
@@ -123,12 +150,6 @@ When using the library, pay attention for this details mentioned below:
 3. Avoid use the **innerHTML** property directly. In JavaScript, you can use a variable value to access the respective property name (`var f='foo',o={foo:'bar'}; o[f] // outputs "bar"`), so instead of use `document.body.innerHTML` or `document.body["innerHTML"]`, you **must** import and use the `innerHTML` variable from CalqueJS, and them call `document.body[innerHTML]` together with the  `html` tagged template function provided (_html_ method is primarily a convenience function, and it can be especially useful when manipulating callback events).
 4. Follow the [best practices](https://google.github.io/styleguide/htmlcssguide.html#HTML_Quotation_Marks), we use double quotes for attributes values.
 
-
-### A delightful and light VDOM-like approach
-
-![ogImage](calquejs_video.gif)
-
-⚠️ **Warning**: The component built using CalqueJS it's intended to be concise and reflect the template content, with that said, the component DOM tree shouldn't be modified via DOM API (removing or adding new nodes).
 
 #### Code Example
 
