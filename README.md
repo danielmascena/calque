@@ -1,23 +1,21 @@
 ![ogImage](calque.png)
 
 
-
 # calque.js 📑
 
-🚧 Status: In Development 🛠️
 
 ![downloads-badge](https://flat.badgen.net/npm/dt/calque)
 ![version-badge](https://flat.badgen.net/npm/v/calque)
 ![license-badge](https://flat.badgen.net/npm/license/calque)
 
 
-CalqueJS is a tiny utility library (_only ~7KB_) for the native web platform aimed to help building interfaces easily. The goal is to offer a declarative way to code UI components by writing bits of HTML, rather the traditional client-side scripting, and also providing a simple layer as Virtual DOM to update the view changes.
+CalqueJS is a tiny utility library (_only ~7KB_) for the native web platform aimed to help building interfaces easily. The goal is to offer a declarative way to code UI components by writing bits of HTML, rather the traditional client-side scripting, and also providing a simple layer as Virtual DOM to update the view 🖼️ changes.
 
 It is based only on Web Standards, so is 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs, using them to calque the HTML-like template content into the base element properties. This approach suits to aid as an add-on for reusable [Web Components](https://www.webcomponents.org/). *No dependecies, frameworks, or transpilation needed* \o/ #usetheplatform 
 
 Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together._ 
 
-This definition, resumes the approach behind CalqueJS, maximize the readability, avoid some boilerplate code, and enhance the component using a solid and well-known markup language to bootstrapping the content.
+This definition, resumes the idea behind CalqueJS, (1) avoid some boilerplate code and (2) maximize the readability using the markup _lingua franca_ for the web, as the same time, it enhance the component by bootstrapping his content.
 
 
 ## Build components with a light abstraction
@@ -28,7 +26,7 @@ This definition, resumes the approach behind CalqueJS, maximize the readability,
 ```javascript
 import { innerHTML, html } from '../dist/calque.mjs';
 
-customElements.define('my-component', class extends HTMLElement {
+window.customElements.define('my-component', class extends HTMLElement {
   static get observedAttributes() { return ['text', 'data-list'];}
   constructor(...args) {
     super(...args);
@@ -79,7 +77,6 @@ customElements.define('my-component', class extends HTMLElement {
     `;
   }
 });
-
 ```
 
 
@@ -105,14 +102,13 @@ NeoTag.prototype.connectedCallback = function() {
         <p onclick="${this.handlerClick}">Neo Tag</p>
     `;
 };
-
 customElements.define('neo-tag', NeoTag);
 document.body.appendChild(document.createElement('neo-tag'));
 ```
 
 ### A delightful VDOM-like approach
 
-CalqueJS updates the markup 🖼️ after the changes on component attributes to reflect the new values.
+CalqueJS updates the DOM after the changes on component attributes to reflect the new values.
 
 ![ogImage](calquejs_video.gif)
 
@@ -140,7 +136,7 @@ With the advent of Web Components, it's now possible to achieve some features pr
 
 ### Simplify web interface implementation.
 
-Nothing new or needed to learned, the mantra is 🙏: _no 3rd party library APIs to interact, just some conveniences_. **Using CalqueJS is as easy as use template tags**. This feature was added at ES6 as he Template literals, which are simply functions that allows to create domain-specific languages (DSLs). For more details about The [HTML templating](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation), access the book _ExploringJS_ by Dr. Axel Rauschmayer.
+Nothing new or needed to learned, the mantra is 🙏: _no 3rd party library API to interact, just some conveniences_. **Using CalqueJS is as easy as use template tags**. This feature was added at ES6 as he Template literals, which are simply functions that allows to create domain-specific languages (DSLs). For more details about The [HTML templating](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation), access the book _ExploringJS_ by Dr. Axel Rauschmayer.
 
 
 ### Some subtle differences and gotchas
@@ -168,16 +164,22 @@ There's quite a few things to be done:
 - Investigating Shadow DOM support
 
 ---
+
+🚧 Status: In Development 🛠️
+
 ☑️ Suitable for web UI prototyping 👌
 
-☢️ Not optimized for production ☣️ (use at your own risk)
+☢️ Not optimized for production ☣️ (**use at your own risk**)
 
 
 ### Some cool resources
 
-
 https://github.com/w3c/webcomponents/
+
 https://www.w3.org/wiki/WebComponents/
+
 https://w3c.github.io/webcomponents/
+
 https://developers.google.com/web/fundamentals/web-components/customelements
+
 https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
