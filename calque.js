@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /**
- * CalqueJS /kalk/
+ * CalqueJS
  * @author: Daniel Mascena <danielmascena@gmail.com>
  */
 

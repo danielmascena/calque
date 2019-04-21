@@ -2,21 +2,24 @@
 <html lang="en">
 <head>
   <title>Welcome to CalqueJS</title>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Julius+Sans+One" rel="stylesheet">
   <style type="text/css">
-    @font-face {
-      font-family: 'Julius Sans One';
-      src: url(./fonts/JuliusSansOne-Regular.ttf) format('truetype');
+    header {
+      padding: 1rem;
+      max-width: 40rem;
+      margin: auto;
+      background: linear-gradient(to bottom right, #7de393, transparent 50%, #27a09e),
+             linear-gradient(to top right, #30ce88, transparent 50%, #205374) #d3f5ce;
     }
-    @font-face {
-      font-family: 'Josefin Sans';
-      src: url(./fonts/JosefinSans-Regular.ttf) format('truetype');
-    }
-    h1 {
-      margin-bottom: 5rem;
+    header p {
+      text-align: center;
+      font-size: 1.2rem;
     }
     .libname { 
       font-family: 'Julius Sans One', sans-serif;
       color: #FF642E;
+      font-size: 3rem;
     }
     body {
       font-family: 'Josefin Sans', sans-serif;
@@ -38,7 +41,11 @@
 
 <body>
   <main>
-    <h1 class='libname'>CalqueJS</h1>
+    <header>
+      <h1 class='libname'>CalqueJS</h1>
+      <h5>[kalk]</h5>
+      <p>A utility library for building web interfaces using 🍦vanilla JavaScript</p>
+    </header>
     <x-element text="click (en)" data-list="1,2,3,4"></x-element>
     <script type="module">
       import main from './main.mjs';

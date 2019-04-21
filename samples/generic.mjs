@@ -31,7 +31,7 @@ export default class GenericElement extends HTMLElement {
 			size = this.num, 
 			style = {'color': '#8474A1', 'line-height': this.num, 'font-size': `${size*3}px`};
 		this[innerHTML] = html`
-				<h2 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }">Who am I?</h2>
+				<h2 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }" style="cursor:pointer">Who am I?</h2>
         <div id style="${ {'background-color': '#D4D7DB'} }">
           I'm a DIV parent
           <ul>

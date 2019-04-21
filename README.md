@@ -108,24 +108,26 @@ document.body.appendChild(document.createElement('neo-tag'));
 
 ### A delightful VDOM-like approach
 
-CalqueJS updates the DOM after the changes on component attributes to reflect the new values.
+CalqueJS updates the DOM nodes after the changes on component attributes to reflect the new values.
 
 ![ogImage](calquejs_video.gif)
+
+#### Live Demo
+
+http://run.plnkr.co/vHK0qqHXPlJGzQo6/
+
+http://plnkr.co/edit/XTq7fqxyQawTeQuwdsZi?p=preview
 
 ⚠️ **Warning**: The component built using CalqueJS it's intended to be concise and reflect the template content, with that said, the component DOM tree shouldn't be modified via DOM API (removing or adding new nodes).
 
 
 ## Install via:
 
-1. [NPM](https://npmjs.com) (Terminal)
+[NPM](https://npmjs.com) (Terminal)
 ```sh
 $ npm install --save calque
 ```
 
-2. [UNPKG](https://unpkg.com/) (Web Browser)
-```html
-<script type="module" src="https://unpkg.com/calque@:version/dist/calque.mjs"></script>
-```
 
 ## Features
 
