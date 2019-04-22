@@ -1,7 +1,7 @@
 {
   "name": "calque",
   "description": "📑A utility library for building web interfaces using 🍦vanilla JavaScript",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "main": "dist/calque.mjs",
   "scripts": {
     "build": "npm run lint && npm run test && npm run transpiler && npm run copy && npm run uglify",
