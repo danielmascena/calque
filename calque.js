@@ -2,6 +2,7 @@
 /**
  * CalqueJS
  * @author: Daniel Mascena <danielmascena@gmail.com>
+ * repo: https://github.com/danielmascena/calque
  */
 
 /*jshint esversion: 6 */

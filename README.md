@@ -13,9 +13,13 @@ CalqueJS is a tiny utility library (_only ~7KB_) for the native web platform aim
 
 It is based only on Web Standards, so is 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs, using them to calque the HTML-like template content into the base element properties. This approach suits to aid as an add-on for reusable [Web Components](https://www.webcomponents.org/). *No dependencies, frameworks, or transpilation needed* \o/ #usetheplatform 
 
-Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together._ 
 
-This definition, resumes the idea behind CalqueJS, (1) avoid some boilerplate code and (2) maximize the readability using the markup _lingua franca_ for the web, as the same time, it enhance the component by bootstrapping his content.
+## Install via:
+
+[NPM](https://npmjs.com) (Terminal)
+```sh
+$ npm install --save calque
+```
 
 
 ## Build components with a light abstraction
@@ -112,20 +116,10 @@ CalqueJS updates the DOM nodes after the changes on component attributes to refl
 
 ![ogImage](https://i.postimg.cc/vBHVjpv6/calquejs-video.gif)
 
-#### Live Demo
-
-http://run.plnkr.co/s4sX8ASH3acbgTTe/
+[Live Demo](https://next.plnkr.co/edit/XTq7fqxyQawTeQuwdsZi?preview)
 
 
 ⚠️ **Warning**: The component built using CalqueJS it's intended to be concise and reflect the template content, with that said, the component DOM tree shouldn't be modified via DOM API (removing or adding new nodes).
-
-
-## Install via:
-
-[NPM](https://npmjs.com) (Terminal)
-```sh
-$ npm install --save calque
-```
 
 
 ## Features
@@ -148,6 +142,12 @@ When using the library, pay attention for this details mentioned below:
 2. Passing inline CSS properties not only through strings, but by literal objects too: when using styling objects, the [JSON](https://www.json.org/)-based format is mandatory. for example, you can pass a JSON object for the style attribute as`{[myProp]: "7px", "border-color": myValue}`. **OBS:** single properties names will work `{color: "blue"}` but are better to follow the standard rules.
 3. Avoid use the **innerHTML** property directly. In JavaScript, you can use a variable value to access the respective property name (`var f='foo',o={foo:'bar'}; o[f] // outputs "bar"`), so instead of use `document.body.innerHTML` or `document.body["innerHTML"]`, you **must** import and use the `innerHTML` variable from CalqueJS, and them call `document.body[innerHTML]` together with the  `html` tagged template function provided (_html_ method is primarily a convenience function, and it can be especially useful when manipulating callback events).
 4. Follow the [best practices](https://google.github.io/styleguide/htmlcssguide.html#HTML_Quotation_Marks), we use double quotes for attributes values.
+
+
+Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together._ 
+
+This definition, resumes the idea behind CalqueJS, (1) avoid some boilerplate code and (2) maximize the readability using the markup _lingua franca_ for the web, as the same time, it enhance the component by bootstrapping his content.
+
 
 
 #### Code Example
