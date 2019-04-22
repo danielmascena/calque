@@ -11,7 +11,7 @@
 
 CalqueJS is a tiny utility library (_only ~7KB_) for the native web platform aimed to help building interfaces easily. The goal is to offer a declarative way to code UI components by writing bits of HTML, rather the traditional client-side scripting, and also providing a simple layer as Virtual DOM to update the view 🖼️ changes.
 
-It is based only on Web Standards, so is 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs, using them to calque the HTML-like template content into the base element properties. This approach suits to aid as an add-on for reusable [Web Components](https://www.webcomponents.org/). *No dependecies, frameworks, or transpilation needed* \o/ #usetheplatform 
+It is based only on Web Standards, so is 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs, using them to calque the HTML-like template content into the base element properties. This approach suits to aid as an add-on for reusable [Web Components](https://www.webcomponents.org/). *No dependencies, frameworks, or transpilation needed* \o/ #usetheplatform 
 
 Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together._ 
 
