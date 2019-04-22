@@ -1,4 +1,4 @@
-![ogImage](calque.png)
+![ogImage](https://i.postimg.cc/ZK16RsJ1/calque.png)
 
 
 # calque.js 📑
@@ -110,13 +110,12 @@ document.body.appendChild(document.createElement('neo-tag'));
 
 CalqueJS updates the DOM nodes after the changes on component attributes to reflect the new values.
 
-![ogImage](calquejs_video.gif)
+![ogImage](https://i.postimg.cc/vBHVjpv6/calquejs-video.gif)
 
 #### Live Demo
 
-http://run.plnkr.co/vHK0qqHXPlJGzQo6/
+http://run.plnkr.co/s4sX8ASH3acbgTTe/
 
-http://plnkr.co/edit/XTq7fqxyQawTeQuwdsZi?p=preview
 
 ⚠️ **Warning**: The component built using CalqueJS it's intended to be concise and reflect the template content, with that said, the component DOM tree shouldn't be modified via DOM API (removing or adding new nodes).
 
@@ -171,7 +170,7 @@ There's quite a few things to be done:
 
 ☑️ Suitable for web UI prototyping 👌
 
-☢️ Not optimized for production ☣️ (**use at your own risk**)
+☢️ **use at your own risk** ☣️
 
 
 ### Some cool resources
