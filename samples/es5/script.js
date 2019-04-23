@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 
-import { innerHTML, html } from '../dist/calque.mjs';
-
-export default class GenericElement extends HTMLElement {
+import Calque from 
+class GenericElement extends HTMLElement {
 	static get observedAttributes() {
 		return ['text', 'data-list'];
 	}
@@ -30,7 +29,7 @@ export default class GenericElement extends HTMLElement {
 		let someObj = null, 
 			size = this.num, 
 			style = {'color': '#8474A1', 'line-height': this.num, 'font-size': `${size*3}px`};
-		this[innerHTML] = html`
+		this[Calque.innerHTML] = Calque.html`
 				<h2 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }" style="cursor:pointer">Who am I?</h2>
         <div style="${ {'background-color': '#D4D7DB', 'padding': '1.5rem'} }">
           I'm a DIV parent
@@ -80,7 +79,7 @@ export default class GenericElement extends HTMLElement {
         ${ (this.stars.length > 5)
 		? html`<p>The constellation is complete</p>`
 		: html`<p onblur="${ e => console.log(e.target.textContent) }" contenteditable>
-				There is some missing stars (open the browser console for see the changes)</p>`}
+				There is some missing stars (see browser console for see the changes)</p>`}
         <p onclick="${() => alert(this.num)}">
           ${ new function(lib){this.libName = lib;}('CalqueJS') }
           ${ {toString: () => 'method override'} }

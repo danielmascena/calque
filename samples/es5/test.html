@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="require.js"></script>
+        <script src="../../dist/calque.js"></script>
+        <script>
+            requirejs(['Calque'], function( $ ) {
+                console.log( 'ok' ) // OK
+            });
+        </script>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <x-element text="click (en)" data-list="1,2,3,4"></x-element>
+    </body>
+</html>
