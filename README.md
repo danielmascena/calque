@@ -164,6 +164,11 @@ There's quite a few things to be done:
 
 ---
 
+## License
+
+Code licensed under the [MIT License](LICENSE).
+
+
 🚧 Status: In Development 🛠️
 
 ☑️ Suitable for web UI prototyping 👌
