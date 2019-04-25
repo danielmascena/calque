@@ -1,6 +1,6 @@
 {
   "name": "calque",
-  "description": "📑A utility library for building web interfaces using 🍦vanilla JavaScript",
+  "description": "📑 helper library for building web interfaces using 🍦vanilla JavaScript",
   "version": "0.0.45",
   "main": "dist/calque.mjs",
   "scripts": {
