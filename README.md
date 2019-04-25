@@ -1,4 +1,4 @@
-[![calque.png](https://i.postimg.cc/mr2FNDRf/calque.png)](https://postimg.cc/5XT0ff6n)
+[![calque.png](https://i.postimg.cc/7h1tSgD8/calque.png)](https://postimg.cc/JHnQLHGP)
 
 
 # calque.js 📑
@@ -161,6 +161,10 @@ There's quite a few things to be done:
 - Attributes (not observed) updating
 - Apply some code refactors (more functional programming style)
 - Investigating Shadow DOM support
+
+## License
+
+Code licensed under the [MIT License](LICENSE).
 
 ---
 
