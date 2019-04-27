@@ -1,4 +1,4 @@
-[![calque.png](https://i.postimg.cc/mr2FNDRf/calque.png)](https://postimg.cc/5XT0ff6n)
+[![calque.png](https://i.postimg.cc/jd2QzBbd/calque.png)](https://postimg.cc/gn9ZpSjf)
 
 
 # calque.js 📑
@@ -11,7 +11,7 @@
 
 CalqueJS is a tiny helper library (_only ~7KB_) for the native web platform, aimed to help building interfaces easily. The goal is to offer a declarative way to code UI components by writing bits of HTML, rather the traditional client-side scripting, and also providing a simple layer as Virtual DOM to update the view 🖼️ changes.
 
-It is based only on Web Standards, 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs, using them to calque the HTML-like template content into the base element properties. This approach suits to aid as an add-on for reusable [Web Components](https://www.webcomponents.org/). *No dependencies, frameworks, or transpilation needed* \o/ #usetheplatform 
+It is based on Web Standards, 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs. The library calques, or transcript, the HTML-like template to content and properties of the target [ELEMENT_NODE](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) type. This approach suits to aid as an add-on for reusable [Web Components](https://www.webcomponents.org/). *No dependencies, frameworks, or transpilation needed* \o/ #usetheplatform 
 
 
 ## Install via:
@@ -161,6 +161,10 @@ There's quite a few things to be done:
 - Attributes (not observed) updating
 - Apply some code refactors (more functional programming style)
 - Investigating Shadow DOM support
+
+## License
+
+Code licensed under the [MIT License](LICENSE).
 
 ---
 
