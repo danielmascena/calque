@@ -13,7 +13,9 @@ Calque is a tiny helper library (_only ~7KB_) for the native web platform, aimed
 
 It is all based on Web Standards, 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs. The library calques, or transcript, the HTML-like template inner data into respective properties on the target [ELEMENT_NODE](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) type object. This approach aims to aid coding [Web Components](https://www.webcomponents.org/) 🖤💙💛, more specifically as an add-on for **Custom Elements** 😍. Custom Elements are awesome, they play a key role at [micro frontends](https://micro-frontends.org) because they are our present and future.
 
-> Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together_. This definition sums up the idea behind Calque, it intends to maximize the readability using the web markup _lingua franca_, at the same time, it enhances the component by bootstrapping his content and avoids some mandatory JS-DOM boilerplate codes.
+> Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together_. 
+
+This definition sums up the idea behind Calque, it intends to maximize the readability using the web markup _lingua franca_, at the same time, it enhances the component by bootstrapping his content and avoids some mandatory JS-DOM boilerplate codes.
 
 
 
