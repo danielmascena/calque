@@ -33,7 +33,7 @@ $ npm install --save calque
 import { innerHTML, html } from '../dist/calque.mjs';
 
 window.customElements.define('my-component', class extends HTMLElement {
-  static get observedAttributes() { return ['text', 'data-list'];}
+  static get observedAttributes() { return ['name', 'data-list'];}
   constructor(...args) {
     super(...args);
   }
