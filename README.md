@@ -36,6 +36,7 @@ window.customElements.define('my-component', class extends HTMLElement {
   static get observedAttributes() { return ['name', 'data-list'];}
   constructor(...args) {
     super(...args);
+    this.showNodeName = this.showNodeName.bind(this);
   }
   attributeChangedCallback() { this.render(); }
   connectedCallback() { this.render(); }
@@ -51,24 +52,14 @@ window.customElements.define('my-component', class extends HTMLElement {
         contenteditable>
         Temporary text
       </p>
-      <h3 onclick="${this.showNodeName.bind(this)}" 
-        style="${
-          {
-            [colorProp]: "red", 
-            "font-size": name.length+"em"
-          }
-        }">
+      <h3 onclick="${this.showNodeName}" 
+        style="${{[colorProp]: "red","font-size": name.length+"em"}}">
         Hello, &lambda; ${name}
       </h3>
-      <div>
-        <ul>
-        ${
-          this.hasAttribute('data-list') 
-          && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)
-        }
-        </ul>
-        <button onclick="${
-          (function removeItem() {
+      <aside>
+        <ul>${this.hasAttribute('data-list') 
+          && this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}</ul>
+        <button onclick="${(function removeItem() {
             if (this.hasAttribute('data-list')) {
               let list = this.getAttribute('data-list');
               let lastIndex = list.lastIndexOf(',');
@@ -76,9 +67,8 @@ window.customElements.define('my-component', class extends HTMLElement {
             } else {
               console.warn('No data-list attribute found');
             }
-          }).bind(this) 
-        }">-</button>
-      </div>
+          }).bind(this)}">-</button>
+      </aside>
     `;
   }
 });
@@ -98,14 +88,9 @@ function NeoTag() {
 NeoTag.prototype = Object.create(HTMLElement.prototype);
 NeoTag.prototype.constructor = NeoTag;
 Object.setPrototypeOf(NeoTag, HTMLElement);
-NeoTag.prototype.handlerClick = function click(){
-	console.log('clicked', this);
-};
+NeoTag.prototype.handlerClick = function click(){console.log('clicked', this);};
 NeoTag.prototype.connectedCallback = function() {
-	this.handlerClick = this.handlerClick.bind(this);
-	this[innerHTML] = html`
-        <p onclick="${this.handlerClick}">Neo Tag</p>
-    `;
+	this[innerHTML] = html`<p onclick="${this.handlerClick.bind(this)}">Neo Tag</p>`;
 };
 customElements.define('neo-tag', NeoTag);
 document.body.appendChild(document.createElement('neo-tag'));
