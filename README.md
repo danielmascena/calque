@@ -2,16 +2,18 @@
 
 
 # CalqueJS 📑
-
+*No dependencies, frameworks, or transpilation needed* \o/ [#usetheplatform](https://webplatform.github.io/) 
 
 ![downloads-badge](https://flat.badgen.net/npm/dt/calque)
 ![version-badge](https://flat.badgen.net/npm/v/calque)
 ![license-badge](https://flat.badgen.net/npm/license/calque)
 
 
-Calque is a tiny helper library (_only ~7KB_) for the native web platform, aimed to help building interfaces easily. The goal is to offer a declarative way to code UI components by writing bits of HTML, rather the traditional client-side scripting, and also providing a simple layer as Virtual DOM to update the view 🖼️ changes.
+Calque is a tiny helper library (_only ~7KB_) for the native web platform, aimed to help to build interfaces easily. The goal is to offer a declarative way to code UI components by writing bits of HTML, rather the traditional client-side scripting, and also providing a simple layer as Virtual DOM to update the view 🖼️ changes. This approach suits to aid as an add-on for reusable [Web Components](https://www.webcomponents.org/) 🖤💙💛, more specifically the **Custom Elements** 😍. Custom Elements are awesome, they play a key role at [micro frontends](https://micro-frontends.org) because they are our present and future.
 
-It is all based on Web Standards, 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs. The library calques, or transcript, the HTML-like template inner data into respective properties on the target [ELEMENT_NODE](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) type object. This approach suits to aid as an add-on for reusable [Web Components](https://www.webcomponents.org/). *No dependencies, frameworks, or transpilation needed* \o/ #usetheplatform 
+
+It is all based on Web Standards, 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs. The library calques, or transcript, the HTML-like template inner data into respective properties on the target [ELEMENT_NODE](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) type object. Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together_. This definition sums up the idea behind Calque, it intends to maximize the readability using the web markup _lingua franca_, at the same time, it enhances the component by bootstrapping his content and avoids some mandatory JS-DOM boilerplate codes.
+
 
 
 ## Install via:
@@ -123,29 +125,24 @@ Calque updates the DOM nodes after the changes on component attributes to reflec
 
 ## Features
 
-🔧The motivation for this library comes basically inspired for what [JSX](https://reactjs.org/docs/introducing-jsx.html) represents for [React](https://reactjs.org/), I must say that it's very boring to use React without JSX, because it simplify the coding of a React component using a common HTML grammar. 
+🔧The motivation for this library comes basically inspired for what [JSX](https://reactjs.org/docs/introducing-jsx.html) represents for [React](https://reactjs.org/), I must say that it's very boring to use React without JSX, because it simplifies the coding of a React component using a common HTML grammar.
 
-With the advent of Web Components, it's now possible to achieve some features provide by frameworks and libraries, but using the timeless advantage of the native web. The component pattern is one of the major benefit of Web Components, which enables to break the UI into distinct and small chunks of code providing a modular and reusable component to be used in many different contexts.
+With the advent of Web Components, it's now possible to achieve some features provide by frameworks and libraries, but using the timeless advantage of the native web. The component pattern is one of the major benefits of Web Components, which enables to break the UI into distinct and small chunks of code providing a modular and reusable component to be used in many different contexts.
 
 
 ### Simplify web interface implementation.
 
-Nothing new or needed to learned, the mantra is 🙏: _no 3rd party library API to interact, just some conveniences_. **Using Calque is as easy as use template tags**. This feature was added at ES6 as he Template literals, which are simply functions that allows to create domain-specific languages (DSLs). For more details about The [HTML templating](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation), access the book _ExploringJS_ by Dr. Axel Rauschmayer.
+Nothing new or needed to learn, the mantra is 🙏 - _no 3rd party library API to interact, just some conveniences_. **Using Calque is as easy as using template tags**. This feature was added at ES6 as he Templates literals, which are simply functions that allow creating domain-specific languages (DSLs). For more details about The [HTML templating](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation), access the book _ExploringJS_ by Dr. Axel Rauschmayer.
 
 
 ### Some subtle differences and gotchas
 
-When using the library, pay attention for this details mentioned below:
+When using the library, pay attention to this details mentioned below:
 
 1. Adding Event Listeners smoothly: use function reference `onevent="myFunction"`, not function invocation `onevent="myFunction()"`. Note that in HTML, event listener names are written only in lowercase, such as onclick, onmouseover, etc. In some libraries, however, like JSX or lit-html, event listener names are written in camelCase or with the prefix @, such as onClick or @click, respectively. The philosophy behind Calque is to avoid at the most any divergence from common HTML syntax.
-2. Passing inline CSS properties not only through strings, but by literal objects too: when using styling objects, the [JSON](https://www.json.org/)-based format is mandatory. for example, you can pass a JSON object for the style attribute as`{[myProp]: "7px", "border-color": myValue}`. **OBS:** single properties names will work `{color: "blue"}` but are better to follow the standard rules.
+2. Passing inline CSS properties not only through strings but by literal objects too: when using styling objects, the [JSON](https://www.json.org/)-based format is mandatory. for example, you can pass a JSON object for the style attribute as`{[myProp]: "7px", "border-color": myValue}`. **OBS:** single properties names will work `{color: "blue"}` but are better to follow the standard rules.
 3. Avoid use the **innerHTML** property directly. In JavaScript, you can use a variable value to access the respective property name (`var f='foo',o={foo:'bar'}; o[f] // outputs "bar"`), so instead of use `document.body.innerHTML` or `document.body["innerHTML"]`, you **must** import and use the `innerHTML` variable from CalqueJS, and them call `document.body[innerHTML]` together with the  `html` tagged template function provided (_html_ method is primarily a convenience function, and it can be especially useful when manipulating callback events).
 4. Follow the [best practices](https://google.github.io/styleguide/htmlcssguide.html#HTML_Quotation_Marks), we use double quotes for attributes values.
-
-
-Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together._ 
-
-This definition, resumes the idea behind Calque, (1) avoid some boilerplate code and (2) maximize the readability using the markup _lingua franca_ for the web, as the same time, it enhance the component by bootstrapping his content.
 
 
 #### Code Example
@@ -157,7 +154,7 @@ $ npm i serve
 ```
 
 ### Roadmap 🎯
-There's quite a few things to be done:
+There are quite a few things to be done:
 - Attributes (not observed) updating
 - Apply some code refactors (more functional programming style)
 - Investigating Shadow DOM support
@@ -179,12 +176,13 @@ Code licensed under the [MIT License](LICENSE).
 
 ### Some cool resources
 
+
 https://github.com/w3c/webcomponents/
-
-https://www.w3.org/wiki/WebComponents/
-
-https://w3c.github.io/webcomponents/
 
 https://developers.google.com/web/fundamentals/web-components/customelements
 
 https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
+
+https://blog.usejournal.com/web-components-will-replace-your-frontend-framework-3b17a580831c
+
+https://www.youtube.com/watch?v=dTW7eJsIHDg
