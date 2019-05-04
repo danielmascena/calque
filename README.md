@@ -107,11 +107,6 @@ Calque updates the DOM nodes after the changes on component attributes to reflec
 ⚠️ **Warning**: The component built using Calque it's intended to be concise and reflect the template content, with that said, the component DOM tree shouldn't be modified via DOM API (removing or adding new nodes).
 
 
-> Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together_. 
-
-This definition sums up the idea behind Calque, it intends to maximize the readability using the web markup _lingua franca_, at the same time, it enhances the component by bootstrapping his content and avoids some mandatory JS-DOM boilerplate codes.
-
-
 ## Features
 
 🔧The motivation for this library comes basically inspired for what [JSX](https://reactjs.org/docs/introducing-jsx.html) represents for [React](https://reactjs.org/), I must say that it's too boring to use React without JSX, because it simplifies the coding of a React component using a common HTML grammar.
@@ -122,6 +117,10 @@ With the advent of Web Components, it's now possible to achieve some features pr
 ### Simplify web interface implementation.
 
 Nothing new or needed to learn, the mantra is 🙏 - _no 3rd party library API to interact, just some conveniences_. **Using Calque is as easy as using template tags**. This feature was added at ES6 as he Templates literals, which are simply functions that allow creating domain-specific languages (DSLs). For more details about The [HTML templating](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation), access the book _ExploringJS_ by Dr. Axel Rauschmayer.
+
+> Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together_. 
+
+This definition sums up the idea behind Calque, it intends to maximize the readability using the web markup _lingua franca_, at the same time, it enhances the component by bootstrapping his content and avoids some mandatory JS-DOM boilerplate codes.
 
 
 ### Some subtle differences and gotchas
