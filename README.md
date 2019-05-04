@@ -13,10 +13,6 @@ Calque is a tiny helper library (_only ~7KB_) for the native web platform, aimed
 
 It is all based on Web Standards, 💪powered by [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) language, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) & [browser](https://developer.mozilla.org/en-US/docs/Web/API/Window) APIs. The library calques, or transcript, the HTML-like template inner data into respective properties on the target [ELEMENT_NODE](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) type object. This approach aims to aid coding [Web Components](https://www.webcomponents.org/) 🖤💙💛, especially as an add-on for **Custom Elements** (which are awesome). They play a key role at [micro frontends](https://micro-frontends.org) and make possible to reuse code on web platform.
 
-> Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together_. 
-
-This definition sums up the idea behind Calque, it intends to maximize the readability using the web markup _lingua franca_, at the same time, it enhances the component by bootstrapping his content and avoids some mandatory JS-DOM boilerplate codes.
-
 
 
 ## Install via:
@@ -111,9 +107,14 @@ Calque updates the DOM nodes after the changes on component attributes to reflec
 ⚠️ **Warning**: The component built using Calque it's intended to be concise and reflect the template content, with that said, the component DOM tree shouldn't be modified via DOM API (removing or adding new nodes).
 
 
+> Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together_. 
+
+This definition sums up the idea behind Calque, it intends to maximize the readability using the web markup _lingua franca_, at the same time, it enhances the component by bootstrapping his content and avoids some mandatory JS-DOM boilerplate codes.
+
+
 ## Features
 
-🔧The motivation for this library comes basically inspired for what [JSX](https://reactjs.org/docs/introducing-jsx.html) represents for [React](https://reactjs.org/), I must say that it's very boring to use React without JSX, because it simplifies the coding of a React component using a common HTML grammar.
+🔧The motivation for this library comes basically inspired for what [JSX](https://reactjs.org/docs/introducing-jsx.html) represents for [React](https://reactjs.org/), I must say that it's too boring to use React without JSX, because it simplifies the coding of a React component using a common HTML grammar.
 
 With the advent of Web Components, it's now possible to achieve some features provide by frameworks and libraries, but using the timeless advantage of the native web. The component pattern is one of the major benefits of reusable Web Components, which enables to break the UI into distinct and small chunks of code providing a modular and reusable component to be used in many different contexts.
 
@@ -153,8 +154,7 @@ There are quite a few things to be done:
 
 Code licensed under the [MIT License](LICENSE).
 
-
-🚧 Status: In Development 🛠️
+---
 
 ☑️ Suitable for web UI prototyping 👌
 
