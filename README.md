@@ -2,7 +2,10 @@
 
 
 # CalqueJS 📑
-*No dependencies, frameworks, or transpilation needed* \o/ [#usetheplatform](https://webplatform.github.io/) 
+* Zero dependencies
+* Framework-free
+* No transpilation needed
+\o/ [#usetheplatform](https://webplatform.github.io/) 
 
 ![downloads-badge](https://flat.badgen.net/npm/dt/calque)
 ![version-badge](https://flat.badgen.net/npm/v/calque)
