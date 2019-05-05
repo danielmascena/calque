@@ -116,6 +116,7 @@ Calque updates the DOM nodes after the changes on component attributes to reflec
 
 With the advent of Web Components, it's now possible to achieve some features provide by frameworks and libraries, but using the timeless advantage of the native web. The component pattern is one of the major benefits of reusable Web Components, which enables to break the UI into distinct and small chunks of code providing a modular and reusable component to be used in many different contexts.
 
+>Web Components use a set of standardized APIs that are natively supported in all modern browsers. These UI components run on nearly all mobile devices and desktop browsers today.
 
 ### Simplify web interface implementation.
 
