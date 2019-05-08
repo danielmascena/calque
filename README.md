@@ -1,5 +1,6 @@
 [![calque.png](https://i.postimg.cc/BbrSv6qm/calque.png)](https://postimg.cc/K35Sqm3T)
 
+> ## 🛠 Status: In Development 🚧🛑
 
 # CalqueJS 📑
 * Zero dependencies
