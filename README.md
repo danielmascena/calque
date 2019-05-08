@@ -1,6 +1,5 @@
 [![calque.png](https://i.postimg.cc/BbrSv6qm/calque.png)](https://postimg.cc/K35Sqm3T)
 
-> ## 🛠 Status: In Development 🚧🛑
 
 # CalqueJS 📑
 * Zero dependencies
@@ -12,6 +11,7 @@
 ![version-badge](https://flat.badgen.net/npm/v/calque)
 ![license-badge](https://flat.badgen.net/npm/license/calque)
 
+> ## 🛠 Status: In Development 🚧
 
 Calque is a tiny helper library (_only ~7KB_) for the native web platform, aimed to help to build interfaces easily. The goal is to offer a declarative way to code UI components by writing bits of [HTML](https://html.spec.whatwg.org/multipage/), rather the traditional client-side scripting, and also providing a simple layer as Virtual DOM to update the view 🖼️ changes.
 
