@@ -121,7 +121,7 @@ With the advent of Web Components, it's now possible to achieve some features pr
 
 ### Simplify web interface implementation.
 
-Nothing new or needed to learn, the mantra is 🙏 - _no third-party libraries/frameworks APIs to interact, just some conveniences_. **Using Calque is as easy as using template tags**. This feature was added at ES6 as he Templates literals, which are simply functions that allow creating domain-specific languages (DSLs). For more details about The [HTML templating](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation), access the book _ExploringJS_ by Dr. Axel Rauschmayer.
+Nothing new or needed to learn, the mantra is 🙏 - _no third-party libraries/frameworks APIs to interact, just some conveniences_. **Using Calque is as easy as using template tags**. This feature was added at [EcmaScript](https://www.ecma-international.org/memento/tc39.htm) [2015 (6)](https://www.ecma-international.org/ecma-262/6.0/) as Template literals, which are simply functions that allow creating domain-specific languages (DSLs). For more details about The [HTML templating](http://exploringjs.com/es6/ch_template-literals.html#sec_html-tag-function-implementation), access the book _ExploringJS_ by Dr. Axel Rauschmayer.
 
 > Just for curiosity, 🤔 _In linguistics, a [calque](https://en.wikipedia.org/wiki/Calque) /kælk/ or loan-translation is a borrowing of a compound word from another language where each component is translated into native words and then joined together_. 
 
