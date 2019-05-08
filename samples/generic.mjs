@@ -31,14 +31,17 @@ export default class GenericElement extends HTMLElement {
 			size = this.num, 
 			style = {'color': '#8474A1', 'line-height': this.num, 'font-size': `${size*3}px`};
 		this[innerHTML] = html`
-				<h2 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }" style="cursor:pointer">Who am I?</h2>
-        <div style="${ {'background-color': '#D4D7DB', 'padding': '1.5rem'} }">
-          I'm a DIV parent
-          <ul>
-            ${this.hasAttribute('data-list') 
-							&& this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
-          </ul>
-          <button onclick="${ 
+			<style>
+				h2 {cursor: pointer;}
+			</style>
+			<h2 onclick="${ (function mustHaveAName() {alert('I\'m '+this);}).bind(this) }">Who am I?</h2>
+			<div style="${ {'background-color': '#D4D7DB', 'padding': '1.5rem'} }">
+				I'm a DIV parent
+				<ul>
+					${this.hasAttribute('data-list') 
+						&& this.getAttribute('data-list').split(',').map(num => html`<li>${num}</li>`)}
+				</ul>
+				<button onclick="${ 
 	(function addItem(event) {
 		if (this.hasAttribute('data-list')) {
 			const ulElem = event.target.previousElementSibling;
@@ -54,7 +57,7 @@ export default class GenericElement extends HTMLElement {
 		}
 	}).bind(this)
 }">+</button>
-          <button onclick="${
+				<button onclick="${
 	(function removeItem() {
 		if (this.hasAttribute('data-list')) {
 			let list = this.getAttribute('data-list');
@@ -70,14 +73,14 @@ export default class GenericElement extends HTMLElement {
 		this.hasAttribute('data-list') && this.setAttribute('data-list', '');
 	}).bind(this)
 }">Remove All</button>
-        </div>
-        <h3 onclick="${ this.clickHandler.bind(this) }" style="${style}">
-          A calque example: 📑 <a href="#" title="Click" aria-label="Click" style="font-size: ${size*3}px">${this.getAttribute('text')}</a>
-        </h3>
-        <ol>
-          ${this.stars.map((name, i) => html`<li style="font-size: ${size*i}px" onclick="alert('${name}')">${name}</li>`)}
-        </ol>
-        ${ (this.stars.length > 5)
+			</div>
+			<h3 onclick="${ this.clickHandler.bind(this) }" style="${style}">
+				A calque example: 📑 <a href="#" title="Click" aria-label="Click" style="font-size: ${size*3}px">${this.getAttribute('text')}</a>
+			</h3>
+			<ol>
+				${this.stars.map((name, i) => html`<li style="font-size: ${size*i}px" onclick="alert('${name}')">${name}</li>`)}
+			</ol>
+			${ (this.stars.length > 5)
 		? html`<p>The constellation is complete</p>`
 		: html`<p onblur="${ e => console.log(e.target.textContent) }" contenteditable>
 				There is some missing stars (open the browser console for see the changes)</p>`}

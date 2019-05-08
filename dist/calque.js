@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 /**
- * CalqueJS
+ * Calque
  * @author: Daniel Mascena <danielmascena@gmail.com>
  * repo: https://github.com/danielmascena/calque
  */
@@ -125,6 +125,7 @@ function html(literals) {
 
   substs.forEach(function (subst, i) {
     var lit = raw[i];
+    console.log('Testing regex' + /(<([a-z]+)\s)/gi.exec(lit));
 
     var type = _typeof(subst);
 

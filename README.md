@@ -51,8 +51,10 @@ window.customElements.define('my-component', class extends HTMLElement {
     const colorProp = 'color';
     const name = this.getAttribute('name');
     this[innerHTML] = html`
-      <p onblur="${(e)=>console.log(e.target.textContent)}" 
-        contenteditable>
+      <style>
+        p {text-decoration: overline;}
+      </style>
+      <p onblur="${(e)=>console.log(e.target.textContent)}" contenteditable>
         Temporary text
       </p>
       <h3 onclick="${this.showNodeName}" 
