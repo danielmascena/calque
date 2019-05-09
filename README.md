@@ -107,8 +107,9 @@ Calque updates the DOM nodes after the changes on component attributes to reflec
 
 ![ogImage](https://i.postimg.cc/vBHVjpv6/calquejs-video.gif)
 
-[Live Demo](https://next.plnkr.co/edit/XTq7fqxyQawTeQuwdsZi?preview)
-
+#### Live Demo
+[Plunker](https://next.plnkr.co/edit/XTq7fqxyQawTeQuwdsZi?preview)
+[JSFiddle](https://jsfiddle.net/danmascena/324v0wpL/show/)
 
 ⚠️ **Warning**: The component built using Calque it's intended to be concise and reflect the template content, with that said, the component DOM tree shouldn't be modified via DOM API (removing or adding new nodes).
 

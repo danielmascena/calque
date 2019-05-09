@@ -102,7 +102,12 @@ export function html(literals, ...substs) {
 	substs.forEach((subst, i) => {
       
 		let lit = raw[i];
-		console.log('Testing regex' + (/(<([a-z]+)\s)/gi).exec(lit));
+		const regexTag = /<[a-z1-6-]+[>\s]?/g;
+		const tagStr = regexTag.exec(lit);
+		if (tagStr != null) {
+			let tag = tagStr[0].trimEnd();
+			console.log('Tag found: ' + tag.slice(1, tag.endsWith('>') ? tag.length - 1 : undefined));
+		}
 		const type = typeof subst;
 		if (subst == null || 
           (type === 'object' && 
