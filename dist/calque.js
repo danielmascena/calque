@@ -125,12 +125,13 @@ function html(literals) {
 
   substs.forEach(function (subst, i) {
     var lit = raw[i];
-    var regexTag = /<[a-z1-6-]+[>\s]?/g;
-    var tagStr = regexTag.exec(lit);
+    var regexTag = /.?<([a-z1-6-]+)[>|\s]?/g;
+    var tagStr;
 
-    if (tagStr != null) {
-      var tag = tagStr[0].trimEnd();
-      console.log('Tag found: ' + tag.slice(1, tag.endsWith('>') ? tag.length - 1 : undefined));
+    while (tagStr = regexTag.exec(lit)) {
+      var tag = tagStr.length > 1 ? tagStr[1] : tagStr[0].trimEnd(); //slice(1, tag.endsWith('>') ? tag.length - 1 : undefined)
+
+      console.log('Tag found: ' + tag);
     }
 
     var type = _typeof(subst);
